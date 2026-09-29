@@ -400,7 +400,7 @@ let lastFwdTime=0, lastBackTime=0;
 const MOBILE_QUERY='(max-width:1024px) and (orientation:portrait)';
 const isMobile=()=>window.matchMedia(MOBILE_QUERY).matches;
 const expanded=new Set(['root']);
-let PRESENT=false, focusBranch=null;
+let PRESENT=false, focusBranch=null, focusCategory=null;
 
 /* ══════════════ 데스크톱 트리 레이아웃 ══════════════ */
 const stage=document.getElementById('stage'),
@@ -465,7 +465,9 @@ function drawDesktop(animate){
 
   order.forEach((n,i)=>{
     const wrap=document.createElement('div');
-    wrap.className='nodewrap'+(focusBranch&&n.br&&n.br!==focusBranch?' dim':'');
+    const dimBranch=focusBranch&&n.br&&n.br!==focusBranch;
+    const dimCategory=focusCategory&&n.br===focusBranch&&n.depth>=2&&n.id!==focusCategory&&parentOf[n.id]?.id!==focusCategory;
+    wrap.className='nodewrap'+(dimBranch||dimCategory?' dim':'');
     wrap.style.left=COLX[n.depth]+'px';
     wrap.style.top=(n.y-(SLOT[n.depth]||76)/2)+'px';
     wrap.style.animationDelay=animate?(Math.min(i,26)*22)+'ms':'0ms';
@@ -480,6 +482,14 @@ function drawDesktop(animate){
           const sameOpen=focusBranch===n.id && expanded.has(n.id);
           if(sameOpen){ collapseNode(n); clearFocus(); }
           else{ activateBranch(n.id); }
+        }else if(n.depth===2){
+          const sameOpen=focusCategory===n.id && expanded.has(n.id);
+          if(sameOpen){
+            collapseNode(n);
+            focusCategory=null;
+          }else{
+            activateCategory(n.id);
+          }
         }else{
           expanded.has(n.id)?collapseNode(n):expanded.add(n.id);
         }
@@ -498,7 +508,8 @@ function drawDesktop(animate){
     n.c.forEach(k=>{
       const w1=nodeMeasuredW(n), x1=COLX[n.depth]+w1+13, y1=n.y;
       const x2=COLX[k.depth]-2, y2=k.y;
-      const dim=focusBranch&&k.br&&k.br!==focusBranch;
+      const dim=(focusBranch&&k.br&&k.br!==focusBranch) ||
+        (focusCategory&&k.br===focusBranch&&k.depth>=2&&k.id!==focusCategory&&parentOf[k.id]?.id!==focusCategory);
       svg+=`<path class="wire${dim?' dim':''}" d="${bez(x1,y1,x2,y2)}" stroke-width="${k.depth===1?2.6:1.8}" style="stroke:${accOf(k)};stroke-dasharray:1200;stroke-dashoffset:${animate?1200:0};animation:${animate?'drawLine .7s var(--ease) forwards':'none'};animation-delay:${animate?'80ms':'0ms'}"/>`;
     });
   });
@@ -514,7 +525,8 @@ function drawDesktop(animate){
       n.c.forEach(k=>{
         const w1=nodeMeasuredW(n), x1=COLX[n.depth]+w1+13, y1=n.y;
         const x2=COLX[k.depth]-2, y2=k.y;
-        const dim=focusBranch&&k.br&&k.br!==focusBranch;
+        const dim=(focusBranch&&k.br&&k.br!==focusBranch) ||
+        (focusCategory&&k.br===focusBranch&&k.depth>=2&&k.id!==focusCategory&&parentOf[k.id]?.id!==focusCategory);
         svg2+=`<path class="wire${dim?' dim':''}" d="${bez(x1,y1,x2,y2)}" style="stroke:${accOf(k)};stroke-width:${k.depth===1?2.6:1.8}"/>`;
       });
     });
@@ -528,19 +540,44 @@ function nodeBox(n){
            h:n.depth===0?76:n.depth===1?58:n.depth===2?50:50};
 }
 function nodeMeasuredW(n){ return nodeBox(n).w; }
-function collapseNode(n){ expanded.delete(n.id); (n.c||[]).forEach(collapseNode); if(focusBranch===n.id) clearFocus(); }
+function collapseNode(n){
+  expanded.delete(n.id);
+  (n.c||[]).forEach(collapseNode);
+  if(focusCategory===n.id) focusCategory=null;
+  if(focusBranch===n.id) clearFocus();
+}
 function collapseOtherBranches(activeId){
   BR.forEach(id=>{ if(id!==activeId) collapseNode(byId[id]); });
 }
+function collapseSiblingCategories(activeId){
+  const active=byId[activeId], parent=parentOf[activeId];
+  if(!active || !parent) return;
+  (parent.c||[]).forEach(n=>{ if(n.id!==activeId) collapseNode(n); });
+}
 function activateBranch(id){
+  focusCategory=null;
   collapseOtherBranches(id);
   expanded.add(id);
   setFocus(id);
 }
+function activateCategory(id){
+  const n=byId[id];
+  if(!n) return;
+  if(n.br && focusBranch!==n.br){
+    collapseOtherBranches(n.br);
+    expanded.add(n.br);
+    setFocus(n.br);
+  }else if(n.br && !focusBranch){
+    setFocus(n.br);
+  }
+  collapseSiblingCategories(id);
+  expanded.add(id);
+  focusCategory=id;
+}
 
 /* ── 포커스(브랜치 집중) ── */
 function setFocus(id){ focusBranch=id; document.getElementById('unfocus').classList.add('on'); updateLegendState(); }
-function clearFocus(){ focusBranch=null; document.getElementById('unfocus').classList.remove('on'); updateLegendState(); }
+function clearFocus(){ focusBranch=null; focusCategory=null; document.getElementById('unfocus').classList.remove('on'); updateLegendState(); }
 document.getElementById('unfocus').onclick=()=>{clearFocus();stepIndex=0;updateStepBadge();drawDesktop(true);scheduleFit();};
 
 /* ══════════════ Auto-Fit 엔진 ══════════════
@@ -567,6 +604,15 @@ function boundsOf(nodes){
   return {minX,minY,maxX,maxY};
 }
 function currentFitSet(){
+  if(focusCategory){
+    const c=byId[focusCategory];
+    const nodes=[c];
+    (function collect(n){
+      if(!expanded.has(n.id)) return;
+      (n.c||[]).forEach(k=>{ nodes.push(k); collect(k); });
+    })(c);
+    return nodes;
+  }
   if(focusBranch){
     const b=byId[focusBranch];
     const nodes=[b];
@@ -679,7 +725,10 @@ function goToStep(idx){
   idx=Math.max(0,Math.min(STEPS.length-1,idx));
   stepIndex=idx;
   const n=STEPS[idx];
-  if(n.br) activateBranch(n.br); else clearFocus();
+  if(n.depth===2) activateCategory(n.id);
+  else if(n.depth===3 && parentOf[n.id]) activateCategory(parentOf[n.id].id);
+  else if(n.br) activateBranch(n.br);
+  else clearFocus();
   let p=parentOf[n.id];
   while(p){ expanded.add(p.id); p=parentOf[p.id]; }
   if(n.c){
@@ -829,16 +878,18 @@ function burstAt(x,y,color){
 
 /* ══════════════ 모바일 가로 전체보기 ══════════════ */
 function syncDesktopFromMobilePath(){
-  const branch=path[1];
+  const branch=path[1], category=path[2];
   if(branch && BR.includes(branch)){
     activateBranch(branch);
+    if(category && byId[category]?.c) activateCategory(category);
     path.slice(1).forEach(id=>{ const n=byId[id]; if(n?.c) expanded.add(id); });
     const last=byId[path[path.length-1]];
     if(last && stepIdxOf[last.id]!=null) stepIndex=stepIdxOf[last.id];
   }
 }
 function syncMobileFromDesktop(){
-  if(focusBranch && BR.includes(focusBranch)) path=['root',focusBranch];
+  if(focusCategory && focusBranch) path=['root',focusBranch,focusCategory];
+  else if(focusBranch && BR.includes(focusBranch)) path=['root',focusBranch];
   else if(!path.length || path[0]!=='root') path=['root'];
 }
 let rotateTipT=null;
@@ -896,7 +947,7 @@ function buildLegend(){
     btn.textContent=LEGLABEL[b];
     btn.onclick=()=>{
       if(isMobile()){ path=['root',b]; drawMobile(); updateLegendState(); document.getElementById('mobile').scrollTop=0; return; }
-      const node=byId[b]; expanded.add(node.id); setFocus(node.id); stepIndex=stepIdxOf[b]; updateStepBadge();
+      const node=byId[b]; activateBranch(node.id); stepIndex=stepIdxOf[b]; updateStepBadge();
       drawDesktop(true); scheduleFit();
     };
     wrap.appendChild(btn);
