@@ -11,6 +11,8 @@ def validate(data):
         if not meta.get(k): errors.append(f'meta.{k} missing')
     branches=data.get('branches')
     if not isinstance(branches,list) or not branches: errors.append('branches missing')
+    legal_texts=data.get('legalTexts')
+    if not isinstance(legal_texts,dict) or not legal_texts: errors.append('legalTexts missing')
     ids=set(); cards=0
     def addid(x,kind):
         i=x.get('id')
@@ -31,13 +33,19 @@ def validate(data):
                 if not isinstance(c.get('s'),list) or not c.get('s'): errors.append(f"{n.get('id')}: card.s missing")
                 if not c.get('e'): errors.append(f"{n.get('id')}: card.e missing")
                 if not c.get('l'): errors.append(f"{n.get('id')}: legal/source reference missing")
-                qs=c.get('q',[])
-                if qs and not isinstance(qs,list): errors.append(f"{n.get('id')}: q must be array"); qs=[]
-                for qi,q in enumerate(qs):
-                    opts=q.get('o')
-                    if not isinstance(opts,list) or len(opts)!=4: errors.append(f"{n.get('id')}: q[{qi}] needs 4 options")
-                    a=q.get('a')
-                    if not isinstance(a,int) or not isinstance(opts,list) or not (0<=a<len(opts)): errors.append(f"{n.get('id')}: q[{qi}] answer index invalid")
+                recall=c.get('recall')
+                if not isinstance(recall,list) or len(recall)<2:
+                    errors.append(f"{n.get('id')}: recall needs at least 2 ANKI items")
+                else:
+                    for ri,item in enumerate(recall):
+                        if not item.get('prompt') or not item.get('answer'):
+                            errors.append(f"{n.get('id')}: recall[{ri}] missing prompt/answer")
+                law_keys=c.get('lawKeys')
+                if not isinstance(law_keys,list) or not law_keys:
+                    errors.append(f"{n.get('id')}: lawKeys missing")
+                else:
+                    for key in law_keys:
+                        if key not in (legal_texts or {}): errors.append(f"{n.get('id')}: unknown law key {key}")
     if cards!=32: errors.append(f'expected 32 cards, got {cards}')
     if errors: raise SystemExit('VALIDATION FAILED\n- '+'\n- '.join(errors))
     return cards

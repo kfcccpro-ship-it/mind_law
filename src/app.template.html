@@ -73,7 +73,7 @@ header{
 .kakao-link:active{transform:scale(.97)}
 .kakao-link .kdot{width:7px;height:7px;border-radius:50%;background:#191919;flex:none}
 @media (max-width:980px){.status-pill{display:none}.brand span{display:none}.legend{max-width:24vw}}
-@media (max-width:640px){header{padding-left:12px;padding-right:10px;gap:7px}.brand{font-size:14px}.legend{display:none!important}.kakao-link{font-size:10.5px;padding:0 9px}.tools{display:none!important}}
+@media (max-width:640px){header{padding-left:12px;padding-right:10px;gap:7px}.brand{font-size:14px}.legend{display:none}.kakao-link{font-size:10.5px;padding:0 9px}.tools{max-width:none}.tools .tbtn:not(#btnReset){display:none}.tbtn{height:32px;padding:0 10px}}
 .legend{display:flex;gap:5px;margin-left:14px;overflow-x:auto;scrollbar-width:none;max-width:30vw}
 .legend::-webkit-scrollbar{display:none}
 .leg{
@@ -257,24 +257,31 @@ header{
 .blk li{font-size:14.5px;line-height:1.55;padding-left:16px;position:relative;letter-spacing:-.012em;color:var(--ink)}
 .blk li::before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;
   background:var(--ac,var(--hA));opacity:.6}
-.easy,.case{font-size:14.5px;line-height:1.65;letter-spacing:-.012em;margin:0;background:var(--canvas);
+.easy{font-size:14.5px;line-height:1.65;letter-spacing:-.012em;margin:0;background:var(--canvas);
   border-radius:16px;padding:16px 18px;color:var(--ink)}
-.case{border-left:3px solid var(--ac,var(--hA))}
 .lawtag{display:inline-block;font-size:12.5px;font-weight:700;color:var(--ink2);background:var(--canvas);
-  border-radius:9px;padding:8px 13px;line-height:1.5}
-.note{font-size:11.5px;color:var(--ink3);margin-top:9px;line-height:1.5}
-.q{font-size:15.5px;font-weight:800;line-height:1.5;margin:0 0 13px;letter-spacing:-.015em}
-.opts{display:flex;flex-direction:column;gap:8px}
-.opt{text-align:left;font:inherit;font-size:14px;letter-spacing:-.012em;background:var(--canvas);
-  border:1.5px solid transparent;color:var(--ink);border-radius:13px;padding:13px 16px;cursor:pointer;
-  line-height:1.45;transition:transform .2s var(--easeSpring),border-color .2s,background .2s}
-.opt:hover:not([disabled]){transform:translateX(3px)}
-.opt.ok{border-color:#0FA968;background:color-mix(in srgb,#0FA968 14%,var(--canvas))}
-.opt.no{border-color:#E4436A;background:color-mix(in srgb,#E4436A 14%,var(--canvas))}
-.opt[disabled]{cursor:default}
-.qx{font-size:13.5px;line-height:1.6;margin:13px 0 0;padding:14px 16px;border-radius:13px;
-  background:var(--canvas);color:var(--ink2);display:none;animation:fadeUp .35s var(--ease) both}
-.qx.on{display:block}
+  border-radius:9px;padding:8px 13px;line-height:1.5;margin-bottom:10px}
+.recall-list{display:flex;flex-direction:column;gap:10px}
+.recall-card{width:100%;text-align:left;font:inherit;border:1px solid color-mix(in srgb,var(--ac,var(--hA)) 24%,var(--sep));
+  background:var(--canvas);color:var(--ink);border-radius:15px;padding:14px 16px;cursor:pointer;
+  transition:transform .18s var(--easeSpring),border-color .18s,background .18s}
+.recall-card:hover{transform:translateY(-1px);border-color:var(--ac,var(--hA))}
+.recall-q{display:block;font-size:14px;font-weight:750;line-height:1.55;letter-spacing:-.012em}
+.recall-a{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13.5px;font-weight:900;color:var(--ac,var(--hA))}
+.recall-a::before{content:'정답';font-size:10px;letter-spacing:.04em;color:var(--ink3);font-weight:800}
+.recall-answer{display:inline-block;min-width:76px;padding:5px 9px;border-radius:9px;background:color-mix(in srgb,var(--ac,var(--hA)) 12%,var(--surface));
+  color:transparent;position:relative;user-select:none;transition:.2s}
+.recall-answer::after{content:'••••••';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--ink3);letter-spacing:.12em}
+.recall-card.revealed .recall-answer{color:var(--ink);user-select:text}
+.recall-card.revealed .recall-answer::after{content:''}
+.recall-hint{display:block;margin-top:7px;font-size:11px;color:var(--ink3)}
+.law-list{display:flex;flex-direction:column;gap:9px}
+.law-article{border:1px solid var(--sep);border-radius:13px;background:var(--canvas);overflow:hidden}
+.law-article summary{cursor:pointer;list-style:none;font-size:13px;font-weight:850;line-height:1.45;padding:12px 14px;color:var(--ink)}
+.law-article summary::-webkit-details-marker{display:none}
+.law-article summary::after{content:'원문 보기';float:right;font-size:10.5px;color:var(--ink3);font-weight:800}
+.law-article[open] summary::after{content:'접기'}
+.law-text{margin:0;padding:14px;border-top:1px solid var(--sep);font:12.5px/1.72 var(--font);white-space:pre-wrap;word-break:keep-all;color:var(--ink2);background:var(--surface)}
 .burstwrap{position:fixed;inset:0;pointer-events:none;z-index:200}
 .p{position:absolute;width:8px;height:8px;border-radius:2px;animation:burst .7s ease-out forwards}
 </style>
@@ -325,9 +332,9 @@ header{
 const COURSE=__COURSE_JSON__;
 const DATA={id:'root',t:COURSE.meta.title,sub:COURSE.meta.subtitle,c:COURSE.branches};
 (function normalizeCourse(n){
-  if(n.card && Array.isArray(n.card.q)) n.card.q=n.card.q[0]||null;
   (n.c||[]).forEach(normalizeCourse);
 })(DATA);
+const esc=s=>String(s??'').replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 document.getElementById('legalStatus').textContent=COURSE.meta.kicker||'';
 const kakaoLink=document.getElementById('kakaoLink');
 if(COURSE.meta.kakaoUrl) kakaoLink.href=COURSE.meta.kakaoUrl; else kakaoLink.style.display='none';
@@ -431,8 +438,16 @@ function drawDesktop(animate){
     if(PRESENT && focusBranch && n.id===focusBranch) el.classList.add('active-branch');
     const act=()=>{
       stepIndex=stepIdxOf[n.id]; updateStepBadge();
-      if(n.c){ expanded.has(n.id)?collapseNode(n):expanded.add(n.id); if(n.depth===1) setFocus(n.id); drawDesktop(true); scheduleFit(); }
-      else openSheet(n);
+      if(n.c){
+        if(n.depth===1){
+          const sameOpen=focusBranch===n.id && expanded.has(n.id);
+          if(sameOpen){ collapseNode(n); clearFocus(); }
+          else{ activateBranch(n.id); }
+        }else{
+          expanded.has(n.id)?collapseNode(n):expanded.add(n.id);
+        }
+        drawDesktop(true); scheduleFit();
+      }else openSheet(n);
     };
     el.onclick=act;
     el.tabIndex=0;
@@ -477,6 +492,14 @@ function nodeBox(n){
 }
 function nodeMeasuredW(n){ return nodeBox(n).w; }
 function collapseNode(n){ expanded.delete(n.id); (n.c||[]).forEach(collapseNode); if(focusBranch===n.id) clearFocus(); }
+function collapseOtherBranches(activeId){
+  BR.forEach(id=>{ if(id!==activeId) collapseNode(byId[id]); });
+}
+function activateBranch(id){
+  collapseOtherBranches(id);
+  expanded.add(id);
+  setFocus(id);
+}
 
 /* ── 포커스(브랜치 집중) ── */
 function setFocus(id){ focusBranch=id; document.getElementById('unfocus').classList.add('on'); }
@@ -509,7 +532,7 @@ function boundsOf(nodes){
 function currentFitSet(){
   if(focusBranch){
     const b=byId[focusBranch];
-    const nodes=[DATA,b];
+    const nodes=[b];
     (function collect(n){ (n.c||[]).forEach(k=>{ if(expanded.has(n.id)){ nodes.push(k); collect(k); } }); })(b);
     return nodes;
   }
@@ -619,9 +642,9 @@ function goToStep(idx){
   idx=Math.max(0,Math.min(STEPS.length-1,idx));
   stepIndex=idx;
   const n=STEPS[idx];
+  if(n.br) activateBranch(n.br); else clearFocus();
   let p=parentOf[n.id];
   while(p){ expanded.add(p.id); p=parentOf[p.id]; }
-  if(n.br) setFocus(n.br); else clearFocus();
   if(n.c){
     expanded.add(n.id);
     drawDesktop(true);
@@ -664,7 +687,7 @@ function drawMobile(){
   if(path.length>1) cr.querySelector('.back').onclick=()=>{path.pop();drawMobile();document.getElementById('mobile').scrollTop=0};
   document.getElementById('mtitle').textContent=cur.t;
   document.getElementById('mdesc').textContent=
-    cur.id==='root' ? '영역을 눌러 단계별로 좁혀 들어가세요. 마지막 카드에서 원문·쉬운 말 풀이·사례·퀴즈를 볼 수 있습니다.'
+    cur.id==='root' ? '영역을 눌러 단계별로 좁혀 들어가세요. 마지막 카드에서 핵심요약·ANKI 빈칸회상·근거조문 원문을 볼 수 있습니다.'
     : `${count(cur)}개 학습카드`;
   const list=document.getElementById('mlist'); list.innerHTML='';
   (cur.c||[]).forEach((k,i)=>{
@@ -687,29 +710,29 @@ function openSheet(n){
   document.getElementById('shEye').textContent=`${byId[parentOf[p.id].id].t} · ${p.t}`;
   document.getElementById('shTitle').textContent=n.t;
   const body=document.getElementById('shBody');
+  const recall=(c.recall||[]).map((r,i)=>`
+    <button class="recall-card" type="button" aria-expanded="false" data-recall="${i}">
+      <span class="recall-q">${esc(r.prompt)}</span>
+      <span class="recall-a"><span class="recall-answer">${esc(r.answer)}</span></span>
+      <span class="recall-hint">눌러서 중요단어 확인</span>
+    </button>`).join('');
+  const lawItems=(c.lawKeys||[]).map((key,i)=>{
+    const src=COURSE.legalTexts?.[key];
+    if(!src) return '';
+    return `<details class="law-article" ${i===0?'open':''}><summary>${esc(src.title)}</summary><pre class="law-text">${esc(src.text)}</pre></details>`;
+  }).join('');
   body.innerHTML=`
-    <div class="blk"><h4>핵심 요약 · 교안 원문</h4><ul>${c.s.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-    <div class="blk"><h4>쉬운 말 풀이</h4><p class="easy">${c.e}</p></div>
-    <div class="blk"><h4>현장 사례</h4><p class="case">${c.k}</p></div>
-    ${c.trap?`<div class="blk"><h4>헷갈림 주의</h4><p class="case">${c.trap}</p></div>`:''}
-    ${c.hook?`<div class="blk"><h4>암기 포인트</h4><p class="easy">${c.hook}</p></div>`:''}
-    ${c.l?`<div class="blk"><h4>근거 조문</h4><span class="lawtag">${c.l}</span>
-      <p class="note">${COURSE.meta.legalBasis}. ${COURSE.meta.disclaimer}</p></div>`:''}
-    <div class="blk"><h4>확인 퀴즈</h4>
-      <p class="q">${c.q.q}</p>
-      <div class="opts">${c.q.o.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join('')}</div>
-      <p class="qx" id="qx">${c.q.x}</p>
-    </div>`;
-  body.querySelectorAll('.opt').forEach(b=>{
-    b.onclick=(ev)=>{
-      const i=+b.dataset.i, ok=i===c.q.a;
-      body.querySelectorAll('.opt').forEach(o=>{
-        o.disabled=true;
-        if(+o.dataset.i===c.q.a) o.classList.add('ok');
-      });
-      if(!ok) b.classList.add('no');
-      else burstAt(ev.clientX,ev.clientY,accOf(n));
-      body.querySelector('#qx').classList.add('on');
+    <div class="blk"><h4>핵심 요약 · 교안 원문</h4><ul>${c.s.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+    <div class="blk"><h4>ANKI 핵심단어 · 빈칸 회상</h4><div class="recall-list">${recall}</div></div>
+    <div class="blk"><h4>쉬운 말 풀이</h4><p class="easy">${esc(c.e)}</p></div>
+    ${c.hook?`<div class="blk"><h4>암기 포인트</h4><p class="easy">${esc(c.hook)}</p></div>`:''}
+    <div class="blk"><h4>근거 조문 · 원문</h4><span class="lawtag">${esc(c.l)}</span><div class="law-list">${lawItems}</div></div>`;
+  body.querySelectorAll('.recall-card').forEach(btn=>{
+    btn.onclick=()=>{
+      const on=btn.classList.toggle('revealed');
+      btn.setAttribute('aria-expanded',on?'true':'false');
+      const hint=btn.querySelector('.recall-hint');
+      if(hint) hint.textContent=on?'다시 눌러 가리기':'눌러서 중요단어 확인';
     };
   });
   body.scrollTop=0;
@@ -728,7 +751,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){ if(sheet.classList.contains('on')) closeSheet(); else if(focusBranch){clearFocus();drawDesktop(true);scheduleFit();} }
   if(!isMobile() && /^[1-5]$/.test(e.key)){
     const b=byId[BR[+e.key-1]];
-    expanded.add(b.id); setFocus(b.id); stepIndex=stepIdxOf[b.id]; updateStepBadge();
+    activateBranch(b.id); stepIndex=stepIdxOf[b.id]; updateStepBadge();
     drawDesktop(true); scheduleFit();
   }
   if(e.key.toLowerCase()==='f') document.getElementById('btnPresent').click();
@@ -796,7 +819,7 @@ function buildLegend(){
   const wrap=document.getElementById('legend'); wrap.innerHTML='';
   BR.forEach((b,i)=>{
     const btn=document.createElement('button'); btn.className='leg';
-    btn.style.background=`var(${HUE[b][0]})`; btn.style.color='#fff';
+    btn.style.background=`var(${HUE[b][0]})`; btn.style.color=`var(${HUE[b][0]})`;
     btn.textContent=(i+1)+'  '+LEGLABEL[b];
     btn.style.background=`var(${HUE[b][0]})`;
     btn.onclick=()=>{
