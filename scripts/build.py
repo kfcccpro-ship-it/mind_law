@@ -40,6 +40,10 @@ def validate(data):
                     for ri,item in enumerate(recall):
                         if not item.get('prompt') or not item.get('answer'):
                             errors.append(f"{n.get('id')}: recall[{ri}] missing prompt/answer")
+                            continue
+                        answer=str(item.get('answer','')).strip()
+                        if re.fullmatch(r'제\\s*\\d+(?:조(?:의\\d+)?|항|호)(?:제?\\d+(?:항|호))*',answer):
+                            errors.append(f"{n.get('id')}: recall[{ri}] must test a concept, not a bare article number ({answer})")
                 law_keys=c.get('lawKeys')
                 if not isinstance(law_keys,list) or not law_keys:
                     errors.append(f"{n.get('id')}: lawKeys missing")
