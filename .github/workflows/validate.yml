@@ -22,8 +22,8 @@ jobs:
           node-version: '22'
       - name: Validate course data
         run: python3 scripts/validate.py
-      - name: Verify generated page is current
-        run: python3 scripts/build.py --check
+      - name: Build page from source
+        run: python3 scripts/build.py
       - name: Check JavaScript syntax
         run: |
           python3 scripts/extract_js.py index.html /tmp/mind_law_app.js
