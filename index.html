@@ -1,1 +1,865 @@
-The requested file reference is not currently visible. Use files.search or files.list to rediscover the file, then retry with a returned ref_id or file_id.
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>새마을금고법 학습 마인드맵 · 현행법 점검본</title>
+<meta name="description" content="새마을금고법을 구조·학습카드·퀴즈로 익히는 비공식 학습 마인드맵">
+<meta name="theme-color" content="#F4F5F7">
+<style>
+:root{
+  --bg:#F4F5F7; --canvas:#EEF0F3; --surface:#FFFFFF;
+  --ink:#1A1B1E; --ink2:#6B6F76; --ink3:#A7ABB2;
+  --sep:rgba(20,20,25,.08);
+  --shadow:0 1px 3px rgba(16,18,24,.06),0 6px 18px rgba(16,18,24,.07);
+  --shadow-lg:0 8px 20px rgba(16,18,24,.12),0 30px 70px rgba(16,18,24,.18);
+  --ease:cubic-bezier(.22,.9,.32,1);
+  --easeSpring:cubic-bezier(.34,1.56,.64,1);
+  --font:"Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;
+  /* 5개 영역 색상 */
+  --hA:#3D6CFF; --hA2:#EAF0FF;
+  --hB:#0FA968; --hB2:#E6F8EF;
+  --hC:#E08A00; --hC2:#FFF3DF;
+  --hD:#9552E8; --hD2:#F4EBFF;
+  --hE:#E4436A; --hE2:#FFEAF0;
+  --root1:#22242B; --root2:#43465A;
+}
+.present{
+  --bg:#06070B; --canvas:#0A0C12; --surface:#14161F;
+  --ink:#F3F4F8; --ink2:#9A9EAC; --ink3:#5B5F6C;
+  --sep:rgba(255,255,255,.09);
+  --shadow:0 2px 8px rgba(0,0,0,.4);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.6);
+  --hA2:rgba(61,108,255,.16); --hB2:rgba(15,169,104,.16);
+  --hC2:rgba(224,138,0,.18); --hD2:rgba(149,82,232,.18); --hE2:rgba(228,67,106,.18);
+  --root1:#F3F4F8; --root2:#C9CCDA;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{
+  font-family:var(--font);background:var(--bg);color:var(--ink);
+  overflow:hidden;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;
+  transition:background .5s var(--ease),color .5s var(--ease);
+}
+:focus-visible{outline:2px solid var(--hA);outline-offset:3px;border-radius:8px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes popIn{0%{opacity:0;transform:scale(.55)}65%{transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+@keyframes drawLine{to{stroke-dashoffset:0}}
+@keyframes pulseRing{0%{box-shadow:0 0 0 0 var(--ac-glow)}70%{box-shadow:0 0 0 14px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes burst{to{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition-duration:.01ms !important}}
+
+/* ── 헤더 ─────────────────────────────── */
+header{
+  position:fixed;top:0;left:0;right:0;height:60px;z-index:90;
+  display:flex;align-items:center;gap:10px;padding:0 18px;
+  padding-top:env(safe-area-inset-top);height:calc(60px + env(safe-area-inset-top));
+  background:color-mix(in srgb,var(--bg) 70%,transparent);
+  backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:.5px solid var(--sep);transition:background .5s var(--ease),border-color .5s;
+}
+.brand{font-size:16px;font-weight:800;letter-spacing:-.02em;white-space:nowrap;display:flex;align-items:baseline;gap:8px}
+.brand b{
+  background:linear-gradient(90deg,var(--root1),var(--hA),var(--hD),var(--root1));
+  background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shimmer 9s linear infinite;
+}
+.brand span{color:var(--ink3);font-weight:500;font-size:12.5px}
+.status-pill{display:inline-flex;align-items:center;flex:none;height:30px;padding:0 10px;border-radius:10px;background:var(--surface);box-shadow:var(--shadow);font-size:10.5px;font-weight:800;color:var(--ink2);white-space:nowrap}
+.kakao-link{display:inline-flex;align-items:center;gap:6px;flex:none;height:32px;padding:0 11px;border-radius:10px;background:#FEE500;color:#191919;text-decoration:none;font-size:11.5px;font-weight:800;box-shadow:var(--shadow);white-space:nowrap;transition:transform .2s var(--easeSpring),filter .2s}
+.kakao-link:hover{transform:translateY(-1px);filter:brightness(.98)}
+.kakao-link:active{transform:scale(.97)}
+.kakao-link .kdot{width:7px;height:7px;border-radius:50%;background:#191919;flex:none}
+@media (max-width:980px){.status-pill{display:none}.brand span{display:none}.legend{max-width:24vw}}
+@media (max-width:640px){header{padding-left:12px;padding-right:10px;gap:7px}.brand{font-size:14px}.legend{display:none}.kakao-link{font-size:10.5px;padding:0 9px}.tools{max-width:none}.tools .tbtn:not(#btnReset){display:none}.tbtn{height:32px;padding:0 10px}}
+.legend{display:flex;gap:5px;margin-left:14px;overflow-x:auto;scrollbar-width:none;max-width:30vw}
+.legend::-webkit-scrollbar{display:none}
+.leg{
+  border:none;cursor:pointer;font-family:inherit;font-size:11.5px;font-weight:700;flex:none;
+  padding:6px 11px;border-radius:20px;color:#fff;opacity:.9;letter-spacing:-.01em;
+  transition:transform .2s var(--easeSpring),opacity .2s,box-shadow .2s;white-space:nowrap;
+}
+.leg:hover{opacity:1;transform:translateY(-1px)}
+.leg.on{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px currentColor;opacity:1}
+.tools{margin-left:auto;display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none;max-width:60vw}
+.tools::-webkit-scrollbar{display:none}
+.tbtn.on{background:linear-gradient(135deg,#3D6CFF,#9552E8);color:#fff}
+.tbtn{
+  border:none;background:var(--surface);color:var(--ink);cursor:pointer;flex:none;
+  height:34px;padding:0 14px;border-radius:10px;font-size:12.5px;font-weight:700;
+  font-family:inherit;letter-spacing:-.01em;box-shadow:var(--shadow);
+  transition:transform .25s var(--easeSpring),opacity .2s,background .3s;
+}
+.tbtn:hover{opacity:.75}
+.tbtn:active{transform:scale(.92)}
+.tbtn.icon{width:34px;padding:0;font-size:17px;line-height:1}
+.tbtn.present{background:linear-gradient(135deg,#3D6CFF,#9552E8);color:#fff}
+.tbtn.present.on{background:linear-gradient(135deg,#E4436A,#E08A00)}
+
+/* ── 캔버스 ───────────────────────────── */
+#stage{position:fixed;inset:0;top:0;overflow:hidden;cursor:grab;touch-action:none;background:var(--canvas);
+  transition:background .5s var(--ease)}
+#stage.drag{cursor:grabbing}
+#stage::before{ /* 은은한 그리드 */
+  content:"";position:absolute;inset:-2000px;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(var(--sep) 1px,transparent 1px);background-size:26px 26px;
+}
+.present #stage::before{opacity:.35}
+#world{position:absolute;top:0;left:0;transform-origin:0 0;will-change:transform;
+  transition:transform .55s var(--ease)}
+#world.instant{transition:none}
+#wires{position:absolute;top:0;left:0;overflow:visible;pointer-events:none}
+.wire{fill:none;stroke-linecap:round}
+.wire.dim{opacity:.08}
+
+.nodewrap{position:absolute;display:flex;align-items:center;animation:popIn .5s var(--easeSpring) both}
+.node{
+  position:relative;display:flex;align-items:center;gap:10px;
+  border-radius:17px;box-shadow:var(--shadow);cursor:pointer;padding:0 18px;
+  transition:transform .28s var(--easeSpring),box-shadow .3s var(--ease),opacity .4s,filter .4s;
+  white-space:nowrap;width:max-content;
+}
+.node:hover{transform:translateY(-2px) scale(1.015);box-shadow:var(--shadow-lg)}
+.node:active{transform:scale(.98)}
+.node .txt{font-weight:700;letter-spacing:-.015em;line-height:1.25;white-space:normal;max-width:100%}
+.nodewrap.dim{opacity:.16;filter:saturate(.3)}
+.nodewrap.dim .node:hover{transform:none;box-shadow:var(--shadow)}
+
+/* depth별 스타일 */
+.node.d0{background:linear-gradient(135deg,var(--root1),var(--root2));height:76px;padding:0 26px;border-radius:22px}
+.node.d0 .txt{color:var(--bg);font-size:21px;font-weight:900}
+.node.d0 .sub{font-size:11.5px;font-weight:600;opacity:.55;margin-top:3px;color:var(--bg)}
+
+.node.d1{height:58px;color:#fff;font-size:16px;background:var(--ac)}
+.node.d1 .txt{font-size:16px}
+.node.d1 .cnt{font-size:10.5px;font-weight:800;opacity:.85;background:rgba(255,255,255,.22);
+  border-radius:20px;padding:2px 8px;margin-left:2px}
+
+.node.d2{height:50px;background:var(--ac2);color:var(--ink);border:1.5px solid transparent}
+.node.d2 .txt{font-size:14.5px;color:var(--ink)}
+.node.d2 .dot{width:7px;height:7px;border-radius:50%;background:var(--ac);flex:none}
+
+.node.d3{height:50px;background:var(--surface);border:1.5px solid var(--sep)}
+.node.d3 .txt{font-size:13.5px;font-weight:600;color:var(--ink2)}
+.node.d3 .sn{flex:none;width:22px;height:22px;border-radius:7px;background:var(--ac2);
+  color:var(--ac);font-size:10.5px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.node.d3.active{background:var(--ac);border-color:transparent}
+.node.d3.active .txt{color:#fff}
+.node.d3.active .sn{background:rgba(255,255,255,.28);color:#fff}
+
+.node.active-branch{animation:pulseRing 1.8s var(--ease) infinite}
+
+.toggle{
+  position:absolute;top:50%;right:-13px;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;background:var(--surface);
+  border:2px solid var(--ac);color:var(--ac);display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:900;cursor:pointer;box-shadow:var(--shadow);z-index:2;
+  transition:transform .3s var(--easeSpring),background .2s;
+}
+.toggle:hover{transform:translateY(-50%) scale(1.15)}
+.toggle.open{background:var(--ac);color:#fff}
+.node.d0 .toggle{right:-14px;width:30px;height:30px;font-size:12px}
+
+/* 발표모드 전용 확대 */
+.present .node.d0 .txt{font-size:26px}
+.present .node.d1{height:68px}
+.present .node.d1 .txt{font-size:19px}
+.present .node.d2{height:58px}
+.present .node.d2 .txt{font-size:17px}
+.present .node.d3{height:58px}
+.present .node.d3 .txt{font-size:16px}
+.present .node{box-shadow:0 0 0 1px var(--sep),var(--shadow-lg)}
+.present .node.d1,.present .node.d2.active,.present .node.d3.active{
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--ac) 55%,transparent),0 0 26px color-mix(in srgb,var(--ac) 45%,transparent),var(--shadow-lg);
+}
+
+/* 포커스 해제 버튼 */
+#unfocus{
+  position:fixed;left:20px;bottom:20px;z-index:55;border:none;cursor:pointer;
+  background:var(--surface);color:var(--ink);font:inherit;font-weight:700;font-size:12.5px;
+  padding:10px 16px;border-radius:24px;box-shadow:var(--shadow-lg);display:none;align-items:center;gap:8px;
+  animation:fadeUp .3s var(--ease);
+}
+#unfocus.on{display:flex}
+#unfocus .x{width:16px;height:16px;border-radius:50%;background:var(--ink3);color:var(--bg);
+  display:flex;align-items:center;justify-content:center;font-size:9px}
+
+/* 힌트 */
+#hint{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:40;
+  font-size:11.5px;color:var(--ink3);font-weight:600;letter-spacing:-.01em;
+  background:color-mix(in srgb,var(--bg) 75%,transparent);backdrop-filter:blur(8px);
+  padding:8px 16px;border-radius:20px;pointer-events:none;transition:opacity .4s}
+#hint.hide{opacity:0}
+#stepBadge{position:fixed;right:20px;bottom:20px;z-index:55;
+  font-size:12px;font-weight:700;color:var(--ink);letter-spacing:-.01em;
+  background:var(--surface);box-shadow:var(--shadow-lg);padding:9px 16px;border-radius:24px;
+  display:flex;align-items:center;gap:7px;pointer-events:none;max-width:46vw}
+#stepBadge b{color:#fff;background:linear-gradient(135deg,#3D6CFF,#9552E8);
+  border-radius:20px;padding:2px 9px;font-size:11px}
+#stepBadge span{color:var(--ink2);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@keyframes skipFlash{0%{transform:scale(1.14);box-shadow:0 0 0 3px var(--fc)}100%{transform:scale(1);box-shadow:var(--shadow-lg)}}
+#stepBadge.skip-fwd{--fc:#3D6CFF;animation:skipFlash .5s var(--easeSpring)}
+#stepBadge.skip-back{--fc:#E4436A;animation:skipFlash .5s var(--easeSpring)}
+
+/* ── 모바일 드릴다운 ────────────────────── */
+#mobile{position:fixed;inset:0;top:calc(60px + env(safe-area-inset-top));
+  overflow-y:auto;-webkit-overflow-scrolling:touch;display:none;
+  padding:0 16px calc(40px + env(safe-area-inset-bottom))}
+#crumb{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:8px;
+  padding:12px 0 10px;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(12px);font-size:13px;color:var(--ink2)}
+#crumb .back{border:none;background:none;color:var(--hA);font:inherit;font-weight:700;
+  cursor:pointer;padding:0;display:flex;align-items:center;gap:3px}
+#mtitle{font-size:27px;font-weight:900;letter-spacing:-.03em;margin:6px 0 4px}
+#mdesc{font-size:14px;color:var(--ink2);margin:0 0 18px;line-height:1.5}
+.mlist{display:flex;flex-direction:column;gap:9px}
+.mrow{display:flex;align-items:center;gap:12px;background:var(--surface);
+  border-radius:16px;padding:16px 17px;cursor:pointer;box-shadow:var(--shadow);
+  border:.5px solid var(--sep);transition:transform .2s var(--easeSpring);animation:fadeUp .4s var(--ease) both}
+.mrow:active{transform:scale(.97)}
+.mrow .bar{width:9px;height:9px;border-radius:50%;background:var(--ac);flex:none}
+.mrow .mt{font-size:15.5px;font-weight:700;letter-spacing:-.015em;flex:1;line-height:1.35}
+.mrow .mc{font-size:11.5px;font-weight:800;color:#fff;background:var(--ac);border-radius:20px;
+  padding:3px 9px;flex:none}
+.mrow .ar{color:var(--ink3);font-size:16px;flex:none}
+
+/* ── 상세 시트 ─────────────────────────── */
+#scrim{position:fixed;inset:0;z-index:70;background:rgba(6,7,12,.4);
+  opacity:0;pointer-events:none;transition:opacity .4s var(--ease);backdrop-filter:blur(3px)}
+#scrim.on{opacity:1;pointer-events:auto}
+#sheet{
+  position:fixed;z-index:80;background:var(--surface);box-shadow:var(--shadow-lg);
+  display:flex;flex-direction:column;transition:transform .5s var(--easeSpring);
+  top:calc(60px + env(safe-area-inset-top));right:0;bottom:0;width:min(500px,92vw);border-left:.5px solid var(--sep);transform:translateX(101%);
+}
+#sheet.on{transform:none}
+@media (max-width:640px){
+  #sheet{top:auto;left:0;right:0;bottom:0;width:auto;height:92vh;
+    border-radius:22px 22px 0 0;border-left:none;border-top:.5px solid var(--sep);transform:translateY(101%)}
+}
+.sh-head{padding:24px 26px 16px;border-bottom:.5px solid var(--sep);flex:none;position:relative}
+.grip{display:none}
+@media (max-width:640px){.grip{display:block;width:36px;height:5px;border-radius:3px;background:var(--sep);margin:8px auto 12px}.sh-head{padding-top:0}}
+.sh-eyebrow{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ac,var(--hA));margin-bottom:8px}
+.sh-title{font-size:24px;font-weight:900;letter-spacing:-.03em;line-height:1.25;margin:0;padding-right:40px}
+.sh-close{position:absolute;top:22px;right:22px;width:32px;height:32px;border:none;border-radius:50%;
+  background:var(--canvas);color:var(--ink2);font-size:15px;cursor:pointer;transition:transform .2s var(--easeSpring)}
+.sh-close:hover{transform:rotate(90deg)}
+@media (max-width:640px){.sh-close{top:26px}}
+.sh-body{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:22px 26px 60px;flex:1}
+.blk{margin-bottom:26px;animation:fadeUp .4s var(--ease) both}
+.blk h4{font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);
+  margin:0 0 11px;display:flex;align-items:center;gap:7px}
+.blk h4::before{content:"";width:14px;height:2px;background:var(--ac,var(--hA));border-radius:1px}
+.blk ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.blk li{font-size:14.5px;line-height:1.55;padding-left:16px;position:relative;letter-spacing:-.012em;color:var(--ink)}
+.blk li::before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;
+  background:var(--ac,var(--hA));opacity:.6}
+.easy{font-size:14.5px;line-height:1.65;letter-spacing:-.012em;margin:0;background:var(--canvas);
+  border-radius:16px;padding:16px 18px;color:var(--ink)}
+.lawtag{display:inline-block;font-size:12.5px;font-weight:700;color:var(--ink2);background:var(--canvas);
+  border-radius:9px;padding:8px 13px;line-height:1.5;margin-bottom:10px}
+.recall-list{display:flex;flex-direction:column;gap:10px}
+.recall-card{width:100%;text-align:left;font:inherit;border:1px solid color-mix(in srgb,var(--ac,var(--hA)) 24%,var(--sep));
+  background:var(--canvas);color:var(--ink);border-radius:15px;padding:14px 16px;cursor:pointer;
+  transition:transform .18s var(--easeSpring),border-color .18s,background .18s}
+.recall-card:hover{transform:translateY(-1px);border-color:var(--ac,var(--hA))}
+.recall-q{display:block;font-size:14px;font-weight:750;line-height:1.55;letter-spacing:-.012em}
+.recall-a{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13.5px;font-weight:900;color:var(--ac,var(--hA))}
+.recall-a::before{content:'정답';font-size:10px;letter-spacing:.04em;color:var(--ink3);font-weight:800}
+.recall-answer{display:inline-block;min-width:76px;padding:5px 9px;border-radius:9px;background:color-mix(in srgb,var(--ac,var(--hA)) 12%,var(--surface));
+  color:transparent;position:relative;user-select:none;transition:.2s}
+.recall-answer::after{content:'••••••';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--ink3);letter-spacing:.12em}
+.recall-card.revealed .recall-answer{color:var(--ink);user-select:text}
+.recall-card.revealed .recall-answer::after{content:''}
+.recall-hint{display:block;margin-top:7px;font-size:11px;color:var(--ink3)}
+.law-list{display:flex;flex-direction:column;gap:9px}
+.law-article{border:1px solid var(--sep);border-radius:13px;background:var(--canvas);overflow:hidden}
+.law-article summary{cursor:pointer;list-style:none;font-size:13px;font-weight:850;line-height:1.45;padding:12px 14px;color:var(--ink)}
+.law-article summary::-webkit-details-marker{display:none}
+.law-article summary::after{content:'원문 보기';float:right;font-size:10.5px;color:var(--ink3);font-weight:800}
+.law-article[open] summary::after{content:'접기'}
+.law-text{margin:0;padding:14px;border-top:1px solid var(--sep);font:12.5px/1.72 var(--font);white-space:pre-wrap;word-break:keep-all;color:var(--ink2);background:var(--surface)}
+.burstwrap{position:fixed;inset:0;pointer-events:none;z-index:200}
+.p{position:absolute;width:8px;height:8px;border-radius:2px;animation:burst .7s ease-out forwards}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><b>새마을금고법</b><span>학습 마인드맵</span></div>
+  <span class="status-pill" id="legalStatus"></span>
+  <a class="kakao-link" id="kakaoLink" href="#" target="_blank" rel="noopener noreferrer"><span class="kdot"></span>카카오 오픈채팅</a>
+  <div class="legend" id="legend"></div>
+  <div class="tools">
+    <button class="tbtn present" id="btnPresent">🎤 발표모드</button>
+    <button class="tbtn" id="btnExpand">모두 펼치기</button>
+    <button class="tbtn" id="btnReset">처음으로</button>
+    <button class="tbtn icon" id="btnFit" title="화면 맞춤" aria-label="화면 맞춤">⤢</button>
+    <button class="tbtn icon" id="btnOut" aria-label="축소">−</button>
+    <button class="tbtn icon" id="btnIn" aria-label="확대">+</button>
+    <button class="tbtn icon" id="btnFull" title="전체화면" aria-label="전체화면">⛶</button>
+  </div>
+</header>
+
+<div id="stage"><div id="world"><svg id="wires"></svg></div></div>
+<button id="unfocus"><span class="x">✕</span> 전체 보기로 돌아가기</button>
+<div id="hint">드래그로 이동 · 휠로 확대축소 · ← → 한 단계 이동 · 두 번 누르면 건너뛰기 · 숫자키 1~5로 영역 포커스</div>
+<div id="stepBadge"></div>
+
+<main id="mobile">
+  <div id="crumb"></div>
+  <h1 id="mtitle"></h1>
+  <p id="mdesc"></p>
+  <div class="mlist" id="mlist"></div>
+</main>
+
+<div id="scrim"></div>
+<aside id="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle">
+  <div class="sh-head">
+    <div class="grip"></div>
+    <div class="sh-eyebrow" id="shEye"></div>
+    <h2 class="sh-title" id="shTitle"></h2>
+    <button class="sh-close" id="shClose" aria-label="닫기">✕</button>
+  </div>
+  <div class="sh-body" id="shBody"></div>
+</aside>
+
+<script>
+/* ══════════════ 데이터 ══════════════ */
+const COURSE={"meta":{"id":"mg-law-mindmap","title":"새마을금고법","subtitle":"5개 영역 · 32개 학습카드","kicker":"2026.09.29 현행법 원문 대조본","defaultView":"tree","views":["tree"],"legalBasis":"새마을금고법 및 시행령 2026.03.15 시행본을 2026.09.29 기준으로 법제처 현행법과 대조","disclaimer":"비공식 학습자료입니다. 실무 적용 전 국가법령정보센터의 현행 법령과 해당 금고 정관·내부규정을 함께 확인하세요.","kakaoUrl":"https://open.kakao.com/o/gEtSyUPi"},"glossary":{},"branches":[{"id":"A","t":"① 법의 기초","a":0,"c":[{"id":"A1","t":"목적과 이념","c":[{"id":"c1","n":1,"t":"새마을금고법의 목적","card":{"s":["국민의 자주적 협동조직을 기반으로 함","우리나라 고유의 상부상조 정신에 입각","자금의 조성과 이용 및 회원의 경제적·사회적·문화적 지위 향상","지역사회 개발을 통한 건전한 국민정신 함양과 국가경제 발전에 이바지"],"e":"새마을금고법의 출발점은 자주적 협동조직과 상부상조입니다. 법은 회원의 지위 향상뿐 아니라 지역사회 개발과 국가경제 발전까지 목적에 포함합니다. 따라서 금고를 일반 영리회사와 동일하게 이해하면 뒤의 회원·출자·기관 규정을 놓치기 쉽습니다.","l":"새마을금고법 제1조","one":"국민의 자주적 협동조직을 기반으로 함","lawKeys":["법_제1조"],"recall":[{"prompt":"국민의 ＿＿＿＿을 기반으로 함","answer":"자주적 협동조직"},{"prompt":"우리나라 고유의 ＿＿＿＿에 입각","answer":"상부상조 정신"},{"prompt":"지역사회 개발을 통한 건전한 국민정신 함양과 ＿＿＿＿에 이바지","answer":"국가경제 발전"}]}}]},{"id":"A2","t":"법령의 위계","c":[{"id":"c2","n":2,"t":"법률 체계 4단계","card":{"s":["헌법 — 국가 운영의 기본사항을 정한 최고 법규범","법률 — 국회의 의결을 거쳐 제정되는 법규범","대통령령 — 법률에서 위임받은 사항과 집행에 필요한 사항","부령 — 행정각부 장관이 발하는 명령"],"e":"법규범은 상위 규범에 어긋날 수 없습니다. 학습에서는 헌법 → 법률 → 대통령령 → 부령의 기본 위계를 먼저 잡고, 새마을금고 실무에서는 법률인 새마을금고법과 그 위임을 받은 시행령·시행규칙을 함께 확인합니다.","l":"대한민국 헌법 · 새마을금고법 · 새마을금고법 시행령 · 시행규칙","one":"헌법 — 국가 운영의 기본사항을 정한 최고 법규범","lawKeys":["헌법_제75조","헌법_제95조"],"recall":[{"prompt":"＿＿＿＿ — 국가 운영의 기본사항을 정한 최고 법규범","answer":"헌법"},{"prompt":"＿＿＿＿ — 법률에서 위임받은 사항과 집행에 필요한 사항","answer":"대통령령"},{"prompt":"＿＿＿＿ — 행정각부 장관이 발하는 명령","answer":"부령"}]}},{"id":"c3","n":3,"t":"새마을금고법과 다른 법률의 관계","card":{"s":["새마을금고법 — 금고의 설립·회원·기관·사업·감독 등을 규율","시행령·시행규칙 — 법률의 위임사항과 시행 세부사항을 규정","다른 법률과의 관계는 새마을금고법 제6조와 개별 준용조항을 함께 확인","임원에 관하여는 법 제26조가 민법·상법의 특정 조문을 명시적으로 준용","“금고법에 없으면 언제나 민법 적용”이라고 단순화하지 않음"],"e":"새마을금고 업무에서 다른 법률이 어떻게 적용되는지는 하나의 문장으로 정리하기 어렵습니다. 새마을금고법 자체 규정, 제6조의 다른 법률과의 관계, 그리고 제26조·제44조 등 개별 준용조항을 순서대로 확인하는 방식이 안전합니다.","l":"새마을금고법 제6조·제26조·제44조","hook":"관계 규정 → 준용 조항 → 개별 사안.","one":"새마을금고법 — 금고의 설립·회원·기관·사업·감독 등을 규율","lawKeys":["법_제6조","법_제26조","법_제44조"],"recall":[{"prompt":"다른 법률과의 관계는 새마을금고법 ＿＿＿＿와 개별 준용조항을 함께 확인","answer":"제6조"},{"prompt":"임원에 관하여는 법 ＿＿＿＿가 민법·상법의 특정 조문을 명시적으로 준용","answer":"제26조"},{"prompt":"“금고법에 없으면 언제나 ＿＿＿＿”이라고 단순화하지 않음","answer":"민법 적용"}]}}]},{"id":"A3","t":"금고의 법적 성격","c":[{"id":"c4","n":4,"t":"금고의 법적 성격","card":{"s":["새마을금고법 제2조 — 금고는 이 법에 따라 설립된 비영리법인","회원이 출자하여 구성하는 회원 중심 조직","회원의 책임은 출자액을 한도로 함","회원은 출자좌수와 관계없이 원칙적으로 평등한 의결권·선거권을 가짐"],"e":"현행 법률이 직접 쓰는 표현은 “비영리법인”입니다. 사단법인·사법인 같은 학설상 분류를 법 조문 표현처럼 외우기보다, 비영리법인·회원 출자·유한책임·평등한 의결권이라는 법정 특징을 중심으로 이해하는 편이 정확합니다.","l":"새마을금고법 제2조제1항, 제9조제5항·제10항","hook":"법 조문 핵심: 비영리법인.","one":"새마을금고법 제2조 — 금고는 이 법에 따라 설립된 비영리법인","lawKeys":["법_제2조","법_제9조"],"recall":[{"prompt":"새마을금고법 제2조 — 금고는 이 법에 따라 설립된 ＿＿＿＿","answer":"비영리법인"},{"prompt":"회원의 책임은 ＿＿＿＿을 한도로 함","answer":"출자액"},{"prompt":"회원은 출자좌수와 관계없이 원칙적으로 ＿＿＿＿을 가짐","answer":"평등한 의결권·선거권"}]}},{"id":"c5","n":5,"t":"협동조합과 주식회사의 차이","card":{"s":["금고 — 회원 중심의 비영리 협동조직 ↔ 주식회사 — 주주·자본 중심","금고 의결권·선거권 — 출자좌수와 관계없이 원칙적으로 평등","정관으로 미성년자·가입 6개월 미만·고시금액 미만 출자 회원의 의결권·선거권 제한 가능","한 회원의 출자좌수 최고한도 — 총출자좌수의 15% 초과 불가","잉여금 배당 — 손실 보전·적립금 공제 후 정관 한도에서 납입출자액에 비례"],"e":"핵심은 출자좌수가 많다고 의결권·선거권이 늘어나지 않는다는 점입니다. 다만 2025년 개정으로 미성년자, 회원기간 6개월 미만, 일정 금액 미만 출자 회원은 정관에 따라 의결권·선거권을 제한할 수 있으므로 “무조건 모든 회원 1인 1표”라고만 외우면 부족합니다.","l":"새마을금고법 제9조제4항~제6항, 제35조제10항","one":"금고 — 회원 중심의 비영리 협동조직 ↔ 주식회사 — 주주·자본 중심","lawKeys":["법_제9조","법_제35조"],"recall":[{"prompt":"한 회원의 출자좌수 최고한도 — 총출자좌수의 ＿＿＿＿ 초과 불가","answer":"15%"},{"prompt":"금고 의결권·선거권 — 출자좌수와 관계없이 원칙적으로 ＿＿＿＿","answer":"평등"},{"prompt":"잉여금 배당 — 손실 보전·적립금 공제 후 정관 한도에서 ＿＿＿＿에 비례","answer":"납입출자액"}]}}]},{"id":"A4","t":"국가 협력과 정치중립","c":[{"id":"c6","n":6,"t":"국가 등의 협력의무","card":{"s":["사업 육성 지원 — 국가 또는 지방자치단체의 금고·중앙회 사업 육성 지원","국공유재산 대여 — 필요 시 금고·중앙회에 대한 국공유재산 우선 대여·사용·수익 허용","보조금 지원 — 예산 범위 내에서 중앙회에 보조금 지급 가능"],"e":"금고는 민간 조직이지만 공익적 성격이 있어 국가가 도울 근거를 법에 넣어둔 것입니다. 다만 “지원할 수 있다”는 재량 규정이므로 자동으로 지원이 나오는 것은 아닙니다.","l":"새마을금고법 제3조","one":"사업 육성 지원 — 국가 또는 지방자치단체의 금고·중앙회 사업 육성 지원","lawKeys":["법_제3조"],"recall":[{"prompt":"＿＿＿＿ 대여 — 필요 시 금고·중앙회에 대한 국공유재산 우선 대여·사용·수익 허용","answer":"국공유재산"},{"prompt":"＿＿＿＿ 지원 — 예산 범위 내에서 중앙회에 보조금 지급 가능","answer":"보조금"},{"prompt":"사업 육성 지원 — ＿＿＿＿의 금고·중앙회 사업 육성 지원","answer":"국가 또는 지방자치단체"}]}},{"id":"c7","n":7,"t":"금고의 정치관여 금지","card":{"s":["금고와 중앙회는 정치에 관여하는 일체의 행위를 할 수 없음","금지 주체는 법 조문상 금고와 중앙회","정치관여 행위를 하게 한 자에 대한 벌칙 규정이 존재","임직원 개인의 행위는 이 조항만으로 단정하지 말고 다른 법령·내부규정과 구체 사실관계를 별도 확인"],"e":"법 제5조는 금고와 중앙회의 정치관여를 금지합니다. 개인의 정치활동 범위까지 이 조문 하나로 일반화하지 않는 것이 중요합니다. 실제 사안은 다른 법령, 선거 관련 규정, 취업규칙·내부규정과 사실관계를 함께 봐야 합니다.","l":"새마을금고법 제5조, 제85조제4항","hook":"제5조 금지 주체 = 금고·중앙회.","one":"금고와 중앙회는 정치에 관여하는 일체의 행위를 할 수 없음","lawKeys":["법_제5조","법_제85조"],"recall":[{"prompt":"금고와 중앙회는 정치에 관여하는 ＿＿＿＿를 할 수 없음","answer":"일체의 행위"},{"prompt":"금지 주체는 법 조문상 ＿＿＿＿","answer":"금고와 중앙회"},{"prompt":"정치관여 행위를 하게 한 자에 대한 ＿＿＿＿이 존재","answer":"벌칙 규정"}]}}]}]},{"id":"B","t":"② 금고의 설립","a":1,"c":[{"id":"B1","t":"설립 절차","c":[{"id":"c8","n":8,"t":"설립 4단계","card":{"s":["① 발기 — 50명 이상의 발기인이 정관안·사업계획안 작성","② 공고·창립총회 — 시행령에 따라 15일 이상 공고 후 창립총회 의결","③ 설립인가 — 회장을 거쳐 특별자치시장·특별자치도지사 또는 시장·군수·구청장 인가","④ 설립등기 — 설립인가서 도달일부터 3주 이내 주된 사무소 소재지에서 등기"],"e":"“사람 모으기 → 규칙 정하기 → 허가 받기 → 등록하기” 순서입니다. 등기까지 마쳐야 비로소 법인이 됩니다. 인가만 받고 등기를 하지 않으면 아직 법인이 아닙니다.","l":"새마을금고법 제7조·제45조, 시행령 제2조·제3조","one":"① 발기 — 50명 이상의 발기인이 정관안·사업계획안 작성","lawKeys":["법_제7조","법_제45조","시행령_제2조","시행령_제3조"],"recall":[{"prompt":"① 발기 — ＿＿＿＿의 발기인이 정관안·사업계획안 작성","answer":"50명 이상"},{"prompt":"② 공고·창립총회 — 시행령에 따라 ＿＿＿＿ 공고 후 창립총회 의결","answer":"15일 이상"},{"prompt":"④ 설립등기 — 설립인가서 도달일부터 ＿＿＿＿ 주된 사무소 소재지에서 등기","answer":"3주 이내"}]}}]},{"id":"B2","t":"정관","c":[{"id":"c9","n":9,"t":"정관의 기재사항","card":{"s":["목적·명칭·주된 사무소 소재지·업무구역","회원의 자격과 가입·탈퇴·제명","출자 1좌의 금액과 납입방법","기관 및 임원의 수와 선출","사업의 종류와 회계·공고방법·해산","그 밖에 필요한 사항"],"e":"법 제8조는 정관에 반드시 적어야 할 항목을 직접 열거합니다. 기존 교안처럼 “절대적·상대적 기재사항”을 법 조문 자체의 분류로 외우기보다, 제8조의 열거사항을 정확히 확인하는 것이 우선입니다.","l":"새마을금고법 제8조","hook":"정관 = 목적·구역·회원·출자·기관·사업·회계·공고·해산.","one":"목적·명칭·주된 사무소 소재지·업무구역","lawKeys":["법_제8조"],"recall":[{"prompt":"목적·명칭·주된 사무소 소재지·＿＿＿＿","answer":"업무구역"},{"prompt":"＿＿＿＿의 금액과 납입방법","answer":"출자 1좌"},{"prompt":"사업의 종류와 회계·＿＿＿＿·해산","answer":"공고방법"}]}}]}]},{"id":"C","t":"③ 회원과 출자","a":2,"c":[{"id":"C1","t":"회원의 의의와 자격","c":[{"id":"c10","n":10,"t":"회원의 법적 위치","card":{"s":["회원은 금고의 총회를 구성","회원 자격과 출자는 법 제9조에서 규율","회원은 원칙적으로 평등한 의결권·선거권을 보유","회원은 금고 사업의 이용자이면서 의사결정에 참여하는 구성원"],"e":"“소유자·이용자·운영자”라는 표현은 협동조직을 이해하기 위한 학습용 설명입니다. 법률상 직접 확인할 수 있는 핵심은 회원이 총회를 구성하고, 출자하며, 의결권·선거권을 통해 의사결정에 참여한다는 점입니다.","l":"새마을금고법 제9조, 제12조제3항","hook":"회원 = 출자 + 총회 구성 + 의결 참여.","one":"회원은 금고의 총회를 구성","lawKeys":["법_제9조","법_제12조"],"recall":[{"prompt":"회원은 금고의 ＿＿＿＿를 구성","answer":"총회"},{"prompt":"회원 자격과 출자는 법 ＿＿＿＿에서 규율","answer":"제9조"},{"prompt":"회원은 원칙적으로 평등한 ＿＿＿＿을 보유","answer":"의결권·선거권"}]}},{"id":"c11","n":11,"t":"회원의 자격","card":{"s":["정관상 업무구역에 주소나 거소가 있거나 그 업무구역에서 생업에 종사","출자 1좌 이상을 현금으로 납입","정당한 사유 없이 자격을 갖춘 사람의 가입을 거절할 수 없음","법 제9조는 파산선고자·피성년후견인을 일반적인 회원 결격사유로 규정하지 않음","미성년 회원은 정관에 따라 의결권·선거권이 제한될 수 있음"],"e":"회원의 법정 핵심요건은 “업무구역과의 관계 + 1좌 이상 현금출자”입니다. 파산이나 성년후견 여부는 당연탈퇴 사유와 혼동하기 쉽습니다. 회원 가입 단계와 탈퇴 단계의 규정을 구분해 봐야 합니다.","l":"새마을금고법 제9조제1항·제3항·제5항","hook":"회원요건 = 지역 관계 + 현금 1좌.","one":"정관상 업무구역에 주소나 거소가 있거나 그 업무구역에서 생업에 종사","lawKeys":["법_제9조"],"recall":[{"prompt":"＿＿＿＿ 이상을 현금으로 납입","answer":"출자 1좌"},{"prompt":"정당한 사유 없이 자격을 갖춘 사람의 ＿＿＿＿","answer":"가입을 거절할 수 없음"},{"prompt":"＿＿＿＿은 정관에 따라 의결권·선거권이 제한될 수 있음","answer":"미성년 회원"}]}},{"id":"c12","n":12,"t":"회원 가입과 개방 원칙","card":{"s":["정당한 사유 없이 회원 자격을 가진 사람의 가입을 거절할 수 없음","가입에 필요한 세부사항은 정관으로 정함","한 금고의 회원 수는 100명 이상이어야 함","가입 가능 여부는 법 제9조의 자격요건과 정관을 함께 확인"],"e":"현행법에서 직접 확인되는 핵심은 “정당한 사유 없는 가입 거절 금지”입니다. 국제협동조합 원칙이나 신규가입자 조건에 관한 일반론을 법 조문 자체처럼 제시하지 않고, 실제 가입 판단은 법과 정관을 함께 봅니다.","l":"새마을금고법 제9조제2항·제3항","hook":"가입: 자격 있으면 이유 없는 거절 금지.","one":"정당한 사유 없이 회원 자격을 가진 사람의 가입을 거절할 수 없음","lawKeys":["법_제9조"],"recall":[{"prompt":"한 금고의 회원 수는 ＿＿＿＿이어야 함","answer":"100명 이상"},{"prompt":"＿＿＿＿ 없이 회원 자격을 가진 사람의 가입을 거절할 수 없음","answer":"정당한 사유"},{"prompt":"가입에 필요한 세부사항은 ＿＿＿＿으로 정함","answer":"정관"}]}},{"id":"c13","n":13,"t":"회원가입 방법","card":{"s":["업무구역과의 주소·거소 또는 생업 관계 확인","출자 1좌 이상을 현금으로 납입","신청·심사·회원명부 관리 등 구체 절차는 해당 금고 정관과 내부절차를 확인"],"e":"법률은 회원의 자격과 최소 출자요건을 정하고, 가입에 필요한 세부사항은 정관에 맡깁니다. 따라서 “신청→심사→명부등재” 같은 실무 순서는 해당 금고 정관·절차에 근거해 설명해야 합니다.","l":"새마을금고법 제9조제1항·제3항","hook":"법은 자격·1좌, 절차는 정관.","one":"업무구역과의 주소·거소 또는 생업 관계 확인","lawKeys":["법_제9조"],"recall":[{"prompt":"＿＿＿＿ 이상을 현금으로 납입","answer":"출자 1좌"},{"prompt":"＿＿＿＿과의 주소·거소 또는 생업 관계 확인","answer":"업무구역"},{"prompt":"신청·심사·회원명부 관리 등 구체 절차는 해당 금고 ＿＿＿＿를 확인","answer":"정관과 내부절차"}]}}]},{"id":"C2","t":"회원의 권리","c":[{"id":"c14","n":14,"t":"회원의 권리 분류","card":{"s":["학습상 재산권적 권리 — 배당·출자금 환급 등 경제적 이익과 관련","학습상 관리권적 권리 — 의결권·선거권·총회 소집 요구·검사 청구 등 경영 참여와 관련","의결권은 법 제9조, 출자금 환급은 제10조에 근거","총회 소집 요구는 제14조, 검사 청구는 제81조에 근거"],"e":"자익권·공익권은 법 조문의 제목이 아니라 학습을 위한 분류입니다. 실제 문제를 풀거나 실무를 처리할 때는 분류명보다 각 권리의 근거조문과 행사요건을 확인해야 합니다.","l":"학습상 분류 · 새마을금고법 제9조·제10조·제14조·제81조","hook":"재산 = 환급·배당 / 관리 = 의결·소집·검사.","one":"학습상 재산권적 권리 — 배당·출자금 환급 등 경제적 이익과 관련","lawKeys":["법_제9조","법_제10조","법_제14조","법_제81조"],"recall":[{"prompt":"학습상 ＿＿＿＿ — 배당·출자금 환급 등 경제적 이익과 관련","answer":"재산권적 권리"},{"prompt":"학습상 ＿＿＿＿ — 의결권·선거권·총회 소집 요구·검사 청구 등 경영 참여와 관련","answer":"관리권적 권리"},{"prompt":"총회 소집 요구는 제14조, 검사 청구는 ＿＿＿＿에 근거","answer":"제81조"}]}},{"id":"c15","n":15,"t":"의결권과 선거권","card":{"s":["회원은 출자좌수와 관계없이 원칙적으로 평등한 의결권과 선거권을 가짐","정관으로 미성년자·회원기간 6개월 미만·고시금액 미만 출자 회원의 의결권·선거권 제한 가능","의결권은 다른 회원을 대리인으로 행사할 수 있고 한 회원이 최대 2명까지 대리","임원 선거는 법 제18조의 선출방법과 관련 선거규정에 따라 본인 투표 절차를 확인","임원 후보자는 법 제21조의 결격사유와 정관상 자격요건을 충족해야 함"],"e":"의결권과 선거권은 모두 원칙적으로 평등하지만 행사방법은 같지 않습니다. 법 제9조제6항이 명시적으로 대리를 허용하는 것은 의결권입니다. 임원 선거는 법 제18조와 선거 관련 규정에 따라 진행됩니다.","l":"새마을금고법 제9조제5항·제6항, 제18조·제21조","hook":"대리 명문 = 의결권.","one":"회원은 출자좌수와 관계없이 원칙적으로 평등한 의결권과 선거권을 가짐","lawKeys":["법_제9조","법_제18조","법_제21조"],"recall":[{"prompt":"회원은 출자좌수와 관계없이 원칙적으로 ＿＿＿＿을 가짐","answer":"평등한 의결권과 선거권"},{"prompt":"정관으로 미성년자·회원기간 ＿＿＿＿·고시금액 미만 출자 회원의 의결권·선거권 제한 가능","answer":"6개월 미만"},{"prompt":"의결권은 다른 회원을 대리인으로 행사할 수 있고 한 회원이 ＿＿＿＿까지 대리","answer":"최대 2명"}]}},{"id":"c16","n":16,"t":"소수회원권","card":{"s":["임시총회 소집 요구 — 회원 3분의 1 이상 동의","임원 해임 요구 — 시행령상 재적회원 3분의 1 이상 요구가 있어야 총회에서 해임의결 가능","검사 청구 — 재적회원 10분의 1 이상 동의","각 권리는 목적·서면요건·후속절차가 다르므로 조문을 구분해 확인"],"e":"소수회원권은 “여러 회원이 일정 비율 이상 모였을 때 행사할 수 있는 권리”를 묶어 이해하는 학습용 표현입니다. 총회 소집·임원 해임·검사 청구는 필요한 동의비율과 절차가 서로 다릅니다.","l":"새마을금고법 제14조제1항·제81조제1항, 시행령 제9조제1항","hook":"소집·해임 1/3, 검사 1/10.","one":"임시총회 소집 요구 — 회원 3분의 1 이상 동의","lawKeys":["법_제14조","법_제81조","시행령_제9조"],"recall":[{"prompt":"임시총회 소집 요구 — 회원 ＿＿＿＿ 이상 동의","answer":"3분의 1"},{"prompt":"검사 청구 — 재적회원 ＿＿＿＿ 이상 동의","answer":"10분의 1"},{"prompt":"각 권리는 목적·＿＿＿＿·후속절차가 다르므로 조문을 구분해 확인","answer":"서면요건"}]}}]},{"id":"C3","t":"회원의 의무","c":[{"id":"c17","n":17,"t":"출자·책임·경비","card":{"s":["회원이 되려면 출자 1좌 이상을 현금으로 납입","납입할 출자금은 금고에 대한 채권과 상계할 수 없음","출자금은 질권의 목적이 될 수 없음","회원의 책임은 출자액을 한도로 함","총회는 경비의 부과와 징수방법을 의결할 수 있음","계속 손실·적립금 부족 시 법 제35조의 특별절차로 자본금 감소 가능"],"e":"기존의 “회원 5대 의무”라는 묶음보다 현행법 조문에 직접 연결되는 출자·유한책임·경비·자본금 감소를 따로 보는 편이 정확합니다.","l":"새마을금고법 제9조제1항·제7항~제10항, 제12조제4항제7호, 제35조제6항","hook":"출자 = 현금 / 상계 X / 질권 X / 책임은 출자액 한도.","one":"회원이 되려면 출자 1좌 이상을 현금으로 납입","lawKeys":["법_제9조","법_제12조","법_제35조"],"recall":[{"prompt":"납입할 출자금은 금고에 대한 채권과 ＿＿＿＿","answer":"상계할 수 없음"},{"prompt":"출자금은 ＿＿＿＿이 될 수 없음","answer":"질권의 목적"},{"prompt":"회원의 책임은 ＿＿＿＿을 한도로 함","answer":"출자액"}]}}]},{"id":"C4","t":"탈퇴·제명·환급","c":[{"id":"c18","n":18,"t":"회원의 탈퇴","card":{"s":["임의탈퇴 — 회원은 정관으로 정하는 바에 따라 언제라도 탈퇴 가능","당연탈퇴 — 사망(법인은 해산)","당연탈퇴 — 파산선고","당연탈퇴 — 피성년후견인이 된 경우","당연탈퇴 — 회원 자격을 잃은 경우"],"e":"법 제10조는 임의탈퇴의 구체 방식까지 “서면 통고”라고 정하지 않고 정관에 맡깁니다. 반면 사망·파산·피성년후견·회원자격 상실은 법이 직접 당연탈퇴 사유로 정합니다.","l":"새마을금고법 제10조제1항~제3항","hook":"당연탈퇴: 사망·파산·성년후견·자격상실.","one":"임의탈퇴 — 회원은 정관으로 정하는 바에 따라 언제라도 탈퇴 가능","lawKeys":["법_제10조"],"recall":[{"prompt":"임의탈퇴 — 회원은 정관으로 정하는 바에 따라 ＿＿＿＿ 탈퇴 가능","answer":"언제라도"},{"prompt":"당연탈퇴 — ＿＿＿＿","answer":"파산선고"},{"prompt":"당연탈퇴 — ＿＿＿＿이 된 경우","answer":"피성년후견인"}]}},{"id":"c19","n":19,"t":"회원의 제명","card":{"s":["제명사유 — 1년 이상 장기간 대출금 상환 지체","제명사유 — 금고 사업집행 고의 방해","제명사유 — 2년 이상 계속한 사업 미이용","제명사유 — 고의 또는 중대한 과실로 금고에 직접적인 재산상 손해","절차 — 총회 10일 전까지 사유 통지 및 총회 의견진술 기회 부여","의결 — 별도 특례가 없으면 총회 일반의결 기준","효과 — 해당 금고는 제명일부터 2년간 회원가입을 제한할 수 있음"],"e":"제명은 총회 의결이 필요한 중대한 조치이므로 사전통지와 의견진술 기회가 핵심 절차입니다. 또 제명 후 2년간 재가입이 “자동 금지”되는 것이 아니라, 해당 금고가 2년간 가입을 제한할 수 있다는 규정입니다.","l":"새마을금고법 제10조의2, 제13조제1항","one":"제명사유 — 1년 이상 장기간 대출금 상환 지체","lawKeys":["법_제10조의2","법_제13조"],"recall":[{"prompt":"제명사유 — ＿＿＿＿ 장기간 대출금 상환 지체","answer":"1년 이상"},{"prompt":"제명사유 — ＿＿＿＿ 계속한 사업 미이용","answer":"2년 이상"},{"prompt":"절차 — 총회 ＿＿＿＿까지 사유 통지 및 총회 의견진술 기회 부여","answer":"10일 전"},{"prompt":"효과 — 해당 금고는 제명일부터 ＿＿＿＿ 회원가입을 제한할 수 있음","answer":"2년간"}]}},{"id":"c20","n":20,"t":"출자금 환급청구권","card":{"s":["출자금 — 탈퇴 당시 회계연도의 다음 회계연도부터 정관에 따라 환급 청구 가능","예탁금·적금 — 탈퇴 후 정관으로 정하는 바에 따라 환급 청구 가능","환급청구권 소멸시효 — 출자금 2년","환급청구권 소멸시효 — 예탁금·적금 5년","금고 재산으로 채무를 다 갚을 수 없으면 정관에 따라 부담 손실액을 공제하고 출자금 환급 가능"],"e":"법률이 분명하게 구분하는 것은 출자금의 청구개시 시점과 소멸시효입니다. 출자금은 다음 회계연도부터 청구할 수 있고 2년, 예탁금·적금은 5년의 시효가 적용됩니다. 예탁금·적금의 구체 환급절차는 정관과 상품 약관도 확인합니다.","l":"새마을금고법 제10조제4항~제7항","hook":"환급시효: 출자 2 / 예적금 5.","one":"출자금 — 탈퇴 당시 회계연도의 다음 회계연도부터 정관에 따라 환급 청구 가능","lawKeys":["법_제10조"],"recall":[{"prompt":"환급청구권 소멸시효 — 출자금 ＿＿＿＿","answer":"2년"},{"prompt":"환급청구권 소멸시효 — 예탁금·적금 ＿＿＿＿","answer":"5년"},{"prompt":"출자금 — 탈퇴 당시 회계연도의 ＿＿＿＿부터 정관에 따라 환급 청구 가능","answer":"다음 회계연도"}]}}]}]},{"id":"D","t":"④ 금고의 기관","a":3,"c":[{"id":"D1","t":"기관 분리의 원칙","c":[{"id":"c21","n":21,"t":"총회·이사회·감사의 역할","card":{"s":["총회 — 정관 변경·해산·합병·임원 등 중요사항 의결","이사회 — 규정·사업집행 기본방침·자금차입 등 업무집행 사항 의결","이사장 — 금고 대표 및 업무 총괄, 총회·이사회 의장","감사 — 재산과 업무집행상황을 분기마다 1회 이상 감사하고 결과 보고"],"e":"금고의 기관은 역할을 나누어 이해하면 됩니다. 총회는 중요한 기본사항, 이사회는 주요 업무집행 방침, 이사장은 대표·총괄, 감사는 감시·보고 기능을 담당합니다.","l":"새마을금고법 제12조·제17조·제19조","hook":"큰 틀 총회 / 집행방침 이사회 / 대표 이사장 / 감시 감사.","one":"총회 — 정관 변경·해산·합병·임원 등 중요사항 의결","lawKeys":["법_제12조","법_제17조","법_제19조"],"recall":[{"prompt":"＿＿＿＿ — 정관 변경·해산·합병·임원 등 중요사항 의결","answer":"총회"},{"prompt":"＿＿＿＿ — 규정·사업집행 기본방침·자금차입 등 업무집행 사항 의결","answer":"이사회"},{"prompt":"감사 — 재산과 업무집행상황을 ＿＿＿＿ 감사하고 결과 보고","answer":"분기마다 1회 이상"}]}}]},{"id":"D2","t":"총회","c":[{"id":"c22","n":22,"t":"총회의 의결사항","card":{"s":["정관 변경","해산·합병·휴업","임원의 선임·해임 — 다만 이사장 선임은 정관상 총회선출 방식인 경우","기본재산의 처분","결산보고서 승인","사업계획·예산 결정","경비의 부과와 징수방법"],"e":"총회는 금고의 핵심적인 기본사항을 의결합니다. 다만 이사장 선출은 현행 법 제18조의 선출방식에 따라 회원 직접선출·총회선출·대의원회선출 등이 가능하므로 “모든 이사장은 총회에서 선출”한다고 외우면 안 됩니다.","l":"새마을금고법 제12조제4항, 제18조제5항","hook":"총회 = 정관·존립·임원·기본재산·결산·계획예산·경비.","one":"정관 변경","lawKeys":["법_제12조","법_제18조"],"recall":[{"prompt":"＿＿＿＿","answer":"정관 변경"},{"prompt":"＿＿＿＿","answer":"기본재산의 처분"},{"prompt":"＿＿＿＿ 결정","answer":"사업계획·예산"}]}},{"id":"c23","n":23,"t":"총회의 종류","card":{"s":["정기총회 — 매년 1회 정관으로 정하는 바에 따라 소집","임시총회 — 필요하다고 인정할 때 소집","총회는 회원으로 구성하고 이사장이 소집","회원 3분의 1 이상 동의로 임시총회 소집 요구 가능","감사는 감사 결과 부정한 사실을 신속히 보고할 필요가 있을 때 소집 요구 가능","회장은 지도·감독상 필요한 경우 임시총회 소집 요구 가능"],"e":"현행 법률은 정기총회를 매년 1회 열도록 하되 구체적인 소집 시점은 정관에 맡깁니다. 따라서 “사업연도 종료 후 2개월 이내”라는 숫자를 법률 규정으로 외우면 안 됩니다. 결산보고서 승인 등은 정기총회의 핵심 의제입니다.","l":"새마을금고법 제12조제2항·제3항, 제14조","one":"정기총회 — 매년 1회 정관으로 정하는 바에 따라 소집","lawKeys":["법_제12조","법_제14조"],"recall":[{"prompt":"정기총회 — ＿＿＿＿ 정관으로 정하는 바에 따라 소집","answer":"매년 1회"},{"prompt":"＿＿＿＿ 이상 동의로 임시총회 소집 요구 가능","answer":"회원 3분의 1"},{"prompt":"＿＿＿＿은 지도·감독상 필요한 경우 임시총회 소집 요구 가능","answer":"회장"}]}},{"id":"c24","n":24,"t":"총회 소집 절차","card":{"s":["① 소집 결정 — 이사장 또는 소집권자의 총회 소집 결정","② 소집 공고 — 총회 개최일 7일 전까지 회의 목적사항 등 공고","③ 총회 개최 — 정족수 충족 시 개의, 안건 심의·의결","④ 의사록 작성 — 총회 의사록 작성 및 보존"],"e":"공고 기한 7일과 공고 내용(회의 목적사항)이 핵심입니다. 공고에 없던 안건을 당일에 올려 의결하면 나중에 무효 주장이 나올 수 있습니다.","l":"새마을금고법 제15조제2항, 시행령 제5조","one":"① 소집 결정 — 이사장 또는 소집권자의 총회 소집 결정","lawKeys":["법_제15조","시행령_제5조"],"recall":[{"prompt":"② 소집 공고 — 총회 개최일 ＿＿＿＿까지 회의 목적사항 등 공고","answer":"7일 전"},{"prompt":"② 소집 공고 — 총회 개최일 7일 전까지 ＿＿＿＿ 등 공고","answer":"회의 목적사항"},{"prompt":"④ ＿＿＿＿ 작성 — 총회 의사록 작성 및 보존","answer":"의사록"}]}},{"id":"c25","n":25,"t":"총회의 의결정족수","card":{"s":["일반의결 — 재적회원 과반수 출석, 출석회원 과반수 찬성","회원 500명 초과 금고 — 251명 이상 출석으로 개의 가능","특별의결 — 정관 변경, 해산·합병·휴업은 출석 요건을 갖추고 출석회원 3분의 2 이상 찬성","공고된 회의 목적사항만 의결하는 것이 원칙 — 긴급한 경우 법정 특례 있음"],"e":"정족수는 두 단계입니다. “몇 명이 와야 회의가 성립하는가(의사정족수)”와 “몇 명이 찬성해야 통과되는가(의결정족수)”. 중요한 안건일수록 찬성 기준만 3분의 2로 올라갑니다.","l":"새마을금고법 제13조","one":"일반의결 — 재적회원 과반수 출석, 출석회원 과반수 찬성","lawKeys":["법_제13조"],"recall":[{"prompt":"일반의결 — ＿＿＿＿ 출석, 출석회원 과반수 찬성","answer":"재적회원 과반수"},{"prompt":"회원 500명 초과 금고 — ＿＿＿＿ 출석으로 개의 가능","answer":"251명 이상"},{"prompt":"특별의결 — 정관 변경, 해산·합병·휴업은 출석 요건을 갖추고 출석회원 ＿＿＿＿ 이상 찬성","answer":"3분의 2"}]}}]},{"id":"D3","t":"대의원회","c":[{"id":"c26","n":26,"t":"대의원회","card":{"s":["회원이 500명을 초과하는 금고는 총회를 갈음할 대의원회를 둘 수 있음","대의원회는 이사장과 대의원으로 구성","대의원 자격은 정관으로 정하되 원칙적으로 회원 가입 후 1년이 지난 자","대의원 수는 회원 수에 비례하여 정관으로 정하되 100명 이상","대의원 임기는 3년","대의원회에는 총회에 관한 규정을 준용"],"e":"대의원회는 회원 수가 많은 금고에서 총회를 갈음할 수 있는 대표기관입니다. 법률은 설치기준과 임기를, 시행령은 구성·자격·정수의 기본기준을 정합니다.","l":"새마을금고법 제16조, 시행령 제6조","hook":"대의원회: 500명 초과 / 대의원 100명 이상 / 임기 3년.","one":"회원이 500명을 초과하는 금고는 총회를 갈음할 대의원회를 둘 수 있음","lawKeys":["법_제16조","시행령_제6조"],"recall":[{"prompt":"회원이 ＿＿＿＿을 초과하는 금고는 총회를 갈음할 대의원회를 둘 수 있음","answer":"500명"},{"prompt":"대의원 수는 회원 수에 비례하여 정관으로 정하되 ＿＿＿＿","answer":"100명 이상"},{"prompt":"대의원 임기는 ＿＿＿＿","answer":"3년"}]}}]},{"id":"D4","t":"이사회","c":[{"id":"c27","n":27,"t":"이사회","card":{"s":["구성 — 이사장을 포함한 이사로 구성","소집 — 이사장이 소집, 재적이사 3분의 1 이상 요구 시 지체 없이 소집","의결 — 규정 제정·변경·폐지, 사업집행 기본방침, 자금 차입 등","의결 — 정관상 간부직원 임면·직원 징계, 총회 위임사항과 총회에 부칠 사항","보고 — 상근이사 성과평가, 외부감사·경영평가·검사 결과 등","정족수 — 재적이사 과반수 출석, 출석이사 과반수 찬성"],"e":"이사회는 금고의 주요 업무집행 방침과 내부 규정을 의결하는 핵심 기관입니다. 2025년 개정으로 재적이사 3분의 1 이상이 소집을 요구할 때의 절차와 이사의 안건 제안권도 법에 구체화되었습니다.","l":"새마을금고법 제17조","one":"구성 — 이사장을 포함한 이사로 구성","lawKeys":["법_제17조"],"recall":[{"prompt":"소집 — 이사장이 소집, ＿＿＿＿ 이상 요구 시 지체 없이 소집","answer":"재적이사 3분의 1"},{"prompt":"정족수 — ＿＿＿＿ 출석, 출석이사 과반수 찬성","answer":"재적이사 과반수"},{"prompt":"정족수 — 재적이사 과반수 출석, ＿＿＿＿ 찬성","answer":"출석이사 과반수"}]}}]}]},{"id":"E","t":"⑤ 임원 제도","a":4,"c":[{"id":"E1","t":"선임과 자격","c":[{"id":"c28","n":28,"t":"임원의 선임","card":{"s":["이사장 — 회원의 무기명 비밀투표 직접선출이 원칙","전전 사업연도 자산총액 2,000억원 미만 지역금고 및 지역금고 외 금고는 정관에 따라 선출방식 선택 가능","선택 가능한 방식 — 회원 직접선출·총회선출·대의원회선출","이사장을 제외한 임원 — 총회에서 무기명 비밀투표로 선출","임기 — 이사장·이사 4년, 감사 3년","이사장 — 2차에 한정하여 연임 가능"],"e":"현행법은 이사장 직접선출을 원칙으로 하되 일정 범위의 금고에 선택권을 둡니다. 선택 가능한 방식에 “이사회 선출”은 포함되지 않습니다. 임기도 이사장·이사와 감사가 다릅니다.","l":"새마을금고법 제18조제5항·제9항, 제20조 / 시행령 제8조의3","hook":"임기 4·4·3 / 선택금고 기준 자산 2,000억 미만.","one":"이사장 — 회원의 무기명 비밀투표 직접선출이 원칙","lawKeys":["법_제18조","법_제20조","시행령_제8조의3"],"recall":[{"prompt":"이사장 — 회원의 ＿＿＿＿ 직접선출이 원칙","answer":"무기명 비밀투표"},{"prompt":"전전 사업연도 자산총액 ＿＿＿＿ 지역금고 및 지역금고 외 금고는 정관에 따라 선출방식 선택 가능","answer":"2,000억원 미만"},{"prompt":"임기 — 이사장·이사 ＿＿＿＿, 감사 3년","answer":"4년"},{"prompt":"임기 — 이사장·이사 4년, 감사 ＿＿＿＿","answer":"3년"}]}},{"id":"c29","n":29,"t":"임원의 자격요건","card":{"s":["결격사유 — 미성년자·피성년후견인·피한정후견인","결격사유 — 파산선고를 받고 복권되지 않은 사람","형사처벌·선거범죄·금융관계법령상 제재 등에 관한 다양한 제한기간 존재","회원 후보 요건 — 정관이 정한 출자좌수 이상을 원칙적으로 2년 이상 계속 보유","채무 요건 — 선거일공고일 현재 정관상 금액·기간을 초과하는 연체채무가 없어야 함","그 밖에 정관으로 정하는 자격 제한 사유 확인"],"e":"임원 자격은 법 제21조의 결격사유가 매우 상세하므로 단순 암기보다 범주를 나눠 보는 것이 좋습니다. 신분·파산, 형사처벌, 금융관계법령상 제재, 출자보유기간, 연체채무, 정관상 제한을 차례로 확인하면 됩니다.","l":"새마을금고법 제21조","one":"결격사유 — 미성년자·피성년후견인·피한정후견인","lawKeys":["법_제21조"],"recall":[{"prompt":"결격사유 — 파산선고를 받고 ＿＿＿＿ 사람","answer":"복권되지 않은"},{"prompt":"회원 후보 요건 — 정관이 정한 출자좌수 이상을 원칙적으로 ＿＿＿＿ 계속 보유","answer":"2년 이상"},{"prompt":"채무 요건 — 선거일공고일 현재 정관상 금액·기간을 초과하는 ＿＿＿＿가 없어야 함","answer":"연체채무"}]}}]},{"id":"E2","t":"임원의 책임","c":[{"id":"c30","n":30,"t":"임원의 책임","card":{"s":["금고에 대한 책임 — 임원이 직무수행 중 고의나 과실로 손해를 끼치면 연대 배상","비상근임원 — 금고에 대한 책임은 고의나 중대한 과실 기준","타인에 대한 책임 — 고의나 중대한 과실로 손해를 끼친 경우 연대 배상","이사회가 고의·중대한 과실로 금고에 손해를 끼친 경우 관련 출석 임원도 원칙적으로 연대책임","회의에서 반대 의사를 표시한 임원은 제25조제5항 단서에 따라 예외"],"e":"상근 여부에 따라 금고에 대한 손해배상 기준이 다릅니다. 일반 임원은 고의·과실, 비상근임원은 고의·중대한 과실이 기준입니다. 제3자 손해는 고의·중대한 과실이 기준입니다.","l":"새마을금고법 제25조","hook":"비상근 = 고의·중과실.","one":"금고에 대한 책임 — 임원이 직무수행 중 고의나 과실로 손해를 끼치면 연대 배상","lawKeys":["법_제25조"],"recall":[{"prompt":"금고에 대한 책임 — 임원이 직무수행 중 고의나 과실로 손해를 끼치면 ＿＿＿＿","answer":"연대 배상"},{"prompt":"비상근임원 — 금고에 대한 책임은 ＿＿＿＿ 기준","answer":"고의나 중대한 과실"},{"prompt":"회의에서 ＿＿＿＿를 표시한 임원은 제25조제5항 단서에 따라 예외","answer":"반대 의사"}]}}]},{"id":"E3","t":"이사장","c":[{"id":"c31","n":31,"t":"이사장의 직무권한","card":{"s":["대표권 — 금고 대표, 대외적 의사 표시","업무집행권 — 금고 업무 총괄, 직원 지휘·감독","총회 소집권 — 정기총회 및 임시총회 소집","이사회 소집권 — 이사회 소집 및 의장 역할"],"e":"이사장은 대외적으로는 금고의 얼굴이고, 대내적으로는 사령탑입니다. 계약서에 도장을 찍는 사람이자 회의를 여는 사람입니다. 다만 금고와 이사장이 다투는 상황에서는 감사가 금고를 대표합니다.","l":"새마을금고법 제19조제1항·제2항·제6항, 제12조제3항, 제17조제2항","one":"대표권 — 금고 대표, 대외적 의사 표시","lawKeys":["법_제19조","법_제12조","법_제17조"],"recall":[{"prompt":"대표권 — ＿＿＿＿, 대외적 의사 표시","answer":"금고 대표"},{"prompt":"업무집행권 — 금고 ＿＿＿＿, 직원 지휘·감독","answer":"업무 총괄"},{"prompt":"＿＿＿＿ — 정기총회 및 임시총회 소집","answer":"총회 소집권"},{"prompt":"＿＿＿＿ — 이사회 소집 및 의장 역할","answer":"이사회 소집권"}]}}]},{"id":"E4","t":"감사","c":[{"id":"c32","n":32,"t":"감사의 직무권한과 감사 범위","card":{"s":["금고의 재산과 업무집행상황을 분기마다 1회 이상 감사","감사 결과를 총회와 이사회에 보고","총회·이사회에 출석하여 의견 진술 가능","감사 결과 부정한 사실을 신속히 보고할 필요가 있으면 이사장에게 총회 소집 요구","이사장이 요구일부터 2주 이내 총회를 열지 않으면 감사가 5일 이내 소집하고 의장 직무 대행"],"e":"감사의 법정 핵심은 “재산과 업무집행상황의 정기 감사 및 보고”입니다. 총회 직접 소집은 언제나 자유롭게 행사하는 일반권한이 아니라 법 제14조의 요건과 순서를 충족한 경우에 작동합니다.","l":"새마을금고법 제19조제4항·제7항, 제14조제2항~제4항","hook":"감사: 분기 1회 + 재산·업무집행 + 총회·이사회 보고.","one":"금고의 재산과 업무집행상황을 분기마다 1회 이상 감사","lawKeys":["법_제19조","법_제14조"],"recall":[{"prompt":"금고의 재산과 업무집행상황을 ＿＿＿＿ 감사","answer":"분기마다 1회 이상"},{"prompt":"감사 결과를 ＿＿＿＿에 보고","answer":"총회와 이사회"},{"prompt":"이사장이 요구일부터 2주 이내 총회를 열지 않으면 감사가 ＿＿＿＿ 소집하고 의장 직무 대행","answer":"5일 이내"}]}}]}]}],"legalTexts":{"헌법_제75조":{"title":"대한민국헌법 제75조","text":"제75조\n대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한 사항에 관하여 대통령령을 발할 수 있다."},"헌법_제95조":{"title":"대한민국헌법 제95조","text":"제95조\n국무총리 또는 행정각부의 장은 소관사무에 관하여 법률이나 대통령령의 위임 또는 직권으로 총리령 또는 부령을 발할 수 있다."},"법_제1조":{"title":"새마을금고법 제1조(목적)","text":"제1조 목적\n이 법은 국민의 자주적인 협동 조직을 바탕으로 우리나라 고유의 상부상조 정신에 입각하여 자금의 조성과 이용, 회원의 경제적ㆍ사회적ㆍ문화적 지위의 향상, 지역사회 개발을 통한 건전한 국민정신의 함양과 국가경제 발전에 이바지함을 목적으로 한다."},"법_제2조":{"title":"새마을금고법 제2조(정의와 명칭)","text":"제2조(정의와 명칭)\n① 이 법에서 \"금고\"란 제1조의 목적을 달성하기 위하여 이 법에 따라 설립된 비영리법인인 새마을금고를 말한다.\n② 이 법에서 \"지역금고\"란 제1항의 금고 중 동일한 행정구역, 경제권 또는 생활권을 업무구역으로 하는 금고를 말한다.\n③ 이 법에서 \"중앙회\"란 모든 금고의 공동이익 증진과 지속적인 발전을 도모하기 위하여 이 법에 따라 설립한 비영리법인인 새마을금고중앙회를 말한다. \u003c개정 2011.3.8>\n④ 금고나 중앙회는 그 명칭 중 \"새마을금고\" 또는 \"새마을금고중앙회\"라는 문자를 사용하여야 한다. \u003c개정 2011.3.8>\n⑤ 금고나 중앙회가 아니면 제4항에 따른 명칭이나 이와 유사한 명칭을 사용할 수 없다. \u003c개정 2011.3.8>"},"법_제3조":{"title":"새마을금고법 제3조(국가 등의 협력의무)","text":"제3조(국가 등의 협력의무)\n① 국가나 지방자치단체는 금고나 중앙회가 행하는 사업의 육성을 위하여 필요한 지원을 하여야 하며, 국공유재산을 금고나 중앙회가 필요로 하는 경우에는 우선적으로 대여하거나 사용ㆍ수익하게 할 수 있다. \u003c개정 2011.3.8>\n② 국가나 지방자치단체는 금고의 원활한 발전을 위하여 예산의 범위에서 중앙회에 보조금을 내줄 수 있다. \u003c개정 2011.3.8>"},"법_제5조":{"title":"새마을금고법 제5조(정치 관여 금지)","text":"제5조 정치 관여 금지\n금고와 중앙회는 정치에 관여하는 일체의 행위를 할 수 없다. \u003c개정 2011.3.8>"},"법_제6조":{"title":"새마을금고법 제6조(다른 법률과의 관계)","text":"제6조(다른 법률과의 관계)\n① 제67조제1항제5호다목(내국환 업무만 해당된다)이나 같은 호 마목에 따른 중앙회의 신용사업 부문은 「은행법」 제2조에 따른 은행 및 「한국은행법」 제11조에 따른 하나의 금융기관으로 본다. \u003c개정 2010.5.17, 2011.3.8>\n② 금고와 중앙회의 사업에 관하여는 「보험업법」의 규정을 적용하지 아니한다. \u003c개정 2011.3.8>\n③ 금고와 중앙회는 「한국자산관리공사 설립 등에 관한 법률」 제45조의2를 적용할 경우에 같은 조의 적용을 받는 기관으로 본다. \u003c개정 2011.3.8, 2011.5.19, 2019.11.26>"},"법_제7조":{"title":"새마을금고법 제7조(설립)","text":"제7조(설립)\n① 금고는 50명 이상의 발기인이 중앙회장(이하 \"회장\"이라 한다)이 정하는 정관례에 따라 정관을 작성하여 창립총회의 의결을 거친 뒤에 회장을 거쳐 특별자치시장ㆍ특별자치도지사 또는 시장ㆍ군수ㆍ구청장(구청장은 자치구의 구청장을 말한다. 이하 같다)의 인가를 받아 그 주된 사무소의 소재지에서 설립등기를 함으로써 성립한다. \u003c개정 2008.2.29, 2011.3.8, 2013.3.23, 2014.11.19, 2017.7.26, 2020.2.18>\n② 창립총회의 의사(議事)는 발기인에게 금고 설립 동의서를 개의(開議) 전까지 제출한 자 과반수의 출석과 출석자 3분의 2 이상의 찬성으로 의결한다.\n③ 창립총회의 공고ㆍ의결사항과 설립인가 신청 절차, 인가 제한 사유 등 금고 설립에 필요한 사항은 대통령령으로 정한다.\n④ 삭제 \u003c2011.3.8>\n⑤ 삭제 \u003c2011.3.8>"},"법_제8조":{"title":"새마을금고법 제8조(정관의 기재사항)","text":"제8조 정관의 기재사항\n금고의 정관에는 다음 각 호의 사항을 적어야 한다. \u003c개정 2023.4.11>\n\n1. 목적\n2. 명칭\n3. 주된 사무소의 소재지\n4. 해당 금고의 업무구역\n5. 회원의 자격과 가입, 탈퇴 및 제명(除名)에 관한 사항\n6. 출자(出資) 1좌(座)의 금액과 납입 방법\n7. 기관에 관한 사항 및 임원의 수와 선출에 관한 사항\n8. 사업의 종류와 회계에 관한 사항\n9. 공고 방법\n10. 해산에 관한 사항\n11. 그 밖에 필요한 사항"},"법_제9조":{"title":"새마을금고법 제9조(회원과 자본금)","text":"제9조(회원과 자본금)\n① 금고의 회원은 그 금고의 정관으로 정하는 업무구역에 주소나 거소(居所)가 있는 자 또는 생업에 종사하는 자로서 출자 1좌 이상을 현금으로 납입한 자로 한다.\n② 한 금고의 회원 수는 100명 이상으로 한다.\n③ 금고는 정당한 사유 없이 회원이 될 수 있는 자격을 가진 자의 가입을 거절할 수 없으며, 가입에 관하여 필요한 사항은 정관으로 정한다.\n④ 출자 1좌의 금액은 정관으로 정하며, 한 회원이 가질 수 있는 출자좌수(出資座數)의 최고한도는 총출자좌수의 100분의 15를 초과할 수 없다.\n⑤ 회원은 출자좌수에 관계없이 평등한 의결권과 선거권을 가진다. 다만, 다음 각 호의 어느 하나에 해당하는 회원에 대하여는 정관으로 정하는 바에 따라 의결권과 선거권을 제한할 수 있다. \u003c개정 2025.1.7>\n1. 미성년인 회원\n2. 해당 금고의 회원 자격을 유지한 기간이 6개월 미만인 회원\n3. 출자액이 행정안전부장관(이하 \"주무부장관\"이라 한다)이 정하여 고시하는 금액 미만인 회원\n⑥ 회원은 다른 회원을 대리인으로 하여 의결권을 행사할 수 있다. 이 경우 한 회원이 대리할 수 있는 회원의 수는 두 명을 초과할 수 없다.\n⑦ 회원이 금고에 납입할 출자금은 금고에 대한 채권과 상계(相計)하지 못한다.\n⑧ 출자금은 질권(質權)의 목적이 될 수 없다.\n⑨ 회원은 이사장의 승인을 받아 그의 출자금을 다른 회원에게 양도할 수 있다. 이 경우 양수인은 양도인의 출자금에 관한 재산상의 권리와 의무를 승계한다.\n⑩ 회원의 책임은 그 출자액을 한도로 한다. \u003c개정 2023.4.11>\n⑪ 금고의 자본금은 회원이 납입한 출자금(제9조의2에 따른 출자금을 포함한다), 제9조의3에 따른 회전출자금 및 제9조의4에 따른 우선출자금(누적되지 아니하는 것만 해당한다)의 총액으로 한다. \u003c개정 2023.4.11>"},"법_제10조":{"title":"새마을금고법 제10조(탈퇴 등)","text":"제10조(탈퇴 등)\n① 회원은 언제라도 정관으로 정하는 바에 따라 금고에서 탈퇴할 수 있다.\n② 회원이 다음 각 호의 어느 하나에 해당하는 경우에는 당연히 금고에서 탈퇴한 것으로 본다. \u003c개정 2016.1.6>\n1. 사망한 경우(법인은 해산한 경우)\n2. 파산선고를 받은 경우\n3. 피성년후견인이 된 경우\n4. 회원의 자격을 잃은 경우\n③ 제2항제4호의 자격상실에 관한 사항은 정관으로 정한다.\n④ 제1항에 따라 탈퇴한 회원(제2항에 따라 탈퇴한 것으로 보는 경우와 제10조의2에 따라 제명된 경우를 포함한다. 이하 이 조에서 같다)은 정관으로 정하는 바에 따라 그의 예탁금 및 적금의 환급(還給)을 청구할 수 있다. \u003c개정 2016.1.6>\n⑤ 제1항에 따라 탈퇴한 회원은 탈퇴 당시 회계연도 다음 회계연도부터 정관으로 정하는 바에 따라 출자금의 환급을 청구할 수 있다. \u003c신설 2016.1.6>\n⑥ 금고는 금고의 재산으로 그 채무를 다 갚을 수 없는 경우에는 제5항에 따른 출자금을 환급할 때 정관으로 정하는 바에 따라 탈퇴하거나 제명된 회원이 부담하여야 할 손실액을 빼고 환급할 수 있다. \u003c신설 2016.1.6>\n⑦ 제4항 및 제5항에 따른 환급청구권은 환급을 청구할 수 있는 날부터 출자금은 2년 간, 예탁금ㆍ적금은 5년 간 행사하지 아니하면 시효의 완성으로 소멸한다. \u003c신설 2016.1.6>"},"법_제10조의2":{"title":"새마을금고법 제10조의2(제명)","text":"제10조의2(제명)\n① 회원이 다음 각 호의 어느 하나에 해당하는 경우에는 총회의 의결로 제명할 수 있다.\n1. 1년 이상의 장기간에 걸쳐 대출금 상환을 지체한 경우\n2. 금고의 사업집행을 고의로 방해한 사실이 입증된 경우\n3. 2년 이상 계속하여 금고의 사업을 이용하지 아니한 경우\n4. 고의 또는 중대한 과실로 금고에 직접적인 재산상의 손해를 끼친 경우\n② 금고는 제1항에 따라 회원을 제명하려면 총회 개최일 10일 전까지 그 회원에게 제명의 사유를 알리고 총회에서 의견을 진술할 기회를 주어야 한다.\n③ 제1항에 따라 제명된 자에 대하여 해당 금고는 제명된 날부터 2년 간 회원가입을 제한할 수 있다."},"법_제12조":{"title":"새마을금고법 제12조(총회)","text":"제12조(총회)\n① 금고에 총회를 둔다.\n② 총회는 정기총회와 임시총회로 하며, 정기총회는 매년 1회 정관으로 정하는 바에 따라 소집하고, 임시총회는 필요하다고 인정할 때에 소집한다.\n③ 총회는 회원으로 구성하며 이사장이 소집한다.\n④ 다음 각 호의 사항은 총회의 의결이 있어야 한다. \u003c개정 2017.12.26>\n1. 정관의 변경\n2. 해산, 합병 또는 휴업\n3. 임원의 선임(이사장의 선임은 정관으로 이사장을 총회에서 선출하도록 한 경우로 한정한다)과 해임\n4. 기본 재산의 처분\n5. 결산보고서(사업보고서ㆍ재무상태표ㆍ손익계산서와 잉여금처분안 또는 손실금처리안을 포함한다)의 승인\n6. 사업계획, 예산의 결정\n7. 경비의 부과와 징수 방법\n8. 그 밖의 중요한 사항\n⑤ 제4항제1호의 사항은 회장을 거쳐 특별자치시장ㆍ특별자치도지사 또는 시장ㆍ군수ㆍ구청장의 인가를 받지 아니하면 그 효력을 발생하지 아니한다. \u003c개정 2011.3.8, 2020.2.18>\n⑥ 금고는 대통령령으로 정하는 바에 따라 총회 의사록을 작성하여야 한다."},"법_제13조":{"title":"새마을금고법 제13조(총회의 개의와 의결)","text":"제13조(총회의 개의와 의결)\n① 총회는 이 법에 다른 규정이 있는 경우 외에는 재적회원(在籍會員) 과반수의 출석으로 개의(開議)하고 출석회원 과반수의 찬성으로 의결한다. 다만, 재적회원이 500명을 초과하는 경우에는 251명 이상 출석으로 개의하고 출석회원 과반수의 찬성으로 의결할 수 있다. \u003c개정 2025.1.7>\n② 제12조제4항제1호 및 제2호의 사항은 재적회원 과반수(제1항 단서의 경우에는 251명 이상의 회원)의 출석과 출석회원 3분의 2 이상의 찬성으로 의결하여야 한다. \u003c개정 2025.1.7>\n③ 총회에서는 제15조제2항에 따라 공고한 사항에 대하여만 의결할 수 있다. 다만, 긴급한 사항으로서 재적회원 과반수(제1항 단서의 경우에는 251명 이상의 회원)의 출석과 출석회원 3분의 2 이상의 찬성이 있는 경우에는 그러하지 아니하다. \u003c개정 2025.1.7>\n④ 금고와 특정회원과의 관련 사항을 의결하는 경우에는 그 회원은 의결권이 없다."},"법_제14조":{"title":"새마을금고법 제14조(총회의 소집 요구)","text":"제14조(총회의 소집 요구)\n① 회원은 회원 3분의 1 이상의 동의를 받아 회의의 목적과 이유를 적고 서명날인한 서면을 제출하여 임시총회의 소집을 이사장에게 요구할 수 있다.\n② 감사는 제19조제4항에 따른 감사를 실시한 결과 금고의 재산 상황 또는 업무집행에 부정한 사실이 발견되어 그 내용을 총회에 신속히 보고할 필요가 있을 때에는 회의의 목적과 소집 이유를 적은 서면을 제출하여 총회의 소집을 이사장에게 요구할 수 있다. \u003c신설 2017.12.26>\n③ 제1항, 제2항 또는 제7항의 요구가 있으면 이사장은 요구가 있는 날부터 2주일 이내에 총회를 개최하여야 한다. \u003c개정 2017.12.26, 2025.1.7>\n④ 총회를 소집할 자가 없거나 제3항의 기간에 정당한 사유 없이 이사장이 총회를 개최하지 아니하면 감사가 5일 이내에 총회를 소집하여야 하며, 이 경우 감사가 의장의 직무를 대행한다. \u003c개정 2017.12.26>\n⑤ 감사가 제4항의 기간에 총회를 소집하지 아니하면 제1항에 따라 총회 소집을 요구한 회원의 대표가 총회를 개최하며, 이 경우 그 회원의 대표가 의장의 직무를 대행한다. \u003c개정 2017.12.26>\n⑥ 제4항이나 제5항에 따라 감사나 회원대표가 총회를 소집할 때에는 소집 공고 전에 회장에게 알려야 한다. \u003c개정 2011.3.8, 2017.12.26>\n⑦ 회장은 제79조제1항에 따른 지도ㆍ감독을 위하여 필요한 경우 임시총회의 소집을 이사장에게 요구할 수 있다. \u003c신설 2025.1.7>\n⑧ 이사장은 회장의 요구가 있는 경우 제7항에 따른 임시총회 개최 시 회장이 지정하는 사람이 임시총회에 출석하여 회원들에게 지도ㆍ감독을 위한 중요 사항을 설명할 수 있도록 하여야 한다. \u003c신설 2025.1.7>"},"법_제15조":{"title":"새마을금고법 제15조(회원에 대한 통지 등)","text":"제15조(회원에 대한 통지 등)\n① 금고는 그 회원에게 다음 각 호의 방법으로 통지를 할 수 있다. \u003c개정 2025.1.7>\n1. 회원 명부에 적은 회원의 주소 또는 거소로 우편물, 문서 발송\n2. 회원 명부에 적은 회원의 전자우편 등 전자적 수단 및 그 밖에 정보통신망을 이용한 방법\n② 총회의 소집 통지는 총회 개최일 7일 전에 개회 일시, 개회 장소, 회의 목적사항을 제시하여 정관으로 정한 방법에 따라 공고하여야 한다."},"법_제16조":{"title":"새마을금고법 제16조(대의원회)","text":"제16조(대의원회)\n① 회원이 500명을 초과하는 금고는 대통령령으로 정하는 바에 따라 총회를 갈음할 대의원회를 둘 수 있다. \u003c개정 2025.1.7>\n② 대의원의 임기는 3년으로 한다. \u003c개정 2023.4.11>\n③ 제2항에도 불구하고 대의원 중 일부의 궐원으로 인한 재선거 또는 보궐선거로 선임된 대의원의 임기는 다음 각 호와 같다. \u003c신설 2023.4.11>\n1. 재선거의 경우에는 재선거 실시 전에 실시한 선거로 선출된 대의원의 남은 임기\n2. 보궐선거의 경우에는 전임자의 남은 임기\n④ 대의원의 자격, 정수, 선임 방법 등에 필요한 사항은 대통령령으로 정한다. \u003c개정 2023.4.11>\n⑤ 대의원은 다음 각 호의 직을 겸할 수 없다. \u003c개정 2017.12.26, 2023.4.11>\n1. 해당 금고의 임직원(이사장은 제외한다)\n2. 다른 금고의 대의원\n3. 다른 금고의 임직원\n⑥ 대의원회에 관하여는 총회에 관한 규정을 준용한다. \u003c개정 2023.4.11>"},"법_제17조":{"title":"새마을금고법 제17조(이사회)","text":"제17조(이사회)\n① 금고에 이사회를 둔다.\n② 이사회는 이사장을 포함한 이사로 구성하며, 이사장이 이를 소집한다. \u003c개정 2021.10.19>\n③ 이사장은 재적이사 3분의 1 이상의 요구가 있는 경우에는 지체 없이 이사회를 소집하여야 한다. 이 경우 이사장이 정당한 이유 없이 소집 요구를 받은 날부터 2주일 이내에 이사회를 소집하지 아니하는 경우에는 그 소집을 요구한 이사의 대표가 이사회를 소집하고, 의장의 직무를 대행한다. \u003c신설 2025.1.7>\n④ 이사는 이사장에게 서면으로 일정한 사항을 이사회의 회의에 부칠 것을 제안할 수 있다. 이 경우 이사장은 그 제안사항을 이사회에 보고하여야 하고, 이사회는 그 내용이 법령 또는 정관을 위반하는 경우를 제외하고는 이를 이사회의 회의에 부쳐야 한다. \u003c신설 2025.1.7>\n⑤ 다음 각 호의 사항은 이사회의 의결이 있어야 한다. \u003c개정 2011.3.8, 2025.1.7>\n1. 규정의 제정, 변경 또는 폐지\n2. 사업 집행에 대한 기본 방침의 결정\n3. 소요 자금의 차입. 다만, 중앙회에서 차입할 경우는 최고한도\n4. 정관으로 정하는 간부 직원의 임면(任免)과 직원의 징계\n5. 상근이사에 대한 성과평가의 실시에 관한 사항\n6. 총회로부터 위임된 사항과 총회에 부칠 사항\n7. 그 밖에 이사장이 회의에 부치는 사항\n⑥ 이사장은 다음 각 호의 사항을 이사회에 보고하여야 한다. \u003c개정 2017.12.26, 2025.1.7>\n1. 제19조의2에 따른 상근이사에 대한 성과평가 결과\n2. 제76조에 따른 감사 결과\n3. 제79조제6항에 따른 경영 평가 결과\n4. 제74조제3항, 제79조제3항 및 제81조제1항에 따른 검사 결과\n⑦ 이사회는 재적이사 과반수의 출석으로 개의하고 출석이사 과반수의 찬성으로 의결한다. \u003c개정 2025.1.7>\n⑧ 이사회의 소집 방법, 의사록 작성 등은 정관으로 정하는 바에 따른다. \u003c개정 2025.1.7>"},"법_제18조":{"title":"새마을금고법 제18조(임원의 선임 등)","text":"제18조(임원의 선임 등)\n① 금고의 임원으로 이사장 1명을 포함한 7명 이상 15명 이하의 이사와 3명 이하의 감사를 두며, 임원은 금고의 다른 직(職)을 겸할 수 없다. \u003c개정 2021.10.19>\n② 금고의 자산 규모, 재무구조 등을 고려하여 대통령령으로 정하는 금고의 경우에는 정관으로 정하는 바에 따라 임원 중 1명 이상을 상근으로 할 수 있되, 상근하는 임원의 수는 이사장을 포함한 이사 중 2명, 감사 중 1명을 초과할 수 없다. 이 경우 상근하는 임원은 금고 업무에 대한 전문지식과 경험이 풍부한 사람으로서 대통령령으로 정하는 요건을 갖춘 사람 중에서 제4항부터 제9항까지에 따라 선임하거나 선출하여야 한다. \u003c개정 2011.3.8, 2023.4.11>\n③ 제2항을 적용할 때 이사장이 상근하지 아니하는 지역금고의 경우에는 제4항에 따라 선임된 상근이사를 두어야 하고, 자산 규모 등이 대통령령으로 정하는 기준 이상에 해당하는 지역금고는 상근감사를 두어야 한다. \u003c개정 2025.1.7>\n④ 제2항에 따라 상근하는 임원 중 이사장이 아닌 이사는 이사회의 추천을 받아 총회에서 선임한다. \u003c개정 2023.4.11>\n⑤ 이사장은 회원 중에서 회원의 무기명 비밀투표로 직접 선출한다. 다만, 자산이 일정 규모 이하인 금고 등 대통령령으로 정하는 금고의 이사장은 회원의 투표로 직접 선출하는 방법, 총회에서 선출하는 방법 또는 대의원회에서 선출하는 방법 중 정관으로 정하는 방법을 택하여 선출할 수 있다. \u003c개정 2021.10.19>\n⑥ 제5항에 따라 회원의 투표로 직접 선출하는 경우 투표의 방법ㆍ절차, 투표의 사전 통지 등에 필요한 사항은 정관으로 정한다. \u003c신설 2021.10.19>\n⑦ 제5항에도 불구하고 이사장의 후보자가 1명인 경우에는 정관으로 따로 정하는 방법에 따라 이사장을 선출할 수 있다. \u003c신설 2021.10.19>\n⑧ 이사장의 선출 방법에 따른 당선인의 결정은 다음 각 호에 따른다. \u003c개정 2017.12.26, 2021.10.19, 2025.1.7>\n1. 회원의 투표로 직접 선출하거나 총회에서 선출하는 경우에는 최다득표자를 당선인으로 결정한다. 다만, 최다득표자가 2명 이상인 때에는 연장자를 당선인으로 결정한다.\n2. 대의원회에서 선출하는 경우에는 과반수득표자를 당선인으로 결정한다. 다만, 과반수득표자가 없는 경우에는 1위와 2위의 다수득표자만을 후보자로 하여 다시 투표를 실시하여 최다득표자를 당선인으로 결정하되, 최다득표자가 2명 이상인 때에는 연장자를 당선인으로 결정한다.\n⑨ 이사장을 제외한 임원은 총회에서 무기명 비밀투표로 선출하되, 다수득표자 순으로 임원의 정수에 해당하는 사람으로 한다. 다만, 이사장을 제외한 임원의 후보자가 각각 그 정수 이내일 경우에는 정관으로 따로 정하는 방법에 따라 선출할 수 있다. \u003c신설 2017.12.26, 2021.10.19, 2025.1.7>\n⑩ 금고의 임원은 명예직으로 한다. 다만, 제2항에 따라 상근하는 임원에게는 급여를 지급할 수 있다. \u003c개정 2017.12.26, 2021.10.19>\n⑪ 임원의 선임 방법과 절차 등에 관하여 이 법에서 정한 사항 외에 필요한 사항은 정관으로 정한다. \u003c개정 2017.12.26, 2021.10.19>"},"법_제19조":{"title":"새마을금고법 제19조(임원과 직원)","text":"제19조(임원과 직원)\n① 이사장은 금고를 대표하고, 금고의 업무를 총괄한다.\n② 이사장은 총회와 이사회의 의장이 된다.\n③ 이사장의 자리가 비거나 사고가 있으면 이사회가 정하는 이사가 그 직무를 대행한다. 다만, 이사장이 구속되거나 60일 이상의 장기입원 등의 사유로 금고의 업무를 집행할 수 없고 총회를 소집할 여유가 없을 때에는 회장은 임원 중에서 임시대표이사를 지정할 수 있다. \u003c개정 2011.3.8, 2021.10.19>\n④ 감사는 금고의 재산과 업무 집행상황에 대하여 분기마다 1회 이상 감사하고 그 결과를 총회와 이사회에 보고하여야 한다.\n⑤ 감사의 직무에 관하여는 「상법」 제402조, 제412조의5, 제413조 및 제413조의2를 준용한다. \u003c개정 2016.1.6, 2017.12.26>\n⑥ 금고와 이사장 사이에 소송, 계약 등의 법률행위를 하는 경우에는 감사가 금고를 대표한다.\n⑦ 감사는 총회나 이사회에 출석하여 그 의견을 진술할 수 있다.\n⑧ 임원은 총회의 의결로써 해임하며, 그 절차나 그 밖에 필요한 사항은 대통령령으로 정한다.\n⑨ 금고의 직원으로서 전무, 상무 및 그 밖의 직원을 둘 수 있으며, 전무나 상무를 둘 수 있는 금고와 직원의 자격 등 필요한 사항은 대통령령으로 정한다."},"법_제20조":{"title":"새마을금고법 제20조(임원의 임기)","text":"제20조(임원의 임기)\n① 이사장 및 이사의 임기는 4년으로 하고, 감사의 임기는 3년으로 한다. \u003c개정 2011.3.8, 2023.4.11>\n② 제1항에도 불구하고 임원 중 일부의 궐원으로 인한 재선거 또는 보궐선거로 선임된 임원의 임기는 다음 각 호와 같다. \u003c개정 2023.4.11>\n1. 재선거의 경우에는 재선거 실시 전에 실시한 선거로 선출된 임원의 남은 임기\n2. 보궐선거의 경우에는 전임자의 남은 임기\n③ 이사장은 2차에 한정하여 연임할 수 있다. 이 경우 이사장이 임기만료일 전 2년부터 임기만료일까지 퇴임한 경우에는 1회를 재임한 것으로 보고, 임기만료에 따라 퇴임한 이사장이 임기만료 후 2년 이내에 이사장으로 선임되는 경우에는 연임한 것으로 본다. \u003c신설 2023.4.11>"},"법_제21조":{"title":"새마을금고법 제21조(임원의 결격 사유)","text":"제21조(임원의 결격 사유)\n① 다음 각 호의 어느 하나에 해당하는 사람은 금고의 임원이 될 수 없다. 다만, 제18조제3항에 따른 상근이사는 제16호를 적용하지 아니한다. \u003c개정 2011.3.8, 2016.1.6, 2017.12.26, 2023.4.11>\n1. 미성년자ㆍ피성년후견인 또는 피한정후견인\n2. 파산선고를 받고 복권되지 아니한 사람\n3. 제85조제1항, 「형법」 제355조부터 제357조까지의 죄(금고나 중앙회의 사업과 관련된 죄만 해당한다)를 범하여 금고 이상의 실형을 선고받고 그 집행이 끝나거나(집행이 끝난 것으로 보는 경우를 포함한다. 이하 이 항에서 같다) 집행이 면제된 날부터 5년이 지나지 아니한 사람\n4. 제3호의 죄를 범하여 금고 이상의 형의 집행유예를 선고받고 그 집행유예 기간이 끝난 날부터 3년이 지나지 아니한 사람\n5. 제3호의 죄를 범하여 금고 이상의 형의 선고유예를 받고 그 선고유예 기간이 끝난 날부터 3년이 지나지 아니한 사람\n6. 제3호의 죄를 범하여 벌금형을 선고받고 그 형이 확정된 후 3년이 지나지 아니한 사람\n7. 삭제\u003c2023.4.11>\n8. 제85조제3항 또는 「공공단체등 위탁선거에 관한 법률」 제58조, 제59조, 제61조부터 제66조까지에 규정된 죄를 범하여 100만원 이상의 벌금형을 선고받고 그 형이 확정된 후 3년이 지나지 아니한 사람\n9. 제3호의 죄 외의 죄로 금고 이상의 실형을 선고받고 그 집행이 끝나거나 집행이 면제된 날부터 3년이 지나지 아니한 사람\n10. 제3호의 죄 외의 죄로 금고 이상의 형의 집행유예를 선고받고 그 집행유예 기간 중에 있는 사람\n11. 제3호의 죄 외의 죄로 금고 이상의 형의 선고유예를 받고 그 선고유예 기간 중에 있는 사람\n11의2. 금고의 임직원으로 재임 또는 재직 중 다른 임직원에게 「형법」 제257조제1항, 제260조제1항, 제261조(제260조제2항의 죄를 범한 경우는 제외한다), 제262조(제260조제2항의 죄를 범한 경우는 제외하며, 제257조의 예에 따르는 경우로 한정한다) 또는 제324조의 죄를 범하여 300만원 이상의 벌금형을 선고받고 그 형이 확정된 후 3년이 지나지 아니한 사람\n11의3. 금고의 임직원으로 재임 또는 재직 중 다른 임직원에게 「형법」 제303조제1항 또는 「성폭력범죄의 처벌 등에 관한 특례법」 제10조제1항의 죄를 범하여 100만원 이상의 벌금형을 선고받고 그 형이 확정된 후 3년이 지나지 아니한 사람\n12. 이 법 또는 대통령령으로 정하는 금융 관련 법령(이하 \"금융관계법령\"이라 한다)에 따라 징계면직 또는 해임된 사람으로서 징계면직 또는 해임된 날부터 5년이 지나지 아니한 사람\n12의2. 이 법 또는 금융관계법령에 따라 직무정지(업무의 집행정지를 포함한다. 이하 이 항에서 같다) 또는 정직의 제재조치를 받은 사람으로서 제재조치 종료일부터 4년이 지나지 아니한 사람\n13. 이 법 또는 금융관계법령에 따라 재직 또는 재임 중이었더라면 징계면직 또는 해임요구의 조치를 받았을 것으로 통보된 퇴임 직원이나 임원으로서 그 통보가 있은 날부터 5년(통보가 있은 날부터 5년이 퇴직 또는 퇴임한 날부터 7년을 초과하는 경우에는 퇴직 또는 퇴임한 날부터 7년으로 한다)이 지나지 아니한 사람\n13의2. 이 법 또는 금융관계법령에 따라 재임 또는 재직 중이었더라면 직무정지 또는 정직의 제재조치를 받았을 것으로 통보된 퇴임 임원이나 퇴직한 직원으로서 그 통보가 있은 날부터 4년(통보가 있은 날부터 4년이 퇴임 또는 퇴직한 날부터 6년을 초과하는 경우에는 퇴임 또는 퇴직한 날부터 6년으로 한다)이 지나지 아니한 사람\n14. 법원의 판결이나 다른 법률에 따라 자격을 잃거나 정지된 사람\n15. 공공기관 또는 다른 법인이나 회사에서 징계면직된 사람으로서 징계면직된 날부터 2년이 지나지 아니한 사람\n16. 회원으로서 임원 선임 선거일공고일 현재의 정관으로 정하는 출자좌수 이상을 2년 이상 계속 보유하고 있지 아니한 사람. 다만, 설립이나 합병 후 2년이 지나지 아니한 금고의 경우에는 그러하지 아니하다.\n17. 임원 선임 선거일공고일 현재 해당 금고에 대하여 정관으로 정하는 금액이나 기간을 초과하는 채무를 연체한 사람\n18. 그 밖에 정관으로 정하는 자격 제한 사유에 해당하는 사람\n② 임원에게 제1항(제12호의2는 제외한다)에 따른 사유가 발견되거나 발생한 경우에는 해당 임원은 당연 퇴임된다. \u003c개정 2016.1.6>\n③ 제2항에 따라 퇴임한 임원이 퇴임 전에 관여한 행위는 그 효력을 잃지 아니한다.\n④ 금고와 중앙회는 임원 또는 임원 후보자에게 제1항의 결격사유가 있는지를 확인하기 위하여 주된 사무소를 관할하는 경찰관서의 장에게 제1항제3호부터 제6호까지 및 제8호부터 제11호까지, 제11호의2 및 제11호의3에 해당하는 범죄의 경력조회 등 필요한 협조를 요청할 수 있고, 해당 경찰관서의 장은 그 결과를 회보하여야 한다. \u003c신설 2011.3.8, 2023.4.11>"},"법_제25조":{"title":"새마을금고법 제25조(임원의 성실 의무와 책임)","text":"제25조(임원의 성실 의무와 책임)\n① 금고의 임원은 이 법과 이 법에 따라 하는 명령과 정관ㆍ규정 및 총회와 이사회의 의결 사항을 지키고 금고를 위하여 성실히 그 직무를 수행하여야 한다.\n② 임원이 그 직무를 수행할 때 고의나 과실(비상근임원의 경우에는 고의나 중대한 과실)로 금고에 끼친 손해에 대하여는 연대하여 손해배상의 책임을 진다.\n③ 임원이 그 직무를 수행할 때 고의나 중대한 과실로 타인에게 끼친 손해에 대하여는 연대하여 손해배상의 책임을 진다.\n④ 임원이 결산보고서에 거짓으로 기록, 등기 또는 공고를 하여 금고나 타인에게 손해를 끼친 경우에도 제2항 및 제3항과 같다.\n⑤ 이사회가 고의나 중대한 과실로 금고에 손해를 끼친 경우에는 그 고의나 중대한 과실에 관련된 이사회에 출석한 임원은 그 손해에 대하여 연대하여 손해배상의 책임을 진다. 다만, 그 회의에서 반대 의사를 표시한 임원은 그러하지 아니하다.\n⑥ 제2항부터 제5항까지의 규정에 따른 구상권(求償權)은 이사장을 포함한 이사에 대하여는 감사가, 임원 전원에 대하여는 회원 3분의 1 이상의 동의를 받은 회원 대표가 행사한다. \u003c개정 2021.10.19>\n⑦ 정관으로 정하는 임원은 그 직무에 관하여 신원보증을 하여야 한다.\n⑧ 제18조제2항에 따라 상근하는 임원은 다른 법인이나 회사의 상근직을 겸할 수 없다. \u003c신설 2011.3.8>"},"법_제26조":{"title":"새마을금고법 제26조(「민법」ㆍ「상법」의 준용)","text":"제26조(「민법」ㆍ「상법」의 준용)\n① 금고의 임원에 관하여는 「민법」 제35조, 제63조 및 「상법」 제382조제2항, 제385조제2항ㆍ제3항, 제386조제1항, 제403조부터 제406조까지, 제407조 및 제408조를 각각 준용한다. 이 경우 「상법」 제385조제2항 중 \"발행주식의 총수의 100분의 3 이상에 해당하는 주식을 가진 주주\"는 \"회원 100명 또는 100분의 3 이상의 동의를 받은 회원\"으로 보고, 같은 법 제403조제1항 중 \"발행주식의 총수의 100분의 1 이상에 해당하는 주식을 가진 주주\"는 \"회원 100명 또는 100분의 1 이상의 동의를 받은 회원\"으로 본다. \u003c개정 2025.1.7>\n② 상근이사 또는 정관으로 정하는 간부직원에 관하여는 「상법」 제11조제1항ㆍ제3항, 제12조, 제13조 및 제17조와 「상업등기법」 제23조제1항, 제50조 및 제51조를 각각 준용한다. \u003c개정 2011.3.8, 2014.5.20>"},"법_제35조":{"title":"새마을금고법 제35조(적립금과 손익금의 처리)","text":"제35조(적립금과 손익금의 처리)\n① 금고는 매 사업연도마다 자기자본(직전 사업연도말 재무상태표의 자산총액에서 부채총액을 차감한 금액을 말한다. 이하 같다)의 총액에 달할 때까지 잉여금의 100분의 15 이상을 법정 적립금으로 적립하여야 한다. \u003c개정 2011.3.8, 2025.1.7>\n② 금고는 대손금(貸損金)의 상각(償却)이나 해산의 경우 외에는 제1항에 따른 적립금을 사용하거나 배당에 충당하지 못한다.\n③ 금고는 결손의 보전(補塡)과 불가항력에 의한 회계사고에 충당하기 위한 준비금으로서 매 사업연도마다 잉여금의 100분의 20 이상을 특별적립금으로 적립하여야 한다. \u003c개정 2025.1.7>\n④ 금고는 정관으로 정하는 바에 따라 사업이나 배당준비금으로서 매 사업연도마다 잉여금의 일부를 임의적립금으로 적립할 수 있다. \u003c개정 2025.1.7>\n⑤ 금고는 사업연도 결산 결과 손실이 발생한 경우에는 특별적립금, 임의적립금의 순으로 이를 보전하되, 잔여손실금이 있으면 이를 다음 사업연도에 이월한다.\n⑥ 금고가 여러 사업연도에 걸쳐 계속하여 손실이 있고 이를 보전할 적립금이 없는 경우에는 총회에서 회원 과반수(제13조제1항 단서의 경우에는 251명 이상의 회원)의 출석과 출석한 회원 3분의 2 이상의 찬성을 받아 자본금을 감소하여 각 회원의 납입출자액이 감소한 것으로 할 수 있다. 자본금을 감소한 경우에는 이를 회장에게 보고하여야 한다. \u003c개정 2011.3.8, 2025.1.7>\n⑦ 제6항에 따라 자본금을 감소한 경우에는 이의신고 기간을 정하여 공고하여야 하며, 공고된 이의신고 기간에 채권자로부터 자본금 감소에 대한 이의신고가 없는 경우에는 이의가 없는 것으로 본다.\n⑧ 채권자가 이의신고를 한 경우에는 금고가 이를 변제하거나 상당한 담보를 제공하지 아니하면 제6항에 따른 자본금의 감소는 그 효력을 발생하지 아니한다.\n⑨ 제6항 및 제7항에 따른 보고와 공고 등에 관하여 필요한 사항은 대통령령으로 정한다.\n⑩ 금고는 손실금을 보전하고 적립금을 공제한 후가 아니면 잉여금을 배당할 수 없으며, 배당은 정관으로 정하는 비율의 한도 내에서 납입출자액에 비례하여야 한다. 이 경우 회원의 사업 이용 실적의 비율에 따른 배당을 병행할 수 있다. \u003c개정 2025.1.7>"},"법_제44조":{"title":"새마을금고법 제44조(「민법」 등 준용)","text":"제44조 「민법」 등 준용\n금고의 해산과 청산에 관하여는 이 법에 규정한 것 외에는 「민법」 제79조, 제81조, 제87조, 제88조제1항 및 제2항, 제89조부터 제92조까지, 제93조제1항과 제2항 및 「비송사건절차법」 제121조를 각각 준용한다."},"법_제45조":{"title":"새마을금고법 제45조(설립등기)","text":"제45조(설립등기)\n① 제7조제1항에 따라 설립인가를 받은 경우에는 그 설립인가서가 도달한 날부터 3주간 내에 다음 각 호의 사항을 등기하여야 한다.\n1. 목적\n2. 명칭\n3. 업무구역\n4. 사무소의 소재지\n5. 설립인가 연월일\n6. 출자 1좌의 금액\n7. 존립 시기나 해산 사유를 정할 때에는 그 시기나 사유\n8. 임원의 성명과 주소\n9. 공고 방법\n② 제1항에 따른 등기를 신청할 때에는 설립인가서, 창립총회 의사록 및 정관의 등본을 첨부하여야 한다."},"법_제81조":{"title":"새마을금고법 제81조(회원의 검사 청구)","text":"제81조(회원의 검사 청구)\n① 회원이 재적회원(在籍會員) 10분의 1 이상의 동의를 받아 소속 금고의 업무 또는 회계의 집행상황이 법령, 정관 또는 공제규정에 위배된다는 이유로 검사를 청구한 경우에는 주무부장관은 회장에게 해당 금고의 업무상황을 검사하게 할 수 있다.\n② 회원이 재적회원 10분의 1 이상의 동의를 받아 중앙회의 업무나 회계의 집행상황이 법령, 정관 또는 공제규정에 위배된다는 이유로 검사를 청구한 경우에는 주무부장관은 금융감독원장에게 중앙회를 검사하게 할 수 있다. \u003c개정 2011.3.8>"},"법_제85조":{"title":"새마을금고법 제85조(벌칙)","text":"제85조(벌칙)\n① 다음 각 호의 어느 하나에 해당하는 자는 5년 이하의 징역 또는 5천만원 이하의 벌금에 처한다. \u003c개정 2011.3.8, 2014.6.11, 2025.1.7>\n1. 자금을 금고나 중앙회의 사업 목적 외에 사용ㆍ대출하거나 금고나 중앙회의 재산을 투기 목적으로 처분하거나 이용한 금고 또는 중앙회의 임직원\n2. 제80조제1항에 따른 경영지도 사항을 이행하지 아니한 금고 또는 중앙회의 임직원\n3. 제80조의2제3항에 따른 경영개선명령이나 이행계획제출명령을 이행하지 아니한 임원, 관리인 또는 청산인\n② 금고나 중앙회의 임직원 또는 청산인이 다음 각 호의 어느 하나에 해당하는 행위를 한 경우에는 3년 이하의 징역이나 3천만원 이하의 벌금에 처한다. \u003c개정 2011.3.8, 2014.6.11, 2017.12.26, 2023.4.11>\n1. 감독기관의 인가나 승인을 받아야 하는 사항에 관하여 인가나 승인을 받지 아니하거나 인가가 취소된 후에도 업무를 계속하여 수행한 경우\n2. 거짓으로 등기를 한 경우\n3. 감독기관, 총회, 이사회에 대하여 거짓으로 자료를 제출하거나 진술(서면진술을 포함한다)한 경우\n4. 총회나 이사회의 의결이 필요한 사항에 대하여 의결을 거치지 아니하고 집행한 경우\n5. 제29조(제67조제5항에서 준용하는 경우를 포함한다)를 위반한 경우\n6. 금고나 중앙회로 하여금 제28조제3항(제67조제5항에서 준용하는 경우를 포함한다)에 따른 명령, 같은 조 제5항이나 제35조(제70조제4항에서 준용하는 경우를 포함한다)를 위반하게 한 경우\n7. 제31조(제70조제4항에서 준용하는 경우를 포함한다)를 위반하여 금고나 중앙회로 하여금 동산이나 부동산을 소유하게 한 경우\n8. 제44조에 따라 준용되는 「민법」의 규정을 위반한 경우\n9. 감독기관의 검사를 거부ㆍ방해 또는 기피하거나 해당 검사원의 질문에 거짓으로 진술(서면진술을 포함한다)하거나 자료를 제출한 경우\n10. 제75조에 따른 경영 공시를 이행하지 아니하거나 거짓으로 공시한 경우\n③ 제22조제2항부터 제4항까지 및 제22조의2(제64조의2제6항에서 준용하는 경우를 포함한다)를 위반한 자는 2년 이하의 징역이나 2천만원 이하의 벌금에 처한다. \u003c신설 2011.3.8, 2014.6.11, 2023.4.11>\n④ 제5조를 위반하여 금고나 중앙회로 하여금 정치에 관여하는 행위를 하게 한 자는 다른 법률에 특별히 규정된 경우 외에는 1년 이하의 징역이나 1천만원 이하의 벌금에 처한다. \u003c개정 2011.3.8, 2014.6.11>\n⑤ 제2조제5항을 위반한 자는 1년 이하의 징역이나 1천만원 이하의 벌금에 처한다. \u003c개정 2011.3.8, 2014.6.11>\n⑥ 제3항에 따른 죄의 공소시효는 해당 선거일 후 6개월(선거일 후에 이루어진 범죄는 그 행위를 한 날부터 6개월)을 경과함으로써 완성된다. 다만, 범인이 도피하거나 범인이 공범 또는 증명에 필요한 참고인을 도피시킨 경우에는 그 기간을 3년으로 한다. \u003c신설 2017.12.26>"},"시행령_제2조":{"title":"새마을금고법 시행령 제2조(설립절차)","text":"제2조(설립절차)\n① 「새마을금고법」(이하 \"법\"이라 한다) 제7조에 따라 새마을금고(이하 \"금고\"라 한다)를 설립하려는 발기인은 정관안과 사업계획안을 작성하고, 다음 각 호의 사항을 15일 이상 공고한 후 창립총회를 개최하여야 한다.\n1. 창립총회의 일시 및 장소\n2. 회원의 자격\n3. 창립총회에 부칠 사항\n② 제1항의 공고는 금고의 주된 사무소 게시판에 게시하는 방법으로 한다.\n③ 다음 각 호의 사항은 창립총회의 의결을 얻어야 한다.\n1. 정관안\n2. 사업계획안\n3. 임원의 선임\n4. 설립경비에 관한 사항 등 설립에 필요한 사항"},"시행령_제3조":{"title":"새마을금고법 시행령 제3조(설립인가 신청)","text":"제3조(설립인가 신청)\n① 법 제7조에 따라 발기인이 금고의 설립인가를 받으려는 때에는 설립인가 신청서에 다음 각 호의 서류를 첨부하여 중앙회장(이하\"회장\"이라 한다)을 거쳐 특별자치시장ㆍ특별자치도지사 또는 시장ㆍ군수ㆍ구청장(자치구의 구청장을 말한다. 이하 같다)에게 설립인가 신청을 해야 한다. \u003c개정 2008.2.29, 2011.9.9, 2013.3.23, 2014.11.19, 2017.7.26, 2020.9.8>\n1. 정관\n2. 창립총회 의사록 사본\n3. 사업계획서\n4. 발기인 대표와 임원의 이력서 및 취임승낙서\n5. 금고 설립 동의서를 제출한 자의 명부\n② 금고의 설립이 법 제37조에 따른 합병으로 인한 것이면 제1항 각 호의 서류 외에 그 설립되는 금고가 승계할 권리ㆍ의무의 범위를 의결한 합병총회의 의사록 사본을 첨부하여야 한다.\n③ 회장은 제1항에 따른 설립인가 신청서를 받은 날부터 30일 이내에 의견을 붙여 특별자치시장ㆍ특별자치도지사 또는 시장ㆍ군수ㆍ구청장에게 제출해야 한다. \u003c신설 2011.9.9, 2013.3.23, 2014.11.19, 2017.7.26, 2020.9.8>\n④ 특별자치시장ㆍ특별자치도지사 또는 시장ㆍ군수ㆍ구청장은 제3항에 따라 회장으로부터 설립인가 신청서를 받은 날부터 60일 이내에 인가 여부를 신청인에게 알려야 한다. \u003c개정 2008.2.29, 2011.9.9, 2013.3.23, 2014.11.19, 2017.7.26, 2020.9.8>"},"시행령_제5조":{"title":"새마을금고법 시행령 제5조(총회 의사록)","text":"제5조 총회 의사록\n법 제12조제6항의 총회 의사록에는 총회의 진행 상황 및 결과를 적고, 의장과 총회에서 선출한 5명 이상의 출석회원이 기명ㆍ날인하여야 한다."},"시행령_제6조":{"title":"새마을금고법 시행령 제6조(대의원회 등)","text":"제6조(대의원회 등)\n① 법 제16조제1항에 따른 금고의 대의원회는 그 금고의 이사장과 대의원으로 구성한다.\n② 대의원의 자격은 정관으로 정하되, 회원으로 가입한 후 1년이 지난 자이어야 한다. 다만, 금고가 설립된 후 1년이 지나지 아니하였거나 직장 금고의 경우에는 그러하지 아니하다.\n③ 금고의 대의원의 수는 회원 수에 비례하여 정관으로 정하되, 100명 이상으로 한다.\n④ 대의원의 선임방법에 관하여 필요한 사항은 정관으로 정한다."},"시행령_제8조의3":{"title":"새마을금고법 시행령 제8조의3(이사장 선출방법을 선택할 수 있는 금고의 범위)","text":"제8조의3 이사장 선출방법을 선택할 수 있는 금고의 범위\n법 제18조제5항 단서에서 \"자산이 일정 규모 이하인 금고 등 대통령령으로 정하는 금고\"란 다음 각 호의 금고를 말한다. \u003c개정 2025.6.25>\n\n1. 이사장을 선출하는 연도의 전전 사업연도의 결산보고서에 적힌 자산총액이 2,000억원 미만인 지역금고\n2. 지역금고 외의 금고"},"시행령_제9조":{"title":"새마을금고법 시행령 제9조(임원의 해임)","text":"제9조(임원의 해임)\n① 법 제19조제8항에 따라 총회에서 임원의 해임의결을 하려면 재적회원 3분의 1 이상의 요구가 있어야 한다.\n② 이사장은 제1항에 따른 해임 요구가 있으면 늦어도 총회 개최일 7일 전까지 해당 임원에게 해임 요구에 관한 사항을 알리고 총회에서 변명할 기회를 주어야 한다.\n③ 임원의 해임에 관하여 그 밖에 필요한 사항은 정관으로 정한다."}}};
+const DATA={id:'root',t:COURSE.meta.title,sub:COURSE.meta.subtitle,c:COURSE.branches};
+(function normalizeCourse(n){
+  (n.c||[]).forEach(normalizeCourse);
+})(DATA);
+const esc=s=>String(s??'').replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+document.getElementById('legalStatus').textContent=COURSE.meta.kicker||'';
+const kakaoLink=document.getElementById('kakaoLink');
+if(COURSE.meta.kakaoUrl) kakaoLink.href=COURSE.meta.kakaoUrl; else kakaoLink.style.display='none';
+
+
+/* ══════════════ 공통 인덱싱 ══════════════ */
+const HUE={A:['--hA','--hA2'],B:['--hB','--hB2'],C:['--hC','--hC2'],D:['--hD','--hD2'],E:['--hE','--hE2']};
+const BR=['A','B','C','D','E'];
+const byId={}, parentOf={};
+(function idx(n,p,br){
+  byId[n.id]=n; parentOf[n.id]=p;
+  if(BR.includes(n.id)) br=n.id;
+  n.br=br||null;
+  (n.c||[]).forEach(k=>idx(k,n,br));
+})(DATA,null,null);
+const accOf=n=>n.br?`var(${HUE[n.br][0]})`:'var(--root1)';
+const acc2Of=n=>n.br?`var(${HUE[n.br][1]})`:'var(--canvas)';
+function count(n){ return n.c ? n.c.reduce((a,k)=>a+count(k),0) : 1; }
+
+/* 프레젠터 클리커(다음/이전)용 발표 순서 — 트리 전체를 문서 순서로 평탄화 */
+const STEPS=[];
+(function flatten(n){ STEPS.push(n); (n.c||[]).forEach(flatten); })(DATA);
+const stepIdxOf={}; STEPS.forEach((n,i)=>stepIdxOf[n.id]=i);
+let stepIndex=0;
+let lastFwdTime=0, lastBackTime=0;
+
+const isMobile=()=>window.matchMedia('(max-width:640px)').matches;
+const expanded=new Set(['root']);
+let PRESENT=false, focusBranch=null;
+
+/* ══════════════ 데스크톱 트리 레이아웃 ══════════════ */
+const stage=document.getElementById('stage'),
+      world=document.getElementById('world'),
+      wires=document.getElementById('wires');
+
+const COLX=[30,330,650,1010];
+const SLOT={1:80,2:66,3:62};
+const GAPD={1:34,2:16,3:8};
+const MIN_S=0.24, MAX_S=2.8;
+let view={x:60,y:40,s:.82};
+
+function layout(){
+  let cursor=20;
+  (function walk(n,d){
+    n.depth=d;
+    const open=(d===0)||(expanded.has(n.id)&&n.c&&n.c.length);
+    if(open && n.c && n.c.length){
+      n.c.forEach(k=>walk(k,d+1));
+      n.y=(n.c[0].y+n.c[n.c.length-1].y)/2;
+    }else{
+      const h=SLOT[d]||56;
+      n.y=cursor+h/2; cursor+=h+(GAPD[d]||8);
+    }
+  })(DATA,0);
+  return cursor;
+}
+
+function nodeHTML(n){
+  const open=expanded.has(n.id)&&n.c&&n.c.length;
+  let html=`<div class="node d${n.depth}${n.depth===3&&sheetOpenId===n.id?' active':''}" style="--ac:${accOf(n)};--ac2:${acc2Of(n)}" data-id="${n.id}">`;
+  if(n.depth===0){
+    html+=`<div><span class="txt">${n.t}</span><div class="sub">${n.sub}</div></div>`;
+  }else if(n.depth===1){
+    html+=`<span class="txt">${n.t}</span><span class="cnt">${count(n)}</span>`;
+  }else if(n.depth===2){
+    html+=`<span class="dot"></span><span class="txt">${n.t}</span>`;
+  }else{
+    html+=`<span class="sn">${n.n}</span><span class="txt">${n.t}</span>`;
+  }
+  if(n.c){
+    html+=`<div class="toggle${open?' open':''}">${open?'−':'+'}</div>`;
+  }else{
+    html+=`<div class="toggle" style="border-color:${accOf(n)}">›</div>`;
+  }
+  html+=`</div>`;
+  return html;
+}
+
+function bez(x1,y1,x2,y2){
+  const dx=Math.max(60,(x2-x1)*.55);
+  return `M${x1} ${y1} C${x1+dx} ${y1}, ${x2-dx} ${y2}, ${x2} ${y2}`;
+}
+
+let sheetOpenId=null;
+
+function drawDesktop(animate){
+  const totalH=layout();
+  world.querySelectorAll('.nodewrap').forEach(e=>e.remove());
+  const order=[];
+  (function collect(n){ order.push(n); if(expanded.has(n.id)||n.depth===0) (n.c||[]).forEach(collect); })(DATA);
+
+  order.forEach((n,i)=>{
+    const wrap=document.createElement('div');
+    wrap.className='nodewrap'+(focusBranch&&n.br&&n.br!==focusBranch?' dim':'');
+    wrap.style.left=COLX[n.depth]+'px';
+    wrap.style.top=(n.y-(SLOT[n.depth]||76)/2)+'px';
+    wrap.style.animationDelay=animate?(Math.min(i,26)*22)+'ms':'0ms';
+    wrap.innerHTML=nodeHTML(n);
+    world.appendChild(wrap);
+    const el=wrap.querySelector('.node');
+    if(PRESENT && focusBranch && n.id===focusBranch) el.classList.add('active-branch');
+    const act=()=>{
+      stepIndex=stepIdxOf[n.id]; updateStepBadge();
+      if(n.c){
+        if(n.depth===1){
+          const sameOpen=focusBranch===n.id && expanded.has(n.id);
+          if(sameOpen){ collapseNode(n); clearFocus(); }
+          else{ activateBranch(n.id); }
+        }else{
+          expanded.has(n.id)?collapseNode(n):expanded.add(n.id);
+        }
+        drawDesktop(true); scheduleFit();
+      }else openSheet(n);
+    };
+    el.onclick=act;
+    el.tabIndex=0;
+    el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();act();}};
+  });
+
+  // wires
+  let svg='';
+  order.forEach(n=>{
+    if(!expanded.has(n.id)||!n.c) return;
+    n.c.forEach(k=>{
+      const w1=nodeMeasuredW(n), x1=COLX[n.depth]+w1+13, y1=n.y;
+      const x2=COLX[k.depth]-2, y2=k.y;
+      const dim=focusBranch&&k.br&&k.br!==focusBranch;
+      svg+=`<path class="wire${dim?' dim':''}" d="${bez(x1,y1,x2,y2)}" stroke-width="${k.depth===1?2.6:1.8}" style="stroke:${accOf(k)};stroke-dasharray:1200;stroke-dashoffset:${animate?1200:0};animation:${animate?'drawLine .7s var(--ease) forwards':'none'};animation-delay:${animate?'80ms':'0ms'}"/>`;
+    });
+  });
+  wires.innerHTML=svg;
+  wires.setAttribute('width',COLX[3]+420);
+  wires.setAttribute('height',Math.max(totalH+40,700));
+
+  // 실제 렌더 폭 재측정 후 wire 재계산 (auto-width라 1프레임 뒤 보정)
+  requestAnimationFrame(()=>{
+    let svg2='';
+    order.forEach(n=>{
+      if(!expanded.has(n.id)||!n.c) return;
+      n.c.forEach(k=>{
+        const w1=nodeMeasuredW(n), x1=COLX[n.depth]+w1+13, y1=n.y;
+        const x2=COLX[k.depth]-2, y2=k.y;
+        const dim=focusBranch&&k.br&&k.br!==focusBranch;
+        svg2+=`<path class="wire${dim?' dim':''}" d="${bez(x1,y1,x2,y2)}" style="stroke:${accOf(k)};stroke-width:${k.depth===1?2.6:1.8}"/>`;
+      });
+    });
+    wires.innerHTML=svg2;
+  });
+}
+function nodeBox(n){
+  const el=world.querySelector('.nodewrap .node[data-id="'+n.id+'"]');
+  if(el) return {w:el.offsetWidth,h:el.offsetHeight};
+  return {w:n.depth===0?260:n.depth===1?190:n.depth===2?190:230,
+           h:n.depth===0?76:n.depth===1?58:n.depth===2?50:50};
+}
+function nodeMeasuredW(n){ return nodeBox(n).w; }
+function collapseNode(n){ expanded.delete(n.id); (n.c||[]).forEach(collapseNode); if(focusBranch===n.id) clearFocus(); }
+function collapseOtherBranches(activeId){
+  BR.forEach(id=>{ if(id!==activeId) collapseNode(byId[id]); });
+}
+function activateBranch(id){
+  collapseOtherBranches(id);
+  expanded.add(id);
+  setFocus(id);
+}
+
+/* ── 포커스(브랜치 집중) ── */
+function setFocus(id){ focusBranch=id; document.getElementById('unfocus').classList.add('on'); }
+function clearFocus(){ focusBranch=null; document.getElementById('unfocus').classList.remove('on'); }
+document.getElementById('unfocus').onclick=()=>{clearFocus();stepIndex=0;updateStepBadge();drawDesktop(true);scheduleFit();};
+
+/* ══════════════ Auto-Fit 엔진 ══════════════
+   클릭 · 확장 · 포커스 · 리사이즈 · 전체화면 전환마다
+   "지금 봐야 할 노드들"을 계산해 화면 가득 자동으로 맞춘다. */
+function availableRect(){
+  const header=document.querySelector('header').offsetHeight;
+  let sheetW=0;
+  if(sheet.classList.contains('on')) sheetW=sheet.offsetWidth;
+  const padX=36, padTop=20, padBottom=54;
+  const w=Math.max(240, innerWidth - sheetW - padX*2);
+  const h=Math.max(220, innerHeight - header - padTop - padBottom);
+  return {x:padX, y:header+padTop, w, h};
+}
+function boundsOf(nodes){
+  let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+  nodes.forEach(n=>{
+    const b=nodeBox(n);
+    const x0=COLX[n.depth], x1=x0+b.w+18;
+    const y0=n.y-b.h/2, y1=n.y+b.h/2;
+    if(x0<minX)minX=x0; if(x1>maxX)maxX=x1;
+    if(y0<minY)minY=y0; if(y1>maxY)maxY=y1;
+  });
+  return {minX,minY,maxX,maxY};
+}
+function currentFitSet(){
+  if(focusBranch){
+    const b=byId[focusBranch];
+    const nodes=[b];
+    (function collect(n){ (n.c||[]).forEach(k=>{ if(expanded.has(n.id)){ nodes.push(k); collect(k); } }); })(b);
+    return nodes;
+  }
+  const nodes=[];
+  (function collect(n){ nodes.push(n); if(expanded.has(n.id)||n.depth===0) (n.c||[]).forEach(collect); })(DATA);
+  return nodes;
+}
+let fitRaf=null;
+function scheduleFit(instant){
+  if(isMobile()) return;
+  cancelAnimationFrame(fitRaf);
+  fitRaf=requestAnimationFrame(()=>{
+    const nodes=currentFitSet();
+    if(!nodes.length) return;
+    const {minX,minY,maxX,maxY}=boundsOf(nodes);
+    const rect=availableRect();
+    const bw=Math.max(1,maxX-minX), bh=Math.max(1,maxY-minY);
+    let s=Math.min(rect.w/bw, rect.h/bh);
+    s=Math.max(MIN_S, Math.min(MAX_S, s));
+    if(instant) world.classList.add('instant');
+    view.s=s;
+    view.x=rect.x + rect.w/2 - (minX+maxX)/2*s;
+    view.y=rect.y + rect.h/2 - (minY+maxY)/2*s;
+    apply();
+    if(instant) requestAnimationFrame(()=>requestAnimationFrame(()=>world.classList.remove('instant')));
+  });
+}
+function home(){ scheduleFit(true); } // 구버전 호출부 대응용 별칭
+
+/* 팬 · 휠줌 · 핀치줌(터치) */
+let drag=null;
+const pointers=new Map();
+let pinch=null;
+stage.addEventListener('pointerdown',e=>{
+  pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pointers.size===2){
+    drag=null; world.classList.add('instant');
+    const pts=[...pointers.values()];
+    pinch={dist:Math.hypot(pts[0].x-pts[1].x,pts[0].y-pts[1].y),scale:view.s,
+           cx:(pts[0].x+pts[1].x)/2, cy:(pts[0].y+pts[1].y)/2};
+  }else if(pointers.size===1){
+    if(e.target.closest('.node')||e.target.closest('.toggle'))return;
+    world.classList.add('instant');
+    drag={px:e.clientX,py:e.clientY,x:view.x,y:view.y};
+    stage.classList.add('drag');
+  }
+  try{ stage.setPointerCapture(e.pointerId); }catch(err){}
+});
+stage.addEventListener('pointermove',e=>{
+  if(pointers.has(e.pointerId)) pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pinch && pointers.size===2){
+    const pts=[...pointers.values()];
+    const dist=Math.hypot(pts[0].x-pts[1].x,pts[0].y-pts[1].y);
+    const ns=Math.min(MAX_S,Math.max(MIN_S,pinch.scale*(dist/pinch.dist)));
+    const r=stage.getBoundingClientRect(), mx=pinch.cx-r.left, my=pinch.cy-r.top;
+    view.x=mx-(mx-view.x)*(ns/view.s); view.y=my-(my-view.y)*(ns/view.s); view.s=ns; apply();
+    return;
+  }
+  if(!drag)return;
+  view.x=drag.x+(e.clientX-drag.px); view.y=drag.y+(e.clientY-drag.py); apply();
+});
+['pointerup','pointercancel'].forEach(t=>stage.addEventListener(t,e=>{
+  pointers.delete(e.pointerId);
+  if(pointers.size<2) pinch=null;
+  if(pointers.size===0){ drag=null; stage.classList.remove('drag'); setTimeout(()=>world.classList.remove('instant'),50); }
+}));
+stage.addEventListener('wheel',e=>{
+  e.preventDefault(); world.classList.add('instant');
+  const f=Math.exp(-e.deltaY*0.0012), ns=Math.min(MAX_S,Math.max(MIN_S,view.s*f));
+  const r=stage.getBoundingClientRect(), mx=e.clientX-r.left, my=e.clientY-r.top;
+  view.x=mx-(mx-view.x)*(ns/view.s); view.y=my-(my-view.y)*(ns/view.s); view.s=ns; apply();
+  clearTimeout(stage._t); stage._t=setTimeout(()=>world.classList.remove('instant'),120);
+},{passive:false});
+function apply(){ world.style.transform=`translate(${view.x}px,${view.y}px) scale(${view.s})`; }
+function zoom(f){
+  const ns=Math.min(MAX_S,Math.max(MIN_S,view.s*f)), cx=innerWidth/2, cy=innerHeight/2;
+  view.x=cx-(cx-view.x)*(ns/view.s); view.y=cy-(cy-view.y)*(ns/view.s); view.s=ns; apply();
+}
+
+/* 전체화면 */
+const btnFull=document.getElementById('btnFull');
+const canFS=!!(document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen);
+if(!canFS) btnFull.style.display='none';
+btnFull.onclick=()=>{
+  const de=document.documentElement;
+  const isFs=document.fullscreenElement||document.webkitFullscreenElement;
+  if(!isFs){ (de.requestFullscreen||de.webkitRequestFullscreen).call(de).catch(()=>{}); }
+  else{ (document.exitFullscreen||document.webkitExitFullscreen).call(document); }
+};
+function onFsChange(){
+  const isFs=!!(document.fullscreenElement||document.webkitFullscreenElement);
+  btnFull.classList.toggle('on',isFs);
+  btnFull.setAttribute('aria-label',isFs?'전체화면 종료':'전체화면');
+  setTimeout(()=>scheduleFit(true),80);
+}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+
+/* 화면 맞춤 수동 버튼 */
+document.getElementById('btnFit').onclick=()=>{ world.classList.remove('instant'); scheduleFit(); };
+
+/* ══════════════ 프레젠터 클리커(로지텍 Spotlight 등) 내비게이션 ══════════════
+   다음/이전 버튼(→/←, PageDown/Up, Space)만으로 화면을 조준하지 않고도
+   가지→카테고리→카드 순서대로 자동 드릴다운/백 이동한다. */
+function goToStep(idx){
+  if(isMobile()) return;
+  idx=Math.max(0,Math.min(STEPS.length-1,idx));
+  stepIndex=idx;
+  const n=STEPS[idx];
+  if(n.br) activateBranch(n.br); else clearFocus();
+  let p=parentOf[n.id];
+  while(p){ expanded.add(p.id); p=parentOf[p.id]; }
+  if(n.c){
+    expanded.add(n.id);
+    drawDesktop(true);
+    scheduleFit();
+  }else{
+    drawDesktop(true);
+    openSheet(n);
+  }
+  updateStepBadge();
+}
+function updateStepBadge(){
+  const el=document.getElementById('stepBadge');
+  if(!el) return;
+  const n=STEPS[stepIndex];
+  el.innerHTML=`<b>${stepIndex+1}</b> / ${STEPS.length} <span>${n.t}</span>`;
+}
+/* 두 번 빠르게 누르면(더블탭) 카드 단위를 건너뛰고 다음/이전 카테고리·영역으로 이동 */
+function skipStep(dir){
+  let idx=stepIndex;
+  do{ idx+=dir; }while(idx>0 && idx<STEPS.length-1 && STEPS[idx].depth===3);
+  goToStep(idx);
+  flashSkip(dir);
+}
+function flashSkip(dir){
+  const el=document.getElementById('stepBadge');
+  if(!el) return;
+  el.classList.remove('skip-fwd','skip-back');
+  void el.offsetWidth;
+  el.classList.add(dir>0?'skip-fwd':'skip-back');
+}
+
+/* ══════════════ 모바일 드릴다운 ══════════════ */
+let path=['root'];
+function drawMobile(){
+  const cur=byId[path[path.length-1]];
+  const cr=document.getElementById('crumb');
+  cr.innerHTML = path.length>1
+    ? `<button class="back">‹ ${byId[path[path.length-2]].t}</button>`
+    : `<span>전체 개요</span>`;
+  if(path.length>1) cr.querySelector('.back').onclick=()=>{path.pop();drawMobile();document.getElementById('mobile').scrollTop=0};
+  document.getElementById('mtitle').textContent=cur.t;
+  document.getElementById('mdesc').textContent=
+    cur.id==='root' ? '영역을 눌러 단계별로 좁혀 들어가세요. 마지막 카드에서 핵심요약·ANKI 빈칸회상·근거조문 원문을 볼 수 있습니다.'
+    : `${count(cur)}개 학습카드`;
+  const list=document.getElementById('mlist'); list.innerHTML='';
+  (cur.c||[]).forEach((k,i)=>{
+    const row=document.createElement('div'); row.className='mrow'; row.tabIndex=0;
+    row.style.setProperty('--ac',accOf(k)); row.style.animationDelay=(i*35)+'ms';
+    row.innerHTML=`<span class="bar"></span><span class="mt">${k.t}</span><span class="mc">${k.c?count(k):k.n}</span><span class="ar">›</span>`;
+    const act=()=>{ if(k.c){path.push(k.id);drawMobile();document.getElementById('mobile').scrollTop=0;} else openSheet(k); };
+    row.onclick=act;
+    row.onkeydown=e=>{if(e.key==='Enter'){act()}};
+    list.appendChild(row);
+  });
+}
+
+/* ══════════════ 상세 시트 ══════════════ */
+const sheet=document.getElementById('sheet'), scrim=document.getElementById('scrim');
+function openSheet(n){
+  sheetOpenId=n.id;
+  const c=n.card, p=parentOf[n.id];
+  sheet.style.setProperty('--ac',accOf(n));
+  document.getElementById('shEye').textContent=`${byId[parentOf[p.id].id].t} · ${p.t}`;
+  document.getElementById('shTitle').textContent=n.t;
+  const body=document.getElementById('shBody');
+  const recall=(c.recall||[]).map((r,i)=>`
+    <button class="recall-card" type="button" aria-expanded="false" data-recall="${i}">
+      <span class="recall-q">${esc(r.prompt)}</span>
+      <span class="recall-a"><span class="recall-answer">${esc(r.answer)}</span></span>
+      <span class="recall-hint">눌러서 중요단어 확인</span>
+    </button>`).join('');
+  const lawItems=(c.lawKeys||[]).map((key,i)=>{
+    const src=COURSE.legalTexts?.[key];
+    if(!src) return '';
+    return `<details class="law-article" ${i===0?'open':''}><summary>${esc(src.title)}</summary><pre class="law-text">${esc(src.text)}</pre></details>`;
+  }).join('');
+  body.innerHTML=`
+    <div class="blk"><h4>핵심 요약 · 교안 원문</h4><ul>${c.s.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+    <div class="blk"><h4>ANKI 핵심단어 · 빈칸 회상</h4><div class="recall-list">${recall}</div></div>
+    <div class="blk"><h4>쉬운 말 풀이</h4><p class="easy">${esc(c.e)}</p></div>
+    ${c.hook?`<div class="blk"><h4>암기 포인트</h4><p class="easy">${esc(c.hook)}</p></div>`:''}
+    <div class="blk"><h4>근거 조문 · 원문</h4><span class="lawtag">${esc(c.l)}</span><div class="law-list">${lawItems}</div></div>`;
+  body.querySelectorAll('.recall-card').forEach(btn=>{
+    btn.onclick=()=>{
+      const on=btn.classList.toggle('revealed');
+      btn.setAttribute('aria-expanded',on?'true':'false');
+      const hint=btn.querySelector('.recall-hint');
+      if(hint) hint.textContent=on?'다시 눌러 가리기':'눌러서 중요단어 확인';
+    };
+  });
+  body.scrollTop=0;
+  sheet.classList.add('on'); scrim.classList.add('on');
+  document.getElementById('shClose').focus();
+  if(!isMobile()){ drawDesktop(false); scheduleFit(); }
+}
+function closeSheet(){
+  sheetOpenId=null;
+  sheet.classList.remove('on'); scrim.classList.remove('on');
+  if(!isMobile()){ drawDesktop(false); scheduleFit(); }
+}
+scrim.onclick=closeSheet;
+document.getElementById('shClose').onclick=closeSheet;
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ if(sheet.classList.contains('on')) closeSheet(); else if(focusBranch){clearFocus();drawDesktop(true);scheduleFit();} }
+  if(!isMobile() && /^[1-5]$/.test(e.key)){
+    const b=byId[BR[+e.key-1]];
+    activateBranch(b.id); stepIndex=stepIdxOf[b.id]; updateStepBadge();
+    drawDesktop(true); scheduleFit();
+  }
+  if(e.key.toLowerCase()==='f') document.getElementById('btnPresent').click();
+
+  if(isMobile()) return;
+  const fwd = e.key==='ArrowRight'||e.key==='ArrowDown'||e.key==='PageDown'||(e.code==='Space'&&!e.shiftKey);
+  const back = e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='PageUp'||e.key==='Backspace'||(e.code==='Space'&&e.shiftKey);
+  const now=Date.now();
+  if(fwd){
+    e.preventDefault();
+    if(now-lastFwdTime<420){ lastFwdTime=0; skipStep(+1); }
+    else{ lastFwdTime=now; goToStep(stepIndex+1); }
+  }else if(back){
+    e.preventDefault();
+    if(now-lastBackTime<420){ lastBackTime=0; skipStep(-1); }
+    else{ lastBackTime=now; goToStep(stepIndex-1); }
+  }
+  else if(e.key==='Home'){ e.preventDefault(); goToStep(0); }
+  else if(e.key==='End'){ e.preventDefault(); goToStep(STEPS.length-1); }
+});
+
+/* 정답 파티클 */
+function burstAt(x,y,color){
+  const wrap=document.createElement('div'); wrap.className='burstwrap'; document.body.appendChild(wrap);
+  for(let i=0;i<14;i++){
+    const p=document.createElement('div'); p.className='p';
+    const ang=Math.random()*Math.PI*2, dist=40+Math.random()*70;
+    p.style.left=x+'px'; p.style.top=y+'px';
+    p.style.background=color;
+    p.style.setProperty('--tx',Math.cos(ang)*dist+'px');
+    p.style.setProperty('--ty',Math.sin(ang)*dist+'px');
+    p.style.animationDelay=(Math.random()*60)+'ms';
+    wrap.appendChild(p);
+  }
+  setTimeout(()=>wrap.remove(),900);
+}
+
+/* ══════════════ 컨트롤 ══════════════ */
+document.getElementById('btnIn').onclick=()=>{world.classList.remove('instant');zoom(1.22)};
+document.getElementById('btnOut').onclick=()=>{world.classList.remove('instant');zoom(1/1.22)};
+document.getElementById('btnExpand').onclick=function(){
+  const allOpen=expanded.size>10;
+  if(allOpen){ expanded.clear(); expanded.add('root'); this.textContent='모두 펼치기'; }
+  else{ (function w(n){ if(n.c){expanded.add(n.id);n.c.forEach(w);} })(DATA); this.textContent='모두 접기'; }
+  clearFocus();
+  if(isMobile()) drawMobile(); else { drawDesktop(true); scheduleFit(); }
+};
+document.getElementById('btnReset').onclick=()=>{
+  expanded.clear(); expanded.add('root'); path=['root']; clearFocus(); stepIndex=0; updateStepBadge();
+  document.getElementById('btnExpand').textContent='모두 펼치기';
+  closeSheet();
+  if(isMobile()){drawMobile();document.getElementById('mobile').scrollTop=0;} else {drawDesktop(true);scheduleFit();}
+};
+document.getElementById('btnPresent').onclick=function(){
+  PRESENT=!PRESENT;
+  document.body.classList.toggle('present',PRESENT);
+  this.classList.toggle('on',PRESENT);
+  this.textContent=PRESENT?'🎤 발표모드 종료':'🎤 발표모드';
+  if(!isMobile()){ scheduleFit(); }
+};
+
+/* 범례 */
+const LEGLABEL={A:'① 법의 기초',B:'② 설립',C:'③ 회원·출자',D:'④ 기관',E:'⑤ 임원'};
+function buildLegend(){
+  const wrap=document.getElementById('legend'); wrap.innerHTML='';
+  BR.forEach((b,i)=>{
+    const btn=document.createElement('button'); btn.className='leg';
+    btn.style.background=`var(${HUE[b][0]})`; btn.style.color=`var(${HUE[b][0]})`;
+    btn.textContent=(i+1)+'  '+LEGLABEL[b];
+    btn.style.background=`var(${HUE[b][0]})`;
+    btn.onclick=()=>{
+      if(isMobile()){ path=['root',b]; drawMobile(); document.getElementById('mobile').scrollTop=0; return; }
+      const node=byId[b]; expanded.add(node.id); setFocus(node.id); stepIndex=stepIdxOf[b]; updateStepBadge();
+      drawDesktop(true); scheduleFit();
+    };
+    wrap.appendChild(btn);
+  });
+}
+
+/* 최초 힌트 자동 숨김 */
+setTimeout(()=>document.getElementById('hint').classList.add('hide'),6000);
+
+function render(){
+  buildLegend();
+  if(isMobile()){
+    stage.style.display='none'; document.getElementById('mobile').style.display='block';
+    document.getElementById('hint').style.display='none';
+    document.getElementById('unfocus').style.display='none';
+    document.getElementById('stepBadge').style.display='none';
+    drawMobile();
+  }else{
+    stage.style.display='block'; document.getElementById('mobile').style.display='none';
+    document.getElementById('hint').style.display='';
+    document.getElementById('unfocus').style.display='';
+    document.getElementById('stepBadge').style.display='flex';
+    drawDesktop(true);
+    updateStepBadge();
+  }
+}
+let mq=window.matchMedia('(max-width:640px)'), wasM=mq.matches;
+let resizeT=null;
+addEventListener('resize',()=>{
+  if(mq.matches!==wasM){ wasM=mq.matches; render(); if(!wasM) home(); return; }
+  if(!isMobile()){ clearTimeout(resizeT); resizeT=setTimeout(()=>scheduleFit(true),100); }
+});
+addEventListener('orientationchange',()=>{ setTimeout(()=>{ if(!isMobile()) scheduleFit(true); },150); });
+render();
+if(!isMobile()) scheduleFit(true);
+</script>
+</body>
+</html>
