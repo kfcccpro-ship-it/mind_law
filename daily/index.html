@@ -3,70 +3,183 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>간부직원 자격전형 · 오늘의 5문제</title>
+<title>간부직원 자격전형 · 오늘의 20문제</title>
 <style>
-:root{--bg:#f4f5f7;--card:#fff;--ink:#17181c;--muted:#6e737b;--line:#e4e7eb;--accent:#2f62f5;--ok:#0a8f5b;--bad:#c9344b}
-*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
-main{max-width:760px;margin:auto;padding:18px 16px 70px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
-.back{color:var(--muted);text-decoration:none;font-weight:700}.pill{font-size:12px;font-weight:800;background:#eaf0ff;color:var(--accent);padding:7px 10px;border-radius:999px}
-.hero{background:linear-gradient(135deg,#1f2937,#38465d);color:#fff;border-radius:22px;padding:22px;margin-bottom:16px}
-.hero h1{font-size:24px;margin:0 0 8px}.hero p{margin:0;opacity:.78;line-height:1.55}.progress{margin-top:14px;font-size:13px;font-weight:700}
-.q{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:19px;margin:12px 0;box-shadow:0 5px 18px rgba(20,25,35,.05)}
-.qnum{font-size:12px;color:var(--accent);font-weight:900}.q h2{font-size:18px;line-height:1.5;margin:8px 0 14px}
-.choice{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:14px;padding:13px 14px;margin:8px 0;font-size:15px;line-height:1.45;cursor:pointer}
+:root{--bg:#f3f5f7;--card:#fff;--ink:#17191d;--muted:#6b717a;--line:#e2e6ea;--accent:#2f62f5;--ok:#087f53;--bad:#c5334d;--warn:#9a6500}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+main{max-width:760px;margin:auto;padding:16px 14px 70px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.back{color:var(--muted);text-decoration:none;font-weight:800}.pill{font-size:12px;font-weight:900;background:#eaf0ff;color:var(--accent);padding:7px 10px;border-radius:999px}
+.hero{background:linear-gradient(135deg,#1f2633,#3f4b61);color:#fff;border-radius:22px;padding:22px;margin-bottom:14px}
+.hero h1{font-size:24px;margin:0 0 7px}.hero p{margin:0;opacity:.82;line-height:1.55}.meter{height:8px;background:rgba(255,255,255,.18);border-radius:20px;overflow:hidden;margin-top:15px}.meter>i{display:block;height:100%;width:0;background:#fff;transition:width .25s}.progress{margin-top:8px;font-size:13px;font-weight:800}
+.card{background:var(--card);border:1px solid var(--line);border-radius:21px;padding:20px;box-shadow:0 6px 20px rgba(20,25,35,.05)}
+.qnum{font-size:12px;color:var(--accent);font-weight:900}.card h2{font-size:19px;line-height:1.5;margin:8px 0 15px}
+.choice{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:14px;padding:14px;margin:8px 0;font-size:15px;line-height:1.45;cursor:pointer}
 .choice.sel{border-color:var(--accent);background:#f1f5ff}.choice.correct{border-color:var(--ok);background:#eefaf5}.choice.wrong{border-color:var(--bad);background:#fff1f3}
-.reveal{margin-top:13px;border:0;border-radius:12px;padding:11px 14px;font-weight:800;background:#20242c;color:white;cursor:pointer}
-.explain{display:none;margin-top:14px;padding:14px;border-radius:14px;background:#f7f8fa;line-height:1.65;font-size:14px}.explain.show{display:block}
-.source{font-size:12px;color:var(--muted);margin-top:8px}.point{font-weight:800;margin-top:7px}
-.notice{font-size:12px;color:var(--muted);line-height:1.55;margin:18px 4px}.err{padding:22px;background:#fff;border-radius:18px;border:1px solid var(--line)}
-@media(max-width:540px){.hero h1{font-size:21px}.q h2{font-size:17px}.choice{font-size:14px}.top{align-items:flex-start}}
+.btn{border:0;border-radius:13px;padding:12px 15px;font-weight:900;cursor:pointer;font-size:14px}.primary{background:#20242c;color:#fff;width:100%;margin-top:12px}.next{background:var(--accent);color:#fff;width:100%;margin-top:12px}
+.feedback{margin-top:14px;padding:14px;border-radius:14px;line-height:1.65;font-size:14px}.good{background:#eefaf5;color:#075c3d}.bad{background:#fff3f5;color:#7e2030}
+.rem{display:none;margin-top:16px;border-top:1px solid var(--line);padding-top:16px}.rem.show{display:block}.rem h3{font-size:16px;margin:0 0 8px}
+.detail{background:#f7f8fa;border-radius:14px;padding:14px;line-height:1.7;font-size:14px}.source{font-size:12px;color:var(--muted);margin-top:9px}.point{font-weight:900;margin-top:8px}
+.anki{margin-top:14px;padding:14px;border:1px dashed #b9c5e8;border-radius:14px}.anki label{display:block;font-weight:900;margin-bottom:9px}.anki input,.namebox input{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:12px;font-size:16px}
+.mini{margin-top:14px;padding:14px;border-radius:14px;background:#fbfbfc;border:1px solid var(--line)}.mini h4{margin:0 0 9px;font-size:15px}
+.statusline{font-size:13px;color:var(--muted);margin-top:7px;min-height:20px}.hidden{display:none!important}
+.finish{display:none}.finish.show{display:block}.cert{background:linear-gradient(145deg,#172033,#313f5b);color:#fff;border-radius:26px;padding:25px;box-shadow:0 15px 40px rgba(15,23,42,.18)}
+.cert .big{font-size:30px;font-weight:950;letter-spacing:-.04em;margin:7px 0}.cert .row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:14px}.cert .row:last-child{border:0}.cert .val{font-weight:900;text-align:right}.cert small{display:block;opacity:.65;margin-top:16px;line-height:1.5}
+.namebox{margin:16px 0;padding:14px;background:#fff;border:1px solid var(--line);border-radius:16px}.namebox label{display:block;font-weight:900;margin-bottom:8px}
+.notice{font-size:12px;color:var(--muted);line-height:1.6;margin:17px 4px}.err{padding:20px;background:#fff;border-radius:18px;border:1px solid var(--line)}
+@media(max-width:540px){.hero h1{font-size:21px}.card h2{font-size:17px}.choice{font-size:14px}.cert .big{font-size:26px}}
+@media print{body{background:#fff} .top,.hero,.notice,.namebox,#study,.screenbtn{display:none!important}.finish{display:block!important}.cert{box-shadow:none;break-inside:avoid}}
 </style>
 </head>
 <body><main>
 <div class="top"><a class="back" href="../">← 법령 학습</a><span class="pill" id="datePill">오늘의 문제</span></div>
-<section class="hero"><h1 id="title">오늘의 5문제</h1><p id="theme">현행 규정에 근거한 매일 학습 세트입니다.</p><div class="progress" id="progress"></div></section>
-<div id="app"><div class="err">문제를 불러오는 중입니다.</div></div>
+<section class="hero"><h1 id="title">오늘의 20문제</h1><p id="theme">하루 20문항을 끝까지 마쳐야 완료됩니다.</p><div class="meter"><i id="bar"></i></div><div class="progress" id="progress"></div></section>
+<div id="study"><div class="err">문제를 불러오는 중입니다.</div></div>
+<section id="finish" class="finish">
+ <div class="namebox"><label for="nickname">카카오방에서 사용하는 이름/닉네임</label><input id="nickname" maxlength="30" placeholder="예: 홍길동"><button class="btn primary" id="applyName">완료 인증 화면 만들기</button></div>
+ <div id="cert" class="cert hidden">
+  <div>간부직원 자격전형 · DAILY 인증</div>
+  <div class="big" id="certTitle">DAY 완료</div>
+  <div class="row"><span>학습자</span><span class="val" id="certName"></span></div>
+  <div class="row"><span>학습일</span><span class="val" id="certDate"></span></div>
+  <div class="row"><span>기본문제</span><span class="val">20 / 20 완료</span></div>
+  <div class="row"><span>최초 정답</span><span class="val" id="certScore"></span></div>
+  <div class="row"><span>오답 복습</span><span class="val" id="certRem"></span></div>
+  <div class="row"><span>복습 상태</span><span class="val">오답 해설·ANKI·유사문제 전부 통과</span></div>
+  <div class="row"><span>완료 시각</span><span class="val" id="certTime"></span></div>
+  <div class="row"><span>인증 코드</span><span class="val" id="certCode"></span></div>
+  <small>이 화면은 오늘의 20문항과 필요한 오답 복습을 모두 마친 뒤에만 표시됩니다. 카카오 채팅방 제출용으로 이 화면 전체를 캡처하세요.</small>
+ </div>
+ <button class="btn primary screenbtn hidden" id="printBtn">인증 화면만 인쇄·PDF 보기</button>
+</section>
 <p class="notice" id="notice"></p>
 </main>
 <script>
 const $=s=>document.querySelector(s);
+let manifest,data,state;
+const norm=s=>String(s??'').toLowerCase().replace(/[\s·,._%()%]/g,'').replace(/퍼센트/g,'%');
+function key(){return 'mg-daily-v3-'+data.date}
+function save(){localStorage.setItem(key(),JSON.stringify(state))}
+function loadState(){
+ const old=localStorage.getItem(key());
+ state=old?JSON.parse(old):{index:0,items:{},firstCorrect:0,completed:false,completionAt:null,code:null,nickname:''};
+ for(const q of data.questions) if(!state.items[q.id]) state.items[q.id]={attempted:false,firstCorrect:null,mastered:false,detailSeen:false,recall:false,similar:false};
+}
+function updateProgress(){
+ const mastered=Object.values(state.items).filter(x=>x.mastered).length;
+ $('#bar').style.width=(mastered/20*100)+'%';
+ $('#progress').textContent='DAY '+data.day+' / 30 · '+mastered+' / 20 완료';
+}
+function choiceButtons(choices,onselect){
+ const wrap=document.createElement('div');
+ choices.forEach((c,i)=>{const b=document.createElement('button');b.className='choice';b.textContent=(i+1)+'. '+c;b.onclick=()=>{[...wrap.children].forEach(x=>x.classList.remove('sel'));b.classList.add('sel');onselect(i+1,b,wrap)};wrap.appendChild(b)});
+ return wrap;
+}
+function render(){
+ updateProgress();
+ if(state.completed){showFinish();return}
+ const idx=Math.min(state.index,19),q=data.questions[idx],s=state.items[q.id];
+ $('#study').innerHTML='';
+ const card=document.createElement('section');card.className='card';
+ card.innerHTML='<div class="qnum">Q'+(idx+1)+' / 20</div><h2></h2><div class="basechoices"></div><button class="btn primary submit">정답 제출</button><div class="feedback hidden"></div><div class="rem"><h3>오답 복습 1 · 조항을 다시 확인하세요</h3><div class="detail"></div><div class="point"></div><div class="source"></div><button class="btn primary seen">해설 확인 완료</button><div class="anki hidden"><label></label><input class="recallInput" autocomplete="off" placeholder="정답을 직접 입력"><button class="btn primary recallBtn">ANKI 회상 확인</button><div class="statusline recallStatus"></div></div><div class="mini hidden"><h4>오답 복습 3 · 유사문제</h4><div class="simq"></div><div class="simchoices"></div><button class="btn primary simSubmit">유사문제 제출</button><div class="statusline simStatus"></div></div></div><button class="btn next hidden">다음 문제</button>';
+ card.querySelector('h2').textContent=q.question;
+ let selected=null,selectedBtn=null,baseWrap=card.querySelector('.basechoices');
+ const built=choiceButtons(q.choices,(n,b)=>{selected=n;selectedBtn=b});
+ baseWrap.replaceWith(built);built.className='basechoices';
+ const feedback=card.querySelector('.feedback'),submit=card.querySelector('.submit'),next=card.querySelector('.next'),rembox=card.querySelector('.rem');
+
+ function markBase(){
+   [...built.children].forEach((b,i)=>{b.disabled=true;if(i+1===q.answer)b.classList.add('correct');if(i+1===selected && selected!==q.answer)b.classList.add('wrong')});
+ }
+ function mastered(){
+   s.mastered=true;save();updateProgress();next.classList.remove('hidden');
+ }
+ submit.onclick=()=>{
+   if(!selected||s.attempted)return;
+   s.attempted=true;s.firstCorrect=(selected===q.answer);
+   if(s.firstCorrect){
+      state.firstCorrect++;markBase();feedback.className='feedback good';feedback.textContent='정답입니다. '+q.explanation;submit.classList.add('hidden');mastered();
+   }else{
+      markBase();feedback.className='feedback bad';feedback.textContent='오답입니다. 정답은 '+q.answer+'번입니다. 아래 복습을 모두 통과해야 다음 문제로 갈 수 있습니다.';submit.classList.add('hidden');
+      rembox.classList.add('show');setupRem();
+   }
+   save();
+ };
+ function setupRem(){
+   rembox.querySelector('.detail').textContent=q.remediation.detail;
+   rembox.querySelector('.point').textContent='암기 포인트 · '+q.point;
+   rembox.querySelector('.source').textContent='근거 · '+q.source;
+   const seen=rembox.querySelector('.seen'),anki=rembox.querySelector('.anki');
+   if(s.detailSeen){seen.classList.add('hidden');anki.classList.remove('hidden')}
+   seen.onclick=()=>{s.detailSeen=true;seen.classList.add('hidden');anki.classList.remove('hidden');save()};
+   const lab=anki.querySelector('label');lab.textContent=q.remediation.recall.prompt;
+   const inp=anki.querySelector('.recallInput'),rs=anki.querySelector('.recallStatus'),rbtn=anki.querySelector('.recallBtn'),mini=rembox.querySelector('.mini');
+   if(s.recall){anki.classList.remove('hidden');rbtn.disabled=true;inp.disabled=true;rs.textContent='회상 정답 통과';mini.classList.remove('hidden');setupSimilar()}
+   rbtn.onclick=()=>{
+     const ok=q.remediation.recall.answers.some(a=>norm(a)===norm(inp.value));
+     if(ok){s.recall=true;rs.textContent='정답입니다. 이제 같은 논점의 유사문제를 풀어야 합니다.';rbtn.disabled=true;inp.disabled=true;mini.classList.remove('hidden');setupSimilar();save()}
+     else rs.textContent='아직 정확하지 않습니다. 해설의 핵심 수치·주체·요건을 다시 보고 직접 입력하세요.';
+   };
+   if(!s.recall && s.detailSeen) anki.classList.remove('hidden');
+ }
+ function setupSimilar(){
+   const mini=rembox.querySelector('.mini'); if(mini.dataset.ready)return; mini.dataset.ready='1';
+   const sm=q.remediation.similar;mini.querySelector('.simq').textContent=sm.question;
+   let sel=null,wrap=mini.querySelector('.simchoices');
+   const sb=choiceButtons(sm.choices,(n)=>sel=n);wrap.replaceWith(sb);sb.className='simchoices';
+   const btn=mini.querySelector('.simSubmit'),st=mini.querySelector('.simStatus');
+   if(s.similar){[...sb.children].forEach((b,i)=>{b.disabled=true;if(i+1===sm.answer)b.classList.add('correct')});btn.classList.add('hidden');st.textContent='유사문제 통과';if(!s.mastered)mastered();return}
+   btn.onclick=()=>{
+     if(!sel)return;
+     if(sel===sm.answer){s.similar=true;[...sb.children].forEach((b,i)=>{b.disabled=true;if(i+1===sm.answer)b.classList.add('correct')});btn.classList.add('hidden');st.textContent='정답입니다. '+sm.explanation;mastered()}
+     else{st.textContent='오답입니다. 같은 논점을 다시 확인하고 재도전하세요.';[...sb.children].forEach((b,i)=>b.classList.remove('wrong'));[...sb.children][sel-1].classList.add('wrong')}
+     save();
+   };
+ }
+ if(s.attempted){
+   selected=s.firstCorrect?q.answer:null;submit.classList.add('hidden');
+   if(s.firstCorrect){[...built.children].forEach((b,i)=>{b.disabled=true;if(i+1===q.answer)b.classList.add('correct')});feedback.className='feedback good';feedback.textContent='정답 처리된 문항입니다.'}
+   else{[...built.children].forEach((b,i)=>{b.disabled=true;if(i+1===q.answer)b.classList.add('correct')});feedback.className='feedback bad';feedback.textContent='오답 복습 진행 중입니다.';rembox.classList.add('show');setupRem()}
+   if(s.mastered)next.classList.remove('hidden');
+ }
+ next.onclick=()=>{
+   if(!s.mastered)return;
+   if(idx===19){
+     state.completed=true;state.completionAt=state.completionAt||new Date().toISOString();
+     state.code=state.code||makeCode();save();showFinish();
+   }else{state.index=idx+1;save();render();window.scrollTo({top:0,behavior:'smooth'})}
+ };
+ $('#study').appendChild(card);
+}
+function makeCode(){
+ const seed=data.date+'|'+Date.now()+'|'+Math.random();
+ let h=2166136261;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=Math.imul(h,16777619)}
+ return data.date.replaceAll('-','').slice(4)+'-'+(h>>>0).toString(36).toUpperCase().padStart(6,'0').slice(0,6);
+}
+function showFinish(){
+ $('#study').innerHTML='';
+ $('#finish').classList.add('show');$('#nickname').value=state.nickname||'';
+ $('#applyName').onclick=()=>{
+   const n=$('#nickname').value.trim();if(!n){alert('카카오방에서 사용하는 이름 또는 닉네임을 입력하세요.');return}
+   state.nickname=n;state.code=state.code||makeCode();state.completionAt=state.completionAt||new Date().toISOString();save();
+   const wrong=20-state.firstCorrect;
+   $('#certTitle').textContent='DAY '+String(data.day).padStart(2,'0')+' 완료';
+   $('#certName').textContent=n;$('#certDate').textContent=data.date;$('#certScore').textContent=state.firstCorrect+' / 20';$('#certRem').textContent=wrong+'문항 복습 완료';
+   $('#certTime').textContent=new Date(state.completionAt).toLocaleString('ko-KR');$('#certCode').textContent=state.code;
+   $('#cert').classList.remove('hidden');$('#printBtn').classList.remove('hidden');window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+ };
+ $('#printBtn').onclick=()=>window.print();
+ if(state.nickname) $('#applyName').click();
+ updateProgress();
+}
 async function load(){
  try{
-  const m=await fetch('../daily_questions/manifest.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('manifest');return r.json()});
-  const latest=m.latest;
-  const d=await fetch('../daily_questions/'+latest+'.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('daily');return r.json()});
-  $('#datePill').textContent=d.date;
-  $('#title').textContent=d.title;
-  const plan=(m.plan||[]).find(x=>x.day===d.day);
-  $('#theme').textContent=plan?plan.theme:'오늘의 핵심 문제';
-  $('#progress').textContent='30일 중 DAY '+d.day+' · '+d.questions.length+'문제';
-  $('#notice').textContent=(m.policy?.publicBasis||'')+' · '+(m.policy?.disclaimer||'');
-  $('#app').innerHTML='';
-  d.questions.forEach((q,idx)=>renderQ(q,idx));
- }catch(e){
-  $('#app').innerHTML='<div class="err">오늘의 문제를 불러오지 못했습니다. 잠시 후 다시 확인해 주세요.</div>';
- }
-}
-function renderQ(q,idx){
- const sec=document.createElement('section');sec.className='q';
- sec.innerHTML='<div class="qnum">Q'+(idx+1)+'</div><h2></h2><div class="choices"></div><button class="reveal">정답·해설 보기</button><div class="explain"><div class="answer"></div><div class="text"></div><div class="point"></div><div class="source"></div></div>';
- sec.querySelector('h2').textContent=q.question;
- const wrap=sec.querySelector('.choices');
- q.choices.forEach((c,i)=>{
-   const b=document.createElement('button');b.className='choice';b.textContent=(i+1)+'. '+c;
-   b.onclick=()=>{wrap.querySelectorAll('.choice').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');};
-   wrap.appendChild(b);
- });
- sec.querySelector('.reveal').onclick=()=>{
-   const ex=sec.querySelector('.explain');ex.classList.add('show');
-   const bs=[...wrap.querySelectorAll('.choice')];
-   bs.forEach((b,i)=>{b.classList.remove('correct','wrong');if(i+1===q.answer)b.classList.add('correct');else if(b.classList.contains('sel'))b.classList.add('wrong')});
-   ex.querySelector('.answer').innerHTML='<strong>정답 '+q.answer+'번</strong>';
-   ex.querySelector('.text').textContent=q.explanation;
-   ex.querySelector('.point').textContent='암기 포인트 · '+q.point;
-   ex.querySelector('.source').textContent='근거 · '+q.source;
- };
- $('#app').appendChild(sec);
+  manifest=await fetch('../daily_questions/manifest.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('manifest');return r.json()});
+  data=await fetch('../daily_questions/'+manifest.latest+'.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('daily');return r.json()});
+  $('#datePill').textContent=data.date;$('#title').textContent=data.title;
+  const plan=(manifest.plan||[]).find(x=>x.day===data.day);$('#theme').textContent=(plan?plan.theme:'오늘의 핵심')+' · 20문항 완주형';
+  $('#notice').textContent=(manifest.policy?.publicBasis||'')+' · '+(manifest.policy?.disclaimer||'')+' · '+(manifest.policy?.privacy||'');
+  loadState();render();
+ }catch(e){$('#study').innerHTML='<div class="err">오늘의 문제를 불러오지 못했습니다. 잠시 후 다시 확인해 주세요.</div>'}
 }
 load();
 </script>
