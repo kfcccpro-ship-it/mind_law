@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DAILY 관리자</title>
+<style>
+body{margin:0;background:#f4f5f7;color:#17181c;font-family:Pretendard,"Malgun Gothic",sans-serif}
+main{max-width:1050px;margin:auto;padding:22px}.card{background:#fff;border:1px solid #e4e7eb;border-radius:20px;padding:18px;margin-bottom:14px}
+h1{margin:0 0 8px}.row{display:flex;gap:8px;flex-wrap:wrap}input,button{border:1px solid #dfe3e8;border-radius:12px;padding:11px 12px;font:inherit}
+input{min-width:220px}button{background:#20242c;color:white;font-weight:800;cursor:pointer}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:#f4f5f7;border-radius:14px;padding:14px}.stat b{display:block;font-size:26px;margin-top:5px}table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;border-bottom:1px solid #eceef1;padding:10px 7px}.bad{color:#c9344b;font-weight:800}.ok{color:#0a8f5b;font-weight:800}
+.small{font-size:12px;color:#6e737b;line-height:1.6}@media(max-width:700px){.stats{grid-template-columns:1fr}.row{display:grid}input{min-width:0;width:100%}}
+</style></head><body><main>
+<div class="card"><h1>DAILY 관리자</h1><p class="small">날짜별 완료자와 미완료자를 확인합니다. ADMIN KEY는 브라우저에만 저장됩니다.</p>
+<div class="row"><input id="api" placeholder="Apps Script /exec URL"><input id="key" type="password" placeholder="ADMIN KEY"><input id="date" type="date"><button id="load">조회</button></div></div>
+<div id="result" class="card">설정값을 입력하고 조회하세요.</div>
+<script>
+const $=s=>document.querySelector(s);$('#date').value=new Date().toISOString().slice(0,10);
+const saved=JSON.parse(localStorage.getItem('mgDailyAdmin')||'{}');if(saved.api)$('#api').value=saved.api;if(saved.key)$('#key').value=saved.key;
+function jsonp(url){return new Promise((res,rej)=>{const cb='cb_'+Date.now()+'_'+Math.floor(Math.random()*9999);window[cb]=x=>{res(x);delete window[cb];s.remove()};const s=document.createElement('script');s.onerror=()=>{rej(Error('API 호출 실패'));delete window[cb];s.remove()};s.src=url+(url.includes('?')?'&':'?')+'callback='+cb;document.body.appendChild(s)})}
+$('#load').onclick=async()=>{const api=$('#api').value.trim(),key=$('#key').value.trim(),date=$('#date').value;if(!api||!key)return alert('API URL과 ADMIN KEY를 입력하세요.');localStorage.setItem('mgDailyAdmin',JSON.stringify({api,key}));$('#result').textContent='조회 중...';try{const u=api+'?action=summary&date='+encodeURIComponent(date)+'&key='+encodeURIComponent(key);const d=await jsonp(u);if(!d.ok)throw Error(d.error||'조회 실패');render(d)}catch(e){$('#result').innerHTML='<span class="bad">'+esc(e.message)+'</span>'}};
+function render(d){const rows=(d.completed||[]).map(x=>'<tr><td>'+esc(x.nickname)+'</td><td>'+x.total+'</td><td>'+x.firstCorrect+'</td><td>'+x.remediationCount+'</td><td>'+esc(x.completionCode)+'</td></tr>').join('');const miss=(d.missing||[]).map(x=>'<span class="bad">'+esc(x)+'</span>').join(', ')||'<span class="ok">없음</span>';$('#result').innerHTML='<div class="stats"><div class="stat">명단<b>'+d.rosterCount+'</b></div><div class="stat">완료<b class="ok">'+d.completedCount+'</b></div><div class="stat">미완료<b class="bad">'+d.missingCount+'</b></div></div><h3>완료자</h3><table><thead><tr><th>닉네임</th><th>문항</th><th>최초정답</th><th>오답복습</th><th>인증코드</th></tr></thead><tbody>'+rows+'</tbody></table><h3>미완료자</h3><p>'+miss+'</p>'}
+function esc(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+</script></main></body></html>
