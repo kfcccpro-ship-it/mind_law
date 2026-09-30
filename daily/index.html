@@ -56,7 +56,7 @@ main{max-width:760px;margin:auto;padding:16px 14px 70px}.top{display:flex;justif
 <script>
 const $=s=>document.querySelector(s);
 let manifest,data,state;
-const norm=s=>String(s??'').toLowerCase().replace(/[\s·,._%()%]/g,'').replace(/퍼센트/g,'%');
+const norm=s=>String(s??'').toLowerCase().replace(/퍼센트/g,'').replace(/[\s·,._%()%]/g,'');
 function key(){return 'mg-daily-v3-'+data.date}
 function save(){localStorage.setItem(key(),JSON.stringify(state))}
 function loadState(){
