@@ -17,7 +17,7 @@ main{max-width:780px;margin:auto;padding:16px 14px 74px}.top{display:flex;justif
 .scope{font-size:12px;font-weight:800;color:var(--accent);line-height:1.55;margin-bottom:6px}.qnum{font-size:12px;color:var(--muted);font-weight:900}.card h2{font-size:19px;line-height:1.5;margin:8px 0 16px}
 .choice{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:14px;padding:13px 14px;margin:8px 0;font-size:15px;line-height:1.45;cursor:pointer}.choice.sel{border-color:var(--accent);background:#f1f5ff}.choice.correct{border-color:var(--ok);background:#eefaf5}.choice.wrong{border-color:var(--bad);background:#fff1f3}.choice:disabled{cursor:default}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.btn{border:0;border-radius:13px;padding:12px 15px;font-weight:900;cursor:pointer}.btn.primary{background:#20242c;color:#fff}.btn.unknown{background:#fff4dc;color:#7a5000;border:1px solid #efd18b}.btn.secondary{background:#edf1ff;color:var(--accent)}.btn.ok{background:#e9f8f1;color:var(--ok)}.btn:disabled{opacity:.45;cursor:not-allowed}
-.feedback,.rem,.stagebox,.retestReview{margin-top:14px;padding:14px;border-radius:15px;background:#f7f8fa;line-height:1.65;font-size:14px}.feedback.good{border-left:4px solid var(--ok)}.feedback.bad{border-left:4px solid var(--bad)}.rem{border-left:4px solid var(--violet)}.rem h3,.stagebox h3{font-size:14px;margin:0 0 8px}.stage{font-size:12px;font-weight:900;color:var(--violet);margin-bottom:6px}.source{font-size:12px;color:var(--muted);margin-top:8px}.sourceDetails{margin-top:8px;border:1px solid #dde3ea;border-radius:12px;background:#fff}.sourceDetails summary{cursor:pointer;padding:10px 12px;font-weight:850;color:#394150;list-style:none}.sourceDetails summary::-webkit-details-marker{display:none}.sourceDetails summary:after{content:' 펼치기';font-weight:700;color:var(--accent);float:right}.sourceDetails[open] summary:after{content:' 접기'}.sourceExcerpt{padding:0 12px 12px;line-height:1.65;color:#313843;font-size:13px;white-space:pre-line}.rulebox{margin:10px 0 0;padding:12px 13px;border-radius:13px;background:#f2efff;border:1px solid #ded7ff;font-weight:850;line-height:1.6}.bridge{font-size:12px;color:var(--violet);font-weight:850;margin-top:8px}.point{font-weight:900;margin-top:8px}
+.feedback,.rem,.stagebox,.retestReview{margin-top:14px;padding:14px;border-radius:15px;background:#f7f8fa;line-height:1.65;font-size:14px}.revealAnswer{margin-top:12px;padding:13px;border-radius:13px;background:#eef7f3;border:1px solid #cde7db}.revealAnswer .mine{color:#5b6470;margin-bottom:7px}.revealAnswer .answer{font-weight:900;color:var(--ok);font-size:15px}.revealAnswer .rule{margin-top:7px;font-size:12.5px;color:#374151}.feedback.good{border-left:4px solid var(--ok)}.feedback.bad{border-left:4px solid var(--bad)}.rem{border-left:4px solid var(--violet)}.rem h3,.stagebox h3{font-size:14px;margin:0 0 8px}.stage{font-size:12px;font-weight:900;color:var(--violet);margin-bottom:6px}.source{font-size:12px;color:var(--muted);margin-top:8px}.sourceDetails{margin-top:8px;border:1px solid #dde3ea;border-radius:12px;background:#fff}.sourceDetails summary{cursor:pointer;padding:10px 12px;font-weight:850;color:#394150;list-style:none}.sourceDetails summary::-webkit-details-marker{display:none}.sourceDetails summary:after{content:' 펼치기';font-weight:700;color:var(--accent);float:right}.sourceDetails[open] summary:after{content:' 접기'}.sourceExcerpt{padding:0 12px 12px;line-height:1.65;color:#313843;font-size:13px;white-space:pre-line}.rulebox{margin:10px 0 0;padding:12px 13px;border-radius:13px;background:#f2efff;border:1px solid #ded7ff;font-weight:850;line-height:1.6}.bridge{font-size:12px;color:var(--violet);font-weight:850;margin-top:8px}.point{font-weight:900;margin-top:8px}
 input[type=text]{width:100%;border:1px solid var(--line);border-radius:13px;padding:13px;font-size:16px;margin-top:9px}.status{font-size:12px;color:var(--bad);margin-top:8px;line-height:1.5}
 .finalIntro{background:#fff;border:2px solid #20242c;border-radius:22px;padding:22px}.finalIntro h2{margin:0 0 8px}.finalIntro p{line-height:1.65;color:#4b5563}
 .finish{display:none}.finish.show{display:block}.namebox{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}.namebox label{font-weight:900;font-size:13px}.cert{background:#fff;border:2px solid #20242c;border-radius:24px;padding:22px}.cert .big{font-size:25px;font-weight:950;margin:5px 0 15px}.cert .row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #eceff2}.cert .val{font-weight:900;text-align:right}.cert small{display:block;color:var(--muted);line-height:1.6;margin-top:14px}.screenbtn{margin-top:12px}.notice{font-size:12px;color:var(--muted);line-height:1.6;margin:16px 4px}.hidden{display:none!important}.err{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px}
@@ -76,19 +76,19 @@ const norm=s=>String(s??'').toLowerCase()
   .replace(/퍼센트/g,'')
   .replace(/[\s·,._%()%원]/g,'');
 
-function storageKey(){return 'mg-daily-v5-'+data.date}
+function storageKey(){return 'mg-daily-v6-'+data.date}
 function save(){localStorage.setItem(storageKey(),JSON.stringify(state))}
 function defaultItem(){return {
   attempted:false,firstCorrect:null,dontKnow:false,mastered:false,
-  detailSeen:false,recall1:false,recall1Attempts:0,
-  similar:false,similarAttempts:0,recall2:false,recall2Attempts:0,
+  detailSeen:false,recall1:false,recall1Revealed:false,recall1Input:'',
+  similar:false,similarAttempts:0,recall2:false,recall2Revealed:false,recall2Input:'',
   finalPassed:false,retestAttempts:0,retestNeedsReview:false
 }}
 function loadState(){
   let old=null;
   try{old=JSON.parse(localStorage.getItem(storageKey())||'null')}catch(e){}
-  state=old||{version:5,phase:'base',index:0,finalIndex:0,items:{},firstCorrect:0,dontKnowCount:0,completed:false,completionAt:null,code:null,nickname:'',startedAt:new Date().toISOString()};
-  state.version=5;
+  state=old||{version:6,phase:'base',index:0,finalIndex:0,items:{},firstCorrect:0,dontKnowCount:0,completed:false,completionAt:null,code:null,nickname:'',startedAt:new Date().toISOString()};
+  state.version=6;
   if(!state.phase)state.phase='base';
   if(!state.startedAt)state.startedAt=new Date().toISOString();
   if(typeof state.firstCorrect!=='number')state.firstCorrect=0;
@@ -286,19 +286,34 @@ function renderRemediation(card,q,it,idx,total){
   if(!it.recall1){
     rem.classList.add('hidden');
     const box=document.createElement('div');box.className='stagebox';
-    box.innerHTML='<div class="stage">오답학습 2/4 · 방금 본 핵심 직접회상</div><h3></h3><p style="font-size:12px;color:var(--muted);margin:0 0 8px">1단계 해설은 가렸습니다. 방금 확인한 핵심규칙을 기억해서 입력하세요.</p><input type="text" autocomplete="off" placeholder="보지 말고 직접 입력"><div class="status"></div>';
+    box.innerHTML='<div class="stage">오답학습 2/4 · 방금 본 핵심 회상</div><h3></h3><p style="font-size:12px;color:var(--muted);margin:0 0 8px">정확한 문구를 맞히는 시험이 아닙니다. 기억나는 만큼 직접 적어 본 뒤 정답을 확인하세요.</p>';
     box.querySelector('h3').textContent=q.remediation.recall.prompt;
-    if(it.recall1Attempts>0)box.querySelector('.status').textContent='아직 정확하지 않습니다. 위 해설을 다시 떠올리고 직접 입력하세요.';
-    const go=button('회상 답안 확인');
-    go.onclick=()=>{
-      const v=box.querySelector('input').value;
-      if(q.remediation.recall.answers.some(a=>norm(a)===norm(v))){it.recall1=true}
-      else {it.recall1Attempts++;it.detailSeen=false}
-      save();render();
-    };
-    const back=button('기억이 안 나면 해설 다시 보기','btn secondary');
-    back.onclick=()=>{it.detailSeen=false;save();render()};
-    actions(box,go,back);card.appendChild(box);return;
+
+    if(!it.recall1Revealed){
+      const input=document.createElement('input');input.type='text';input.autocomplete='off';input.placeholder='기억나는 만큼 입력';
+      input.value=it.recall1Input||'';
+      box.appendChild(input);
+      const go=button('입력하고 정답 보기');
+      go.onclick=()=>{
+        const v=input.value.trim();
+        if(!v)return alert('짧게라도 기억나는 내용을 입력해 보세요.');
+        it.recall1Input=v;it.recall1Revealed=true;save();render();
+      };
+      const back=button('기억이 안 나면 해설 다시 보기','btn secondary');
+      back.onclick=()=>{it.detailSeen=false;save();render()};
+      actions(box,go,back);
+    }else{
+      const ans=document.createElement('div');ans.className='revealAnswer';
+      ans.innerHTML='<div class="mine"></div><div class="answer"></div><div class="rule"></div>';
+      ans.querySelector('.mine').textContent='내가 떠올린 답 · '+it.recall1Input;
+      ans.querySelector('.answer').textContent='정답 확인 · '+q.remediation.recall.answers[0];
+      ans.querySelector('.rule').textContent='핵심규칙 · '+q.remediation.rule;
+      box.appendChild(ans);
+      const next=button('정답 확인 완료 · 유사문제 풀기');
+      next.onclick=()=>{it.recall1=true;save();render()};
+      box.appendChild(next);
+    }
+    card.appendChild(box);return;
   }
 
   if(!it.similar){
@@ -324,17 +339,32 @@ function renderRemediation(card,q,it,idx,total){
   if(!it.recall2){
     rem.classList.add('hidden');
     const box=document.createElement('div');box.className='stagebox';
-    box.innerHTML='<div class="stage">오답학습 4/4 · 같은 핵심 최종회상</div><h3></h3><p style="font-size:12px;color:var(--muted);margin:0 0 8px">1단계 핵심규칙 → 2단계 직접회상 → 3단계 유사문제를 거쳤습니다. 이제 같은 핵심을 마지막으로 다시 떠올립니다.</p><input type="text" autocomplete="off" placeholder="다시 한번 직접 입력"><div class="status"></div>';
+    box.innerHTML='<div class="stage">오답학습 4/4 · 같은 핵심 최종회상</div><h3></h3><p style="font-size:12px;color:var(--muted);margin:0 0 8px">유사문제까지 푼 뒤 다시 한 번 기억나는 내용을 적습니다. 문장 일치 여부는 채점하지 않고 바로 정답을 보여줍니다.</p>';
     box.querySelector('h3').textContent=q.remediation.recall.prompt;
-    if(it.recall2Attempts>0)box.querySelector('.status').textContent='아직 암기가 고정되지 않았습니다. 다시 생각해서 입력하세요.';
-    const go=button('최종 회상 확인');
-    go.onclick=()=>{
-      const v=box.querySelector('input').value;
-      if(q.remediation.recall.answers.some(a=>norm(a)===norm(v))){it.recall2=true;it.mastered=true}
-      else it.recall2Attempts++;
-      save();render();
-    };
-    box.appendChild(go);card.appendChild(box);return;
+
+    if(!it.recall2Revealed){
+      const input=document.createElement('input');input.type='text';input.autocomplete='off';input.placeholder='다시 기억나는 만큼 입력';
+      input.value=it.recall2Input||'';
+      box.appendChild(input);
+      const go=button('입력하고 정답 다시 보기');
+      go.onclick=()=>{
+        const v=input.value.trim();
+        if(!v)return alert('짧게라도 기억나는 내용을 입력해 보세요.');
+        it.recall2Input=v;it.recall2Revealed=true;save();render();
+      };
+      box.appendChild(go);
+    }else{
+      const ans=document.createElement('div');ans.className='revealAnswer';
+      ans.innerHTML='<div class="mine"></div><div class="answer"></div><div class="rule"></div>';
+      ans.querySelector('.mine').textContent='내가 다시 떠올린 답 · '+it.recall2Input;
+      ans.querySelector('.answer').textContent='정답 확인 · '+q.remediation.recall.answers[0];
+      ans.querySelector('.rule').textContent='핵심규칙 · '+q.remediation.rule;
+      box.appendChild(ans);
+      const done=button('확인 완료 · 이 문항 학습 마치기');
+      done.onclick=()=>{it.recall2=true;it.mastered=true;save();render()};
+      box.appendChild(done);
+    }
+    card.appendChild(box);return;
   }
 
   it.mastered=true;save();
