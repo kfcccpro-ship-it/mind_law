@@ -58,6 +58,11 @@ for path in sorted(DATA.glob("20??-??-??.json")):
         if not str(q["explanation"]).strip() or not str(q["source"]).strip():
             fail(f"{q['id']}: explanation/source required")
 
+        scope = q.get("scope", {})
+        for k in ("subject","unit","chapter","part"):
+            if not str(scope.get(k,"")).strip():
+                fail(f"{q['id']}: scope.{k} required")
+
         r = q["remediation"]
         if not isinstance(r, dict) or not str(r.get("detail","")).strip():
             fail(f"{q['id']}: remediation.detail required")
