@@ -214,7 +214,14 @@
     "finalRetestMustBePerfect": true,
     "finalRetestRepeatUntilCorrect": true,
     "showScopeBreadcrumb": true,
-    "freeRecallGrading": "none_type_then_reveal"
+    "freeRecallGrading": "none_type_then_reveal",
+    "remediationStep1": [
+      "왜 틀렸나",
+      "핵심규칙",
+      "헷갈리는 대비",
+      "근거조항 펼쳐보기"
+    ],
+    "remediationWritingRule": "오답학습 1단계는 장문 설명보다 짧은 비교학습을 우선한다. why는 오답원인, rule은 반드시 기억할 1개 규칙, contrast는 시험에서 뒤바뀌기 쉬운 항목의 대비, sourceExcerpt는 최신 근거조항 핵심내용으로 작성한다."
   },
   "coveragePolicy": {
     "mode": "focus_plus_spiral",
