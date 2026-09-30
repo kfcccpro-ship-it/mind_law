@@ -36,7 +36,7 @@ input[type=text]{width:100%;border:1px solid var(--line);border-radius:13px;padd
   <div class="honesty">모르면 찍지 않아도 됩니다. <b>‘모르겠음’</b>을 누르면 오답으로 처리하고 바로 학습으로 넘어갑니다. 인증은 점수가 아니라 <b>끝까지 학습했는지</b>를 확인합니다.</div>
 </section>
 
-<section class="coverage"><b>오늘의 학습 범위</b><div class="chips" id="coverageChips"></div><p id="coveragePlan" class="small" style="margin:10px 0 0"></p></section>
+<section class="coverage"><b>오늘의 학습 범위</b><div class="chips" id="trackCountChips"></div><div class="chips" id="coverageChips" style="margin-top:8px"></div><p id="coveragePlan" class="small" style="margin:10px 0 0"></p></section>
 
 <div id="study"><div class="err">문제를 불러오는 중입니다.</div></div>
 
@@ -161,10 +161,22 @@ function renderSource(el,q){
 }
 
 function renderCoverage(){
+  const trackWrap=$('#trackCountChips');
+  trackWrap.innerHTML='';
+  const counts=data.trackCounts||{};
+  Object.entries(counts).forEach(([label,count])=>{
+    const span=document.createElement('span');
+    span.className='chip';
+    span.style.background='#eaf0ff';
+    span.style.color='var(--accent)';
+    span.textContent=label+' '+count;
+    trackWrap.appendChild(span);
+  });
+
   const units=[];
   for(const q of data.questions){
-    const s=q.scope||{};
-    const key=[s.subject,s.unit].filter(Boolean).join(' · ');
+    const sc=q.scope||{};
+    const key=[sc.subject,sc.unit].filter(Boolean).join(' · ');
     if(key && !units.includes(key))units.push(key);
   }
   $('#coverageChips').innerHTML='';
