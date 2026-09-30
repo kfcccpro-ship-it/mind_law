@@ -17,7 +17,7 @@ main{max-width:780px;margin:auto;padding:16px 14px 74px}.top{display:flex;justif
 .scope{font-size:12px;font-weight:800;color:var(--accent);line-height:1.55;margin-bottom:6px}.qnum{font-size:12px;color:var(--muted);font-weight:900}.card h2{font-size:19px;line-height:1.5;margin:8px 0 16px}
 .choice{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:14px;padding:13px 14px;margin:8px 0;font-size:15px;line-height:1.45;cursor:pointer}.choice.sel{border-color:var(--accent);background:#f1f5ff}.choice.correct{border-color:var(--ok);background:#eefaf5}.choice.wrong{border-color:var(--bad);background:#fff1f3}.choice:disabled{cursor:default}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.btn{border:0;border-radius:13px;padding:12px 15px;font-weight:900;cursor:pointer}.btn.primary{background:#20242c;color:#fff}.btn.unknown{background:#fff4dc;color:#7a5000;border:1px solid #efd18b}.btn.secondary{background:#edf1ff;color:var(--accent)}.btn.ok{background:#e9f8f1;color:var(--ok)}.btn:disabled{opacity:.45;cursor:not-allowed}
-.feedback,.rem,.stagebox,.retestReview{margin-top:14px;padding:14px;border-radius:15px;background:#f7f8fa;line-height:1.65;font-size:14px}.feedback.good{border-left:4px solid var(--ok)}.feedback.bad{border-left:4px solid var(--bad)}.rem{border-left:4px solid var(--violet)}.rem h3,.stagebox h3{font-size:14px;margin:0 0 8px}.stage{font-size:12px;font-weight:900;color:var(--violet);margin-bottom:6px}.source{font-size:12px;color:var(--muted);margin-top:8px}.point{font-weight:900;margin-top:8px}
+.feedback,.rem,.stagebox,.retestReview{margin-top:14px;padding:14px;border-radius:15px;background:#f7f8fa;line-height:1.65;font-size:14px}.feedback.good{border-left:4px solid var(--ok)}.feedback.bad{border-left:4px solid var(--bad)}.rem{border-left:4px solid var(--violet)}.rem h3,.stagebox h3{font-size:14px;margin:0 0 8px}.stage{font-size:12px;font-weight:900;color:var(--violet);margin-bottom:6px}.source{font-size:12px;color:var(--muted);margin-top:8px}.sourceDetails{margin-top:8px;border:1px solid #dde3ea;border-radius:12px;background:#fff}.sourceDetails summary{cursor:pointer;padding:10px 12px;font-weight:850;color:#394150;list-style:none}.sourceDetails summary::-webkit-details-marker{display:none}.sourceDetails summary:after{content:' 펼치기';font-weight:700;color:var(--accent);float:right}.sourceDetails[open] summary:after{content:' 접기'}.sourceExcerpt{padding:0 12px 12px;line-height:1.65;color:#313843;font-size:13px;white-space:pre-line}.rulebox{margin:10px 0 0;padding:12px 13px;border-radius:13px;background:#f2efff;border:1px solid #ded7ff;font-weight:850;line-height:1.6}.bridge{font-size:12px;color:var(--violet);font-weight:850;margin-top:8px}.point{font-weight:900;margin-top:8px}
 input[type=text]{width:100%;border:1px solid var(--line);border-radius:13px;padding:13px;font-size:16px;margin-top:9px}.status{font-size:12px;color:var(--bad);margin-top:8px;line-height:1.5}
 .finalIntro{background:#fff;border:2px solid #20242c;border-radius:22px;padding:22px}.finalIntro h2{margin:0 0 8px}.finalIntro p{line-height:1.65;color:#4b5563}
 .finish{display:none}.finish.show{display:block}.namebox{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}.namebox label{font-weight:900;font-size:13px}.cert{background:#fff;border:2px solid #20242c;border-radius:24px;padding:22px}.cert .big{font-size:25px;font-weight:950;margin:5px 0 15px}.cert .row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #eceff2}.cert .val{font-weight:900;text-align:right}.cert small{display:block;color:var(--muted);line-height:1.6;margin-top:14px}.screenbtn{margin-top:12px}.notice{font-size:12px;color:var(--muted);line-height:1.6;margin:16px 4px}.hidden{display:none!important}.err{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px}
@@ -152,6 +152,13 @@ function scopeText(q){
   const s=q.scope||{};
   return [s.subject,s.unit,s.chapter,s.part].filter(Boolean).join(' › ');
 }
+function renderSource(el,q){
+  el.innerHTML='';
+  const d=document.createElement('details');d.className='sourceDetails';
+  const sm=document.createElement('summary');sm.textContent='근거 · '+q.source+' · 조항 내용 보기';
+  const body=document.createElement('div');body.className='sourceExcerpt';body.textContent=q.sourceExcerpt||q.explanation||'';
+  d.appendChild(sm);d.appendChild(body);el.appendChild(d);
+}
 
 function renderCoverage(){
   const units=[];
@@ -249,7 +256,7 @@ function renderBase(){
       fb.innerHTML='<b>정답입니다.</b><div class="point"></div><div class="source"></div>';
       fb.insertAdjacentText('beforeend',' '+q.explanation);
       fb.querySelector('.point').textContent='암기 포인트 · '+q.point;
-      fb.querySelector('.source').textContent='근거 · '+q.source;
+      renderSource(fb.querySelector('.source'),q);
       card.appendChild(fb);
       renderNext(card,idx,total);
     }else{
@@ -264,34 +271,38 @@ function renderBase(){
 
 function renderRemediation(card,q,it,idx,total){
   const rem=document.createElement('div');rem.className='rem';
-  rem.innerHTML='<div class="stage">오답학습 1/4 · 조항·규정 다시 확인</div><h3>왜 틀렸는지 먼저 이해합니다.</h3><div class="detail"></div><div class="point"></div><div class="source"></div>';
+  rem.innerHTML='<div class="stage">오답학습 1/4 · 조항·규정 다시 확인</div><h3>왜 틀렸는지 먼저 이해합니다.</h3><div class="detail"></div><div class="rulebox"></div><div class="bridge">↓ 다음 단계에서는 방금 본 핵심규칙을 가린 상태에서 직접 회상합니다.</div><div class="source"></div>';
   rem.querySelector('.detail').textContent=q.remediation.detail;
-  rem.querySelector('.point').textContent='암기 포인트 · '+q.point;
-  rem.querySelector('.source').textContent='근거 · '+q.source;
+  rem.querySelector('.rulebox').textContent='이번 문항의 핵심규칙 · '+q.remediation.rule;
+  renderSource(rem.querySelector('.source'),q);
   card.appendChild(rem);
 
   if(!it.detailSeen){
-    const seen=button('해설을 읽었습니다 · 회상 시작','btn secondary');
+    const seen=button('핵심을 읽었습니다 · 가리고 회상하기','btn secondary');
     seen.onclick=()=>{it.detailSeen=true;save();render()};
     rem.appendChild(seen);return;
   }
 
   if(!it.recall1){
+    rem.classList.add('hidden');
     const box=document.createElement('div');box.className='stagebox';
-    box.innerHTML='<div class="stage">오답학습 2/4 · ANKI 직접회상 1차</div><h3></h3><input type="text" autocomplete="off" placeholder="보지 말고 직접 입력"><div class="status"></div>';
+    box.innerHTML='<div class="stage">오답학습 2/4 · 방금 본 핵심 직접회상</div><h3></h3><p style="font-size:12px;color:var(--muted);margin:0 0 8px">1단계 해설은 가렸습니다. 방금 확인한 핵심규칙을 기억해서 입력하세요.</p><input type="text" autocomplete="off" placeholder="보지 말고 직접 입력"><div class="status"></div>';
     box.querySelector('h3').textContent=q.remediation.recall.prompt;
     if(it.recall1Attempts>0)box.querySelector('.status').textContent='아직 정확하지 않습니다. 위 해설을 다시 떠올리고 직접 입력하세요.';
     const go=button('회상 답안 확인');
     go.onclick=()=>{
       const v=box.querySelector('input').value;
       if(q.remediation.recall.answers.some(a=>norm(a)===norm(v))){it.recall1=true}
-      else it.recall1Attempts++;
+      else {it.recall1Attempts++;it.detailSeen=false}
       save();render();
     };
-    box.appendChild(go);card.appendChild(box);return;
+    const back=button('기억이 안 나면 해설 다시 보기','btn secondary');
+    back.onclick=()=>{it.detailSeen=false;save();render()};
+    actions(box,go,back);card.appendChild(box);return;
   }
 
   if(!it.similar){
+    rem.classList.add('hidden');
     const sm=q.remediation.similar;
     const box=document.createElement('div');box.className='stagebox';
     box.innerHTML='<div class="stage">오답학습 3/4 · 같은 논점 유사문제</div><h3></h3><div class="simchoices"></div><div class="status"></div>';
@@ -311,8 +322,9 @@ function renderRemediation(card,q,it,idx,total){
   }
 
   if(!it.recall2){
+    rem.classList.add('hidden');
     const box=document.createElement('div');box.className='stagebox';
-    box.innerHTML='<div class="stage">오답학습 4/4 · ANKI 직접회상 2차</div><h3></h3><p style="font-size:12px;color:var(--muted);margin:0 0 8px">유사문제까지 푼 뒤, 같은 핵심을 다시 보지 않고 떠올려야 이 문항이 끝납니다.</p><input type="text" autocomplete="off" placeholder="다시 한번 직접 입력"><div class="status"></div>';
+    box.innerHTML='<div class="stage">오답학습 4/4 · 같은 핵심 최종회상</div><h3></h3><p style="font-size:12px;color:var(--muted);margin:0 0 8px">1단계 핵심규칙 → 2단계 직접회상 → 3단계 유사문제를 거쳤습니다. 이제 같은 핵심을 마지막으로 다시 떠올립니다.</p><input type="text" autocomplete="off" placeholder="다시 한번 직접 입력"><div class="status"></div>';
     box.querySelector('h3').textContent=q.remediation.recall.prompt;
     if(it.recall2Attempts>0)box.querySelector('.status').textContent='아직 암기가 고정되지 않았습니다. 다시 생각해서 입력하세요.';
     const go=button('최종 회상 확인');
@@ -373,7 +385,7 @@ function renderFinal(){
     c.querySelector('.qnum').textContent='최종 오답 재시험 '+(fi+1)+' / '+wrong.length;
     c.querySelector('.retestReview').textContent=q.remediation.detail;
     c.querySelector('.point').textContent='다시 외울 핵심 · '+q.point;
-    c.querySelector('.source').textContent='근거 · '+q.source;
+    renderSource(c.querySelector('.source'),q);
     const again=button('다시 풀기');
     again.onclick=()=>{it.retestNeedsReview=false;save();render();window.scrollTo({top:0,behavior:'smooth'})};
     c.appendChild(again);app.appendChild(c);return;
