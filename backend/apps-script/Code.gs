@@ -14,7 +14,7 @@ function setup() {
 function ensureSheets_(ss) {
   const c = ss.getSheetByName(SHEET_COMPLETIONS) || ss.insertSheet(SHEET_COMPLETIONS);
   const r = ss.getSheetByName(SHEET_ROSTER) || ss.insertSheet(SHEET_ROSTER);
-  const headers = ['timestamp','date','day','nickname','total','mastered','firstCorrect','remediationCount','completionCode','startedAt','completedAt'];
+  const headers = ['timestamp','date','day','nickname','total','mastered','firstCorrect','dontKnowCount','remediationCount','finalRetestCount','finalRetestPassed','completionCode','startedAt','completedAt'];
   if (c.getLastRow() === 0) c.appendRow(headers);
   if (r.getLastRow() === 0) r.appendRow(['nickname','active','memo']);
 }
@@ -58,8 +58,10 @@ function doPost(e) {
       }
       const rec = [
         new Date(), date, Number(p.day || 0), nick, total, mastered,
-        Number(p.firstCorrect || 0), Number(p.remediationCount || 0),
-        String(p.completionCode || ''), String(p.startedAt || ''), String(p.completedAt || '')
+        Number(p.firstCorrect || 0), Number(p.dontKnowCount || 0),
+        Number(p.remediationCount || 0), Number(p.finalRetestCount || 0),
+        Number(p.finalRetestPassed || 0), String(p.completionCode || ''),
+        String(p.startedAt || ''), String(p.completedAt || '')
       ];
       if (row) sh.getRange(row, 1, 1, rec.length).setValues([rec]);
       else sh.appendRow(rec);
@@ -94,8 +96,9 @@ function doGet(e) {
       if (!date || String(cv[i][1]) === date) {
         completed.push({
           date:String(cv[i][1]), day:cv[i][2], nickname:String(cv[i][3]),
-          total:cv[i][4], firstCorrect:cv[i][6], remediationCount:cv[i][7],
-          completionCode:String(cv[i][8]), completedAt:String(cv[i][10])
+          total:cv[i][4], firstCorrect:cv[i][6], dontKnowCount:cv[i][7],
+          remediationCount:cv[i][8], finalRetestCount:cv[i][9], finalRetestPassed:cv[i][10],
+          completionCode:String(cv[i][11]), completedAt:String(cv[i][13])
         });
       }
     }
