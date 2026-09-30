@@ -36,7 +36,7 @@ input[type=text]{width:100%;border:1px solid var(--line);border-radius:13px;padd
   <div class="honesty">모르면 찍지 않아도 됩니다. <b>‘모르겠음’</b>을 누르면 오답으로 처리하고 바로 학습으로 넘어갑니다. 인증은 점수가 아니라 <b>끝까지 학습했는지</b>를 확인합니다.</div>
 </section>
 
-<section class="coverage"><b>오늘의 학습 범위</b><div class="chips" id="coverageChips"></div></section>
+<section class="coverage"><b>오늘의 학습 범위</b><div class="chips" id="coverageChips"></div><p id="coveragePlan" class="small" style="margin:10px 0 0"></p></section>
 
 <div id="study"><div class="err">문제를 불러오는 중입니다.</div></div>
 
@@ -497,6 +497,7 @@ async function load(){
     $('#title').textContent=data.title;
     const plan=(manifest.plan||[]).find(x=>x.day===data.day);
     $('#theme').textContent=(plan?plan.theme:'오늘의 핵심')+' · '+data.questions.length+'문항 · 한 문제씩 완주';
+    $('#coveragePlan').textContent=data.deliveryNote||'본 DAILY는 여신만 반복하는 구조가 아니라 법·감독·정관·선거, 여신, 수신·출자, AML·세무·공제, 새마을금고론, 내부규정을 매일 순환합니다.';
     $('#notice').textContent=(manifest.policy?.publicBasis||'')+' · '+(manifest.policy?.disclaimer||'')+' · '+(manifest.policy?.privacy||'');
     renderCoverage();loadState();render();
   }catch(e){
