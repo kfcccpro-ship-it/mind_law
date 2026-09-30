@@ -3,207 +3,495 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>간부직원 자격전형 · 오늘의 20문제</title>
+<title>간부직원 자격전형 · DAILY</title>
 <style>
-:root{--bg:#f3f5f7;--card:#fff;--ink:#17191d;--muted:#6b717a;--line:#e2e6ea;--accent:#2f62f5;--ok:#087f53;--bad:#c5334d;--warn:#9a6500}
+:root{--bg:#f3f5f7;--card:#fff;--ink:#17191d;--muted:#6b717a;--line:#e2e6ea;--accent:#2f62f5;--ok:#087f53;--bad:#c5334d;--warn:#9a6500;--violet:#7856d8}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
-main{max-width:760px;margin:auto;padding:16px 14px 70px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+main{max-width:780px;margin:auto;padding:16px 14px 74px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
 .back{color:var(--muted);text-decoration:none;font-weight:800}.pill{font-size:12px;font-weight:900;background:#eaf0ff;color:var(--accent);padding:7px 10px;border-radius:999px}
 .hero{background:linear-gradient(135deg,#1f2633,#3f4b61);color:#fff;border-radius:22px;padding:22px;margin-bottom:14px}
-.hero h1{font-size:24px;margin:0 0 7px}.hero p{margin:0;opacity:.82;line-height:1.55}.meter{height:8px;background:rgba(255,255,255,.18);border-radius:20px;overflow:hidden;margin-top:15px}.meter>i{display:block;height:100%;width:0;background:#fff;transition:width .25s}.progress{margin-top:8px;font-size:13px;font-weight:800}
-.card{background:var(--card);border:1px solid var(--line);border-radius:21px;padding:20px;box-shadow:0 6px 20px rgba(20,25,35,.05)}
-.qnum{font-size:12px;color:var(--accent);font-weight:900}.card h2{font-size:19px;line-height:1.5;margin:8px 0 15px}
-.choice{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:14px;padding:14px;margin:8px 0;font-size:15px;line-height:1.45;cursor:pointer}
-.choice.sel{border-color:var(--accent);background:#f1f5ff}.choice.correct{border-color:var(--ok);background:#eefaf5}.choice.wrong{border-color:var(--bad);background:#fff1f3}
-.btn{border:0;border-radius:13px;padding:12px 15px;font-weight:900;cursor:pointer;font-size:14px}.primary{background:#20242c;color:#fff;width:100%;margin-top:12px}.next{background:var(--accent);color:#fff;width:100%;margin-top:12px}
-.feedback{margin-top:14px;padding:14px;border-radius:14px;line-height:1.65;font-size:14px}.good{background:#eefaf5;color:#075c3d}.bad{background:#fff3f5;color:#7e2030}
-.rem{display:none;margin-top:16px;border-top:1px solid var(--line);padding-top:16px}.rem.show{display:block}.rem h3{font-size:16px;margin:0 0 8px}
-.detail{background:#f7f8fa;border-radius:14px;padding:14px;line-height:1.7;font-size:14px}.source{font-size:12px;color:var(--muted);margin-top:9px}.point{font-weight:900;margin-top:8px}
-.anki{margin-top:14px;padding:14px;border:1px dashed #b9c5e8;border-radius:14px}.anki label{display:block;font-weight:900;margin-bottom:9px}.anki input,.namebox input{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:12px;font-size:16px}
-.mini{margin-top:14px;padding:14px;border-radius:14px;background:#fbfbfc;border:1px solid var(--line)}.mini h4{margin:0 0 9px;font-size:15px}
-.statusline{font-size:13px;color:var(--muted);margin-top:7px;min-height:20px}.hidden{display:none!important}
-.finish{display:none}.finish.show{display:block}.cert{background:linear-gradient(145deg,#172033,#313f5b);color:#fff;border-radius:26px;padding:25px;box-shadow:0 15px 40px rgba(15,23,42,.18)}
-.cert .big{font-size:30px;font-weight:950;letter-spacing:-.04em;margin:7px 0}.cert .row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:14px}.cert .row:last-child{border:0}.cert .val{font-weight:900;text-align:right}.cert small{display:block;opacity:.65;margin-top:16px;line-height:1.5}
-.namebox{margin:16px 0;padding:14px;background:#fff;border:1px solid var(--line);border-radius:16px}.namebox label{display:block;font-weight:900;margin-bottom:8px}
-.notice{font-size:12px;color:var(--muted);line-height:1.6;margin:17px 4px}.err{padding:20px;background:#fff;border-radius:18px;border:1px solid var(--line)}
-@media(max-width:540px){.hero h1{font-size:21px}.card h2{font-size:17px}.choice{font-size:14px}.cert .big{font-size:26px}}
-@media print{body{background:#fff} .top,.hero,.notice,.namebox,#study,.screenbtn{display:none!important}.finish{display:block!important}.cert{box-shadow:none;break-inside:avoid}}
+.hero h1{font-size:24px;margin:0 0 7px}.hero p{margin:0;opacity:.84;line-height:1.58}.meter{height:8px;background:rgba(255,255,255,.18);border-radius:20px;overflow:hidden;margin-top:15px}.meter>i{display:block;height:100%;width:0;background:#fff;transition:width .25s}.progress{margin-top:8px;font-size:13px;font-weight:800}
+.honesty{margin-top:13px;padding:11px 12px;border-radius:13px;background:rgba(255,255,255,.1);font-size:12.5px;line-height:1.55}
+.coverage{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin:0 0 14px}.coverage b{font-size:13px}.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.chip{font-size:11.5px;font-weight:800;color:#334155;background:#f0f3f7;border:1px solid #e1e6ec;padding:7px 9px;border-radius:999px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:19px;box-shadow:0 5px 18px rgba(20,25,35,.05)}
+.scope{font-size:12px;font-weight:800;color:var(--accent);line-height:1.55;margin-bottom:6px}.qnum{font-size:12px;color:var(--muted);font-weight:900}.card h2{font-size:19px;line-height:1.5;margin:8px 0 16px}
+.choice{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:14px;padding:13px 14px;margin:8px 0;font-size:15px;line-height:1.45;cursor:pointer}.choice.sel{border-color:var(--accent);background:#f1f5ff}.choice.correct{border-color:var(--ok);background:#eefaf5}.choice.wrong{border-color:var(--bad);background:#fff1f3}.choice:disabled{cursor:default}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.btn{border:0;border-radius:13px;padding:12px 15px;font-weight:900;cursor:pointer}.btn.primary{background:#20242c;color:#fff}.btn.unknown{background:#fff4dc;color:#7a5000;border:1px solid #efd18b}.btn.secondary{background:#edf1ff;color:var(--accent)}.btn.ok{background:#e9f8f1;color:var(--ok)}.btn:disabled{opacity:.45;cursor:not-allowed}
+.feedback,.rem,.stagebox,.retestReview{margin-top:14px;padding:14px;border-radius:15px;background:#f7f8fa;line-height:1.65;font-size:14px}.feedback.good{border-left:4px solid var(--ok)}.feedback.bad{border-left:4px solid var(--bad)}.rem{border-left:4px solid var(--violet)}.rem h3,.stagebox h3{font-size:14px;margin:0 0 8px}.stage{font-size:12px;font-weight:900;color:var(--violet);margin-bottom:6px}.source{font-size:12px;color:var(--muted);margin-top:8px}.point{font-weight:900;margin-top:8px}
+input[type=text]{width:100%;border:1px solid var(--line);border-radius:13px;padding:13px;font-size:16px;margin-top:9px}.status{font-size:12px;color:var(--bad);margin-top:8px;line-height:1.5}
+.finalIntro{background:#fff;border:2px solid #20242c;border-radius:22px;padding:22px}.finalIntro h2{margin:0 0 8px}.finalIntro p{line-height:1.65;color:#4b5563}
+.finish{display:none}.finish.show{display:block}.namebox{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}.namebox label{font-weight:900;font-size:13px}.cert{background:#fff;border:2px solid #20242c;border-radius:24px;padding:22px}.cert .big{font-size:25px;font-weight:950;margin:5px 0 15px}.cert .row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #eceff2}.cert .val{font-weight:900;text-align:right}.cert small{display:block;color:var(--muted);line-height:1.6;margin-top:14px}.screenbtn{margin-top:12px}.notice{font-size:12px;color:var(--muted);line-height:1.6;margin:16px 4px}.hidden{display:none!important}.err{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px}
+@media(max-width:560px){.hero h1{font-size:21px}.card h2{font-size:17px}.choice{font-size:14px}.actions{display:grid;grid-template-columns:1fr 1fr}.actions .btn{width:100%}.cert .row{align-items:flex-start}.cert .val{max-width:58%}}
+@media print{body{background:#fff}.top,.hero,.coverage,.notice,.namebox,#study,.screenbtn{display:none!important}.finish{display:block!important}.cert{box-shadow:none;break-inside:avoid}}
 </style>
 </head>
 <body><main>
 <div class="top"><a class="back" href="../">← 법령 학습</a><span class="pill" id="datePill">오늘의 문제</span></div>
-<section class="hero"><h1 id="title">오늘의 문제</h1><p id="theme">당일 전체 문항을 끝까지 마쳐야 완료됩니다.</p><div class="meter"><i id="bar"></i></div><div class="progress" id="progress"></div></section>
+
+<section class="hero">
+  <h1 id="title">오늘의 문제</h1>
+  <p id="theme">한 문제씩 확인하며 끝까지 학습합니다.</p>
+  <div class="meter"><i id="bar"></i></div>
+  <div class="progress" id="progress"></div>
+  <div class="honesty">모르면 찍지 않아도 됩니다. <b>‘모르겠음’</b>을 누르면 오답으로 처리하고 바로 학습으로 넘어갑니다. 인증은 점수가 아니라 <b>끝까지 학습했는지</b>를 확인합니다.</div>
+</section>
+
+<section class="coverage"><b>오늘의 학습 범위</b><div class="chips" id="coverageChips"></div></section>
+
 <div id="study"><div class="err">문제를 불러오는 중입니다.</div></div>
+
 <section id="finish" class="finish">
- <div class="namebox"><label for="nickname">카카오방에서 사용하는 이름/닉네임</label><input id="nickname" maxlength="30" placeholder="예: 홍길동"><button class="btn primary" id="applyName">완료 인증 화면 만들기</button></div>
+ <div class="namebox">
+   <label for="nickname">카카오방에서 사용하는 이름/닉네임</label>
+   <input id="nickname" maxlength="30" placeholder="예: 홍길동">
+   <button class="btn primary" id="applyName">완료 인증 화면 만들기</button>
+ </div>
  <div id="cert" class="cert hidden">
   <div>간부직원 자격전형 · DAILY 인증</div>
   <div class="big" id="certTitle">DAY 완료</div>
   <div class="row"><span>학습자</span><span class="val" id="certName"></span></div>
   <div class="row"><span>학습일</span><span class="val" id="certDate"></span></div>
   <div class="row"><span>기본문제</span><span class="val" id="certBase"></span></div>
-  <div class="row"><span>최초 정답</span><span class="val" id="certScore"></span></div>
-  <div class="row"><span>오답 복습</span><span class="val" id="certRem"></span></div>
-  <div class="row"><span>복습 상태</span><span class="val">오답 해설·ANKI·유사문제 전부 통과</span></div>
+  <div class="row"><span>첫 시도 정답</span><span class="val" id="certScore"></span></div>
+  <div class="row"><span>모르겠음 선택</span><span class="val" id="certUnknown"></span></div>
+  <div class="row"><span>오답학습</span><span class="val" id="certRem"></span></div>
+  <div class="row"><span>최종 오답 재시험</span><span class="val" id="certRetest"></span></div>
+  <div class="row"><span>최종 상태</span><span class="val">전체 범위 학습·오답교정·재시험 통과</span></div>
   <div class="row"><span>완료 시각</span><span class="val" id="certTime"></span></div>
   <div class="row"><span>인증 코드</span><span class="val" id="certCode"></span></div>
-  <small>이 화면은 오늘의 전체 문항과 필요한 오답 복습을 모두 마친 뒤에만 표시됩니다. 카카오 채팅방 제출용으로 이 화면 전체를 캡처하세요.</small>
+  <small>첫 시도 정답수나 ‘모르겠음’ 횟수는 참여 판정 기준이 아닙니다. 오늘 배정된 모든 문항을 끝까지 학습하고, 최초 오답·모르겠음 문항을 최종 재시험에서 모두 맞힌 경우에만 이 화면이 표시됩니다.</small>
  </div>
  <button class="btn primary screenbtn hidden" id="printBtn">인증 화면만 인쇄·PDF 보기</button>
 </section>
+
 <p class="notice" id="notice"></p>
 </main>
 <iframe name="submitFrame" class="hidden" aria-hidden="true"></iframe>
+
 <script>
 const $=s=>document.querySelector(s);
 let manifest,data,state;
-const norm=s=>String(s??'').toLowerCase().replace(/퍼센트/g,'').replace(/[\s·,._%()%]/g,'');
-function key(){return 'mg-daily-v3-'+data.date}
-function save(){localStorage.setItem(key(),JSON.stringify(state))}
-function loadState(){
- const old=localStorage.getItem(key());
- state=old?JSON.parse(old):{index:0,items:{},firstCorrect:0,completed:false,completionAt:null,code:null,nickname:'',startedAt:new Date().toISOString()};
- if(!state.startedAt) state.startedAt=new Date().toISOString();
- for(const q of data.questions) if(!state.items[q.id]) state.items[q.id]={attempted:false,firstCorrect:null,mastered:false,detailSeen:false,recall:false,similar:false};
- const mastered=data.questions.filter(q=>state.items[q.id]&&state.items[q.id].mastered).length;
- if(mastered<data.questions.length){
-   state.completed=false;
-   if(state.completionAt){state.completionAt=null;state.code=null}
-   const firstOpen=data.questions.findIndex(q=>!state.items[q.id].mastered);
-   if(firstOpen>=0) state.index=firstOpen;
- }
- save();
-}
-function updateProgress(){
- const total=data.questions.length;
- const mastered=data.questions.filter(q=>state.items[q.id]&&state.items[q.id].mastered).length;
- $('#bar').style.width=(total?mastered/total*100:0)+'%';
- $('#progress').textContent='DAY '+data.day+' / 30 · '+mastered+' / '+total+' 완료';
-}
-function choiceButtons(choices,onselect){
- const wrap=document.createElement('div');
- choices.forEach((c,i)=>{const b=document.createElement('button');b.className='choice';b.textContent=(i+1)+'. '+c;b.onclick=()=>{[...wrap.children].forEach(x=>x.classList.remove('sel'));b.classList.add('sel');onselect(i+1,b,wrap)};wrap.appendChild(b)});
- return wrap;
-}
-function render(){
- updateProgress();
- if(state.completed){showFinish();return}
- const total=data.questions.length;
- const idx=Math.min(state.index,total-1),q=data.questions[idx],s=state.items[q.id];
- $('#study').innerHTML='';
- const card=document.createElement('section');card.className='card';
- card.innerHTML='<div class="qnum">Q'+(idx+1)+' / '+total+'</div><h2></h2><div class="basechoices"></div><button class="btn primary submit">정답 제출</button><div class="feedback hidden"></div><div class="rem"><h3>오답 복습 1 · 조항을 다시 확인하세요</h3><div class="detail"></div><div class="point"></div><div class="source"></div><button class="btn primary seen">해설 확인 완료</button><div class="anki hidden"><label></label><input class="recallInput" autocomplete="off" placeholder="정답을 직접 입력"><button class="btn primary recallBtn">ANKI 회상 확인</button><div class="statusline recallStatus"></div></div><div class="mini hidden"><h4>오답 복습 3 · 유사문제</h4><div class="simq"></div><div class="simchoices"></div><button class="btn primary simSubmit">유사문제 제출</button><div class="statusline simStatus"></div></div></div><button class="btn next hidden">다음 문제</button>';
- card.querySelector('h2').textContent=q.question;
- let selected=null,selectedBtn=null,baseWrap=card.querySelector('.basechoices');
- const built=choiceButtons(q.choices,(n,b)=>{selected=n;selectedBtn=b});
- baseWrap.replaceWith(built);built.className='basechoices';
- const feedback=card.querySelector('.feedback'),submit=card.querySelector('.submit'),next=card.querySelector('.next'),rembox=card.querySelector('.rem');
 
- function markBase(){
-   [...built.children].forEach((b,i)=>{b.disabled=true;if(i+1===q.answer)b.classList.add('correct');if(i+1===selected && selected!==q.answer)b.classList.add('wrong')});
- }
- function mastered(){
-   s.mastered=true;save();updateProgress();next.classList.remove('hidden');
- }
- submit.onclick=()=>{
-   if(!selected||s.attempted)return;
-   s.attempted=true;s.firstCorrect=(selected===q.answer);
-   if(s.firstCorrect){
-      state.firstCorrect++;markBase();feedback.className='feedback good';feedback.textContent='정답입니다. '+q.explanation;submit.classList.add('hidden');mastered();
-   }else{
-      markBase();feedback.className='feedback bad';feedback.textContent='오답입니다. 정답은 '+q.answer+'번입니다. 아래 복습을 모두 통과해야 다음 문제로 갈 수 있습니다.';submit.classList.add('hidden');
-      rembox.classList.add('show');setupRem();
-   }
-   save();
- };
- function setupRem(){
-   rembox.querySelector('.detail').textContent=q.remediation.detail;
-   rembox.querySelector('.point').textContent='암기 포인트 · '+q.point;
-   rembox.querySelector('.source').textContent='근거 · '+q.source;
-   const seen=rembox.querySelector('.seen'),anki=rembox.querySelector('.anki');
-   if(s.detailSeen){seen.classList.add('hidden');anki.classList.remove('hidden')}
-   seen.onclick=()=>{s.detailSeen=true;seen.classList.add('hidden');anki.classList.remove('hidden');save()};
-   const lab=anki.querySelector('label');lab.textContent=q.remediation.recall.prompt;
-   const inp=anki.querySelector('.recallInput'),rs=anki.querySelector('.recallStatus'),rbtn=anki.querySelector('.recallBtn'),mini=rembox.querySelector('.mini');
-   if(s.recall){anki.classList.remove('hidden');rbtn.disabled=true;inp.disabled=true;rs.textContent='회상 정답 통과';mini.classList.remove('hidden');setupSimilar()}
-   rbtn.onclick=()=>{
-     const ok=q.remediation.recall.answers.some(a=>norm(a)===norm(inp.value));
-     if(ok){s.recall=true;rs.textContent='정답입니다. 이제 같은 논점의 유사문제를 풀어야 합니다.';rbtn.disabled=true;inp.disabled=true;mini.classList.remove('hidden');setupSimilar();save()}
-     else rs.textContent='아직 정확하지 않습니다. 해설의 핵심 수치·주체·요건을 다시 보고 직접 입력하세요.';
-   };
-   if(!s.recall && s.detailSeen) anki.classList.remove('hidden');
- }
- function setupSimilar(){
-   const mini=rembox.querySelector('.mini'); if(mini.dataset.ready)return; mini.dataset.ready='1';
-   const sm=q.remediation.similar;mini.querySelector('.simq').textContent=sm.question;
-   let sel=null,wrap=mini.querySelector('.simchoices');
-   const sb=choiceButtons(sm.choices,(n)=>sel=n);wrap.replaceWith(sb);sb.className='simchoices';
-   const btn=mini.querySelector('.simSubmit'),st=mini.querySelector('.simStatus');
-   if(s.similar){[...sb.children].forEach((b,i)=>{b.disabled=true;if(i+1===sm.answer)b.classList.add('correct')});btn.classList.add('hidden');st.textContent='유사문제 통과';if(!s.mastered)mastered();return}
-   btn.onclick=()=>{
-     if(!sel)return;
-     if(sel===sm.answer){s.similar=true;[...sb.children].forEach((b,i)=>{b.disabled=true;if(i+1===sm.answer)b.classList.add('correct')});btn.classList.add('hidden');st.textContent='정답입니다. '+sm.explanation;mastered()}
-     else{st.textContent='오답입니다. 같은 논점을 다시 확인하고 재도전하세요.';[...sb.children].forEach((b,i)=>b.classList.remove('wrong'));[...sb.children][sel-1].classList.add('wrong')}
-     save();
-   };
- }
- if(s.attempted){
-   selected=s.firstCorrect?q.answer:null;submit.classList.add('hidden');
-   if(s.firstCorrect){[...built.children].forEach((b,i)=>{b.disabled=true;if(i+1===q.answer)b.classList.add('correct')});feedback.className='feedback good';feedback.textContent='정답 처리된 문항입니다.'}
-   else{[...built.children].forEach((b,i)=>{b.disabled=true;if(i+1===q.answer)b.classList.add('correct')});feedback.className='feedback bad';feedback.textContent='오답 복습 진행 중입니다.';rembox.classList.add('show');setupRem()}
-   if(s.mastered)next.classList.remove('hidden');
- }
- next.onclick=()=>{
-   if(!s.mastered)return;
-   if(idx===total-1){
-     state.completed=true;state.completionAt=state.completionAt||new Date().toISOString();
-     state.code=state.code||makeCode();save();showFinish();
-   }else{state.index=idx+1;save();render();window.scrollTo({top:0,behavior:'smooth'})}
- };
- $('#study').appendChild(card);
+const norm=s=>String(s??'').toLowerCase()
+  .replace(/퍼센트/g,'')
+  .replace(/[\s·,._%()%원]/g,'');
+
+function storageKey(){return 'mg-daily-v5-'+data.date}
+function save(){localStorage.setItem(storageKey(),JSON.stringify(state))}
+function defaultItem(){return {
+  attempted:false,firstCorrect:null,dontKnow:false,mastered:false,
+  detailSeen:false,recall1:false,recall1Attempts:0,
+  similar:false,similarAttempts:0,recall2:false,recall2Attempts:0,
+  finalPassed:false,retestAttempts:0,retestNeedsReview:false
+}}
+function loadState(){
+  let old=null;
+  try{old=JSON.parse(localStorage.getItem(storageKey())||'null')}catch(e){}
+  state=old||{version:5,phase:'base',index:0,finalIndex:0,items:{},firstCorrect:0,dontKnowCount:0,completed:false,completionAt:null,code:null,nickname:'',startedAt:new Date().toISOString()};
+  state.version=5;
+  if(!state.phase)state.phase='base';
+  if(!state.startedAt)state.startedAt=new Date().toISOString();
+  if(typeof state.firstCorrect!=='number')state.firstCorrect=0;
+  if(typeof state.dontKnowCount!=='number')state.dontKnowCount=0;
+  if(typeof state.finalIndex!=='number')state.finalIndex=0;
+
+  for(const q of data.questions){
+    const x=state.items[q.id]||{};
+    const it=Object.assign(defaultItem(),x);
+    if(x.recall===true && x.recall1===undefined)it.recall1=true;
+    if(it.firstCorrect===true){it.mastered=true;it.finalPassed=true}
+    if(it.firstCorrect===false && !it.recall2)it.mastered=false;
+    state.items[q.id]=it;
+  }
+  const valid=new Set(data.questions.map(q=>q.id));
+  Object.keys(state.items).forEach(id=>{if(!valid.has(id))delete state.items[id]});
+
+  state.firstCorrect=data.questions.filter(q=>state.items[q.id].firstCorrect===true).length;
+  state.dontKnowCount=data.questions.filter(q=>state.items[q.id].dontKnow===true).length;
+
+  const baseDone=data.questions.every(q=>state.items[q.id].mastered);
+  const wrong=wrongQuestions();
+  const finalDone=wrong.every(q=>state.items[q.id].finalPassed);
+
+  if(!baseDone){
+    state.phase='base';state.completed=false;state.completionAt=null;state.code=null;
+    const n=data.questions.findIndex(q=>!state.items[q.id].mastered);
+    state.index=n<0?0:n;
+  }else if(!finalDone){
+    state.phase='final';state.completed=false;state.completionAt=null;state.code=null;
+    const n=wrong.findIndex(q=>!state.items[q.id].finalPassed);
+    state.finalIndex=n<0?0:n;
+  }else if(baseDone && finalDone && state.completed){
+    state.phase='done';
+  }
+  save();
 }
+
+function item(q){return state.items[q.id]}
+function wrongQuestions(){return data.questions.filter(q=>item(q).firstCorrect===false)}
+function baseMastered(){return data.questions.filter(q=>item(q).mastered).length}
+function retestPassed(){return wrongQuestions().filter(q=>item(q).finalPassed).length}
+
+function updateProgress(){
+  const total=data.questions.length;
+  if(state.phase==='base'){
+    const n=baseMastered();
+    $('#bar').style.width=(total?n/total*100:0)+'%';
+    $('#progress').textContent='기본학습 · '+n+' / '+total+' 완료';
+  }else if(state.phase==='final'){
+    const wrong=wrongQuestions(),n=retestPassed();
+    $('#bar').style.width=(wrong.length?n/wrong.length*100:100)+'%';
+    $('#progress').textContent='최종 오답 재시험 · '+n+' / '+wrong.length+' 정답';
+  }else{
+    $('#bar').style.width='100%';
+    $('#progress').textContent='오늘 학습 완료';
+  }
+}
+
+function scopeText(q){
+  const s=q.scope||{};
+  return [s.subject,s.unit,s.chapter,s.part].filter(Boolean).join(' › ');
+}
+
+function renderCoverage(){
+  const units=[];
+  for(const q of data.questions){
+    const s=q.scope||{};
+    const key=[s.subject,s.unit].filter(Boolean).join(' · ');
+    if(key && !units.includes(key))units.push(key);
+  }
+  $('#coverageChips').innerHTML='';
+  units.forEach(x=>{const span=document.createElement('span');span.className='chip';span.textContent=x;$('#coverageChips').appendChild(span)});
+}
+
+function choiceButtons(choices,onselect,shuffle=false){
+  const wrap=document.createElement('div');
+  let arr=choices.map((text,i)=>({text,original:i+1}));
+  if(shuffle){
+    for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}
+  }
+  arr.forEach((c,i)=>{
+    const b=document.createElement('button');
+    b.className='choice';
+    b.textContent=(i+1)+'. '+c.text;
+    b.dataset.original=String(c.original);
+    b.onclick=()=>{
+      [...wrap.children].forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel');
+      onselect(c.original,b,wrap);
+    };
+    wrap.appendChild(b);
+  });
+  return wrap;
+}
+
+function actions(parent,...buttons){
+  const w=document.createElement('div');w.className='actions';buttons.forEach(b=>w.appendChild(b));parent.appendChild(w);return w;
+}
+function button(text,cls='btn primary'){const b=document.createElement('button');b.className=cls;b.textContent=text;return b}
+
+function markBase(w,q,selected){
+  [...w.children].forEach(b=>{
+    b.disabled=true;
+    const original=Number(b.dataset.original);
+    if(original===q.answer)b.classList.add('correct');
+    if(selected && original===selected && selected!==q.answer)b.classList.add('wrong');
+  });
+}
+
+function render(){
+  $('#finish').classList.remove('show');
+  updateProgress();
+  if(state.completed||state.phase==='done')return showFinish();
+  if(state.phase==='final')return renderFinal();
+  return renderBase();
+}
+
+function renderBase(){
+  const total=data.questions.length;
+  if(data.questions.every(q=>item(q).mastered))return enterFinal();
+
+  let idx=state.index;
+  if(idx<0||idx>=total||item(data.questions[idx]).mastered){
+    idx=data.questions.findIndex(q=>!item(q).mastered);
+    state.index=idx;save();
+  }
+  const q=data.questions[idx],it=item(q);
+  const app=$('#study');app.innerHTML='';
+  const card=document.createElement('section');card.className='card';
+  card.innerHTML='<div class="scope"></div><div class="qnum"></div><h2></h2><div class="basechoices"></div>';
+  card.querySelector('.scope').textContent=scopeText(q);
+  card.querySelector('.qnum').textContent='기본문제 Q'+(idx+1)+' / '+total;
+  card.querySelector('h2').textContent=q.question;
+
+  let selected=null;
+  const choices=choiceButtons(q.choices,(n)=>selected=n,false);
+  card.querySelector('.basechoices').replaceWith(choices);choices.className='basechoices';
+
+  if(!it.attempted){
+    const submit=button('선택한 답 제출');
+    submit.onclick=()=>{
+      if(!selected)return alert('보기를 선택하거나 ‘모르겠음’을 누르세요.');
+      it.attempted=true;it.firstCorrect=(selected===q.answer);
+      if(it.firstCorrect){it.mastered=true;it.finalPassed=true}
+      save();render();
+    };
+    const unknown=button('모르겠음 · 오답학습으로 이동','btn unknown');
+    unknown.onclick=()=>{
+      it.attempted=true;it.firstCorrect=false;it.dontKnow=true;
+      save();render();
+    };
+    actions(card,submit,unknown);
+  }else{
+    markBase(choices,q,it.firstCorrect===true?q.answer:null);
+    if(it.firstCorrect===true){
+      const fb=document.createElement('div');fb.className='feedback good';
+      fb.innerHTML='<b>정답입니다.</b><div class="point"></div><div class="source"></div>';
+      fb.insertAdjacentText('beforeend',' '+q.explanation);
+      fb.querySelector('.point').textContent='암기 포인트 · '+q.point;
+      fb.querySelector('.source').textContent='근거 · '+q.source;
+      card.appendChild(fb);
+      renderNext(card,idx,total);
+    }else{
+      const fb=document.createElement('div');fb.className='feedback bad';
+      fb.innerHTML='<b>'+(it.dontKnow?'‘모르겠음’으로 학습을 시작합니다.':'첫 시도 오답입니다.')+'</b> 정답을 확인한 뒤 아래 4단계 오답학습을 모두 통과해야 다음 문제로 갈 수 있습니다.';
+      card.appendChild(fb);
+      renderRemediation(card,q,it,idx,total);
+    }
+  }
+  app.appendChild(card);
+}
+
+function renderRemediation(card,q,it,idx,total){
+  const rem=document.createElement('div');rem.className='rem';
+  rem.innerHTML='<div class="stage">오답학습 1/4 · 조항·규정 다시 확인</div><h3>왜 틀렸는지 먼저 이해합니다.</h3><div class="detail"></div><div class="point"></div><div class="source"></div>';
+  rem.querySelector('.detail').textContent=q.remediation.detail;
+  rem.querySelector('.point').textContent='암기 포인트 · '+q.point;
+  rem.querySelector('.source').textContent='근거 · '+q.source;
+  card.appendChild(rem);
+
+  if(!it.detailSeen){
+    const seen=button('해설을 읽었습니다 · 회상 시작','btn secondary');
+    seen.onclick=()=>{it.detailSeen=true;save();render()};
+    rem.appendChild(seen);return;
+  }
+
+  if(!it.recall1){
+    const box=document.createElement('div');box.className='stagebox';
+    box.innerHTML='<div class="stage">오답학습 2/4 · ANKI 직접회상 1차</div><h3></h3><input type="text" autocomplete="off" placeholder="보지 말고 직접 입력"><div class="status"></div>';
+    box.querySelector('h3').textContent=q.remediation.recall.prompt;
+    if(it.recall1Attempts>0)box.querySelector('.status').textContent='아직 정확하지 않습니다. 위 해설을 다시 떠올리고 직접 입력하세요.';
+    const go=button('회상 답안 확인');
+    go.onclick=()=>{
+      const v=box.querySelector('input').value;
+      if(q.remediation.recall.answers.some(a=>norm(a)===norm(v))){it.recall1=true}
+      else it.recall1Attempts++;
+      save();render();
+    };
+    box.appendChild(go);card.appendChild(box);return;
+  }
+
+  if(!it.similar){
+    const sm=q.remediation.similar;
+    const box=document.createElement('div');box.className='stagebox';
+    box.innerHTML='<div class="stage">오답학습 3/4 · 같은 논점 유사문제</div><h3></h3><div class="simchoices"></div><div class="status"></div>';
+    box.querySelector('h3').textContent=sm.question;
+    if(it.similarAttempts>0)box.querySelector('.status').textContent='아직 아닙니다. 같은 논점을 다시 적용해 보세요.';
+    let sel=null;
+    const sw=choiceButtons(sm.choices,(n)=>sel=n,false);
+    box.querySelector('.simchoices').replaceWith(sw);sw.className='simchoices';
+    const go=button('유사문제 제출');
+    go.onclick=()=>{
+      if(!sel)return alert('보기를 선택하세요.');
+      if(sel===sm.answer){it.similar=true}
+      else it.similarAttempts++;
+      save();render();
+    };
+    box.appendChild(go);card.appendChild(box);return;
+  }
+
+  if(!it.recall2){
+    const box=document.createElement('div');box.className='stagebox';
+    box.innerHTML='<div class="stage">오답학습 4/4 · ANKI 직접회상 2차</div><h3></h3><p style="font-size:12px;color:var(--muted);margin:0 0 8px">유사문제까지 푼 뒤, 같은 핵심을 다시 보지 않고 떠올려야 이 문항이 끝납니다.</p><input type="text" autocomplete="off" placeholder="다시 한번 직접 입력"><div class="status"></div>';
+    box.querySelector('h3').textContent=q.remediation.recall.prompt;
+    if(it.recall2Attempts>0)box.querySelector('.status').textContent='아직 암기가 고정되지 않았습니다. 다시 생각해서 입력하세요.';
+    const go=button('최종 회상 확인');
+    go.onclick=()=>{
+      const v=box.querySelector('input').value;
+      if(q.remediation.recall.answers.some(a=>norm(a)===norm(v))){it.recall2=true;it.mastered=true}
+      else it.recall2Attempts++;
+      save();render();
+    };
+    box.appendChild(go);card.appendChild(box);return;
+  }
+
+  it.mastered=true;save();
+  const ok=document.createElement('div');ok.className='feedback good';ok.innerHTML='<b>이 문항 오답학습 완료.</b> 아직 DAY 완료는 아닙니다. 마지막에 이 문항을 다시 풀어 최종 정답을 맞혀야 합니다.';card.appendChild(ok);
+  renderNext(card,idx,total);
+}
+
+function renderNext(card,idx,total){
+  const next=button(idx===total-1?'기본학습 마무리':'다음 문제','btn primary');
+  next.onclick=()=>{
+    if(!item(data.questions[idx]).mastered)return;
+    if(idx===total-1)return enterFinal();
+    let n=idx+1;
+    while(n<total&&item(data.questions[n]).mastered)n++;
+    if(n>=total)return enterFinal();
+    state.index=n;save();render();window.scrollTo({top:0,behavior:'smooth'});
+  };
+  card.appendChild(next);
+}
+
+function enterFinal(){
+  if(!data.questions.every(q=>item(q).mastered)){
+    state.phase='base';state.index=data.questions.findIndex(q=>!item(q).mastered);save();return render();
+  }
+  const wrong=wrongQuestions();
+  if(!wrong.length)return completeDay();
+  state.phase='final';
+  const n=wrong.findIndex(q=>!item(q).finalPassed);
+  state.finalIndex=n<0?0:n;
+  save();render();
+}
+
+function renderFinal(){
+  const wrong=wrongQuestions();
+  if(!wrong.length||wrong.every(q=>item(q).finalPassed))return completeDay();
+
+  let fi=state.finalIndex;
+  if(fi<0||fi>=wrong.length||item(wrong[fi]).finalPassed){
+    fi=wrong.findIndex(q=>!item(q).finalPassed);
+    state.finalIndex=fi;save();
+  }
+  const q=wrong[fi],it=item(q),app=$('#study');app.innerHTML='';
+
+  if(it.retestNeedsReview){
+    const c=document.createElement('section');c.className='card';
+    c.innerHTML='<div class="scope"></div><div class="qnum"></div><h2>아직 완전히 기억나지 않았습니다.</h2><div class="retestReview"></div><div class="point"></div><div class="source"></div>';
+    c.querySelector('.scope').textContent=scopeText(q);
+    c.querySelector('.qnum').textContent='최종 오답 재시험 '+(fi+1)+' / '+wrong.length;
+    c.querySelector('.retestReview').textContent=q.remediation.detail;
+    c.querySelector('.point').textContent='다시 외울 핵심 · '+q.point;
+    c.querySelector('.source').textContent='근거 · '+q.source;
+    const again=button('다시 풀기');
+    again.onclick=()=>{it.retestNeedsReview=false;save();render();window.scrollTo({top:0,behavior:'smooth'})};
+    c.appendChild(again);app.appendChild(c);return;
+  }
+
+  if(it.finalPassed){
+    const c=document.createElement('section');c.className='card';
+    c.innerHTML='<div class="scope"></div><div class="qnum"></div><h2>최종 재시험 정답.</h2><div class="feedback good">처음에는 틀렸거나 모르겠던 문항을 다시 맞혔습니다.</div>';
+    c.querySelector('.scope').textContent=scopeText(q);
+    c.querySelector('.qnum').textContent='최종 오답 재시험 '+(fi+1)+' / '+wrong.length;
+    const next=button(fi===wrong.length-1?'오늘 학습 완료 확인':'다음 오답 재시험');
+    next.onclick=()=>{
+      const n=wrong.findIndex(x=>!item(x).finalPassed);
+      if(n<0)return completeDay();
+      state.finalIndex=n;save();render();window.scrollTo({top:0,behavior:'smooth'});
+    };
+    c.appendChild(next);app.appendChild(c);return;
+  }
+
+  const c=document.createElement('section');c.className='card';
+  c.innerHTML='<div class="scope"></div><div class="qnum"></div><h2></h2><div class="rechoices"></div><div class="status"></div>';
+  c.querySelector('.scope').textContent=scopeText(q);
+  c.querySelector('.qnum').textContent='최종 오답 재시험 '+(fi+1)+' / '+wrong.length+' · 전부 맞혀야 완료';
+  c.querySelector('h2').textContent=q.question;
+  let selected=null;
+  const w=choiceButtons(q.choices,(n)=>selected=n,true);
+  c.querySelector('.rechoices').replaceWith(w);w.className='rechoices';
+
+  const submit=button('정답 제출');
+  submit.onclick=()=>{
+    if(!selected)return alert('보기를 선택하거나 ‘모르겠음’을 누르세요.');
+    it.retestAttempts++;
+    if(selected===q.answer){it.finalPassed=true;it.retestNeedsReview=false}
+    else it.retestNeedsReview=true;
+    save();render();
+  };
+  const unknown=button('아직 모르겠음 · 다시 학습','btn unknown');
+  unknown.onclick=()=>{it.retestAttempts++;it.retestNeedsReview=true;save();render()};
+  actions(c,submit,unknown);
+  if(it.retestAttempts>0)c.querySelector('.status').textContent='틀려도 끝까지 다시 풀 수 있습니다. 이 문항을 맞힐 때까지 다음으로 넘어가지 않습니다.';
+  app.appendChild(c);
+}
+
+function completeDay(){
+  const wrong=wrongQuestions();
+  if(!data.questions.every(q=>item(q).mastered))return enterFinal();
+  if(!wrong.every(q=>item(q).finalPassed)){state.phase='final';save();return render()}
+  state.completed=true;state.phase='done';state.completionAt=state.completionAt||new Date().toISOString();state.code=state.code||makeCode();save();showFinish();
+}
+
 function makeCode(){
- const seed=data.date+'|'+Date.now()+'|'+Math.random();
- let h=2166136261;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=Math.imul(h,16777619)}
- return data.date.replaceAll('-','').slice(4)+'-'+(h>>>0).toString(36).toUpperCase().padStart(6,'0').slice(0,6);
+  const seed=data.date+'|'+Date.now()+'|'+Math.random();
+  let h=2166136261;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=Math.imul(h,16777619)}
+  return data.date.replaceAll('-','').slice(4)+'-'+(h>>>0).toString(36).toUpperCase().padStart(6,'0').slice(0,6);
 }
+
 function showFinish(){
- $('#study').innerHTML='';
- $('#finish').classList.add('show');$('#nickname').value=state.nickname||'';
- $('#applyName').onclick=()=>{
-   const n=$('#nickname').value.trim();if(!n){alert('카카오방에서 사용하는 이름 또는 닉네임을 입력하세요.');return}
-   state.nickname=n;state.code=state.code||makeCode();state.completionAt=state.completionAt||new Date().toISOString();save();
-   const total=data.questions.length,wrong=total-state.firstCorrect;
-   $('#certTitle').textContent='DAY '+String(data.day).padStart(2,'0')+' 완료';
-   $('#certName').textContent=n;$('#certDate').textContent=data.date;$('#certBase').textContent=total+' / '+total+' 완료';$('#certScore').textContent=state.firstCorrect+' / '+total;$('#certRem').textContent=wrong+'문항 복습 완료';
-   $('#certTime').textContent=new Date(state.completionAt).toLocaleString('ko-KR');$('#certCode').textContent=state.code;
-   submitCompletion();
-   $('#cert').classList.remove('hidden');$('#printBtn').classList.remove('hidden');window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
- };
- $('#printBtn').onclick=()=>window.print();
- if(state.nickname) $('#applyName').click();
- updateProgress();
+  $('#study').innerHTML='';
+  $('#finish').classList.add('show');
+  $('#nickname').value=state.nickname||'';
+  $('#applyName').onclick=()=>{
+    const n=$('#nickname').value.trim();
+    if(!n){alert('카카오방에서 사용하는 이름 또는 닉네임을 입력하세요.');return}
+    state.nickname=n;state.code=state.code||makeCode();state.completionAt=state.completionAt||new Date().toISOString();save();
+    const total=data.questions.length,wrong=wrongQuestions();
+    $('#certTitle').textContent='DAY '+String(data.day).padStart(2,'0')+' 완료';
+    $('#certName').textContent=n;
+    $('#certDate').textContent=data.date;
+    $('#certBase').textContent=total+' / '+total+' 완료';
+    $('#certScore').textContent=state.firstCorrect+' / '+total;
+    $('#certUnknown').textContent=state.dontKnowCount+'문항';
+    $('#certRem').textContent=wrong.length+'문항 4단계 통과';
+    $('#certRetest').textContent=wrong.length+' / '+wrong.length+' 최종 정답';
+    $('#certTime').textContent=new Date(state.completionAt).toLocaleString('ko-KR');
+    $('#certCode').textContent=state.code;
+    submitCompletion();
+    $('#cert').classList.remove('hidden');$('#printBtn').classList.remove('hidden');
+    window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+  };
+  $('#printBtn').onclick=()=>window.print();
+  if(state.nickname)$('#applyName').click();
+  updateProgress();
 }
+
 function submitCompletion(){
- if(!manifest.completion?.enabled||!manifest.completion?.apiUrl)return;
- const total=data.questions.length;
- const mastered=data.questions.filter(q=>state.items[q.id]&&state.items[q.id].mastered).length;
- if(mastered!==total)return;
- const form=document.createElement('form');form.method='POST';form.action=manifest.completion.apiUrl;form.target='submitFrame';form.className='hidden';
- const payload={action:'complete',nickname:state.nickname,date:data.date,day:data.day,total,mastered,firstCorrect:state.firstCorrect,remediationCount:total-state.firstCorrect,completionCode:state.code,startedAt:state.startedAt||'',completedAt:state.completionAt||''};
- Object.entries(payload).forEach(([k,v])=>{const i=document.createElement('input');i.name=k;i.value=String(v);form.appendChild(i)});
- document.body.appendChild(form);form.submit();setTimeout(()=>form.remove(),1500);
+  if(!manifest.completion?.enabled||!manifest.completion?.apiUrl)return;
+  const total=data.questions.length,wrong=wrongQuestions();
+  const mastered=data.questions.filter(q=>item(q).mastered).length;
+  const finalPassed=wrong.filter(q=>item(q).finalPassed).length;
+  if(mastered!==total||finalPassed!==wrong.length)return;
+
+  const form=document.createElement('form');
+  form.method='POST';form.action=manifest.completion.apiUrl;form.target='submitFrame';form.className='hidden';
+  const payload={
+    action:'complete',nickname:state.nickname,date:data.date,day:data.day,total,mastered,
+    firstCorrect:state.firstCorrect,dontKnowCount:state.dontKnowCount,
+    remediationCount:wrong.length,finalRetestCount:wrong.length,finalRetestPassed:finalPassed,
+    completionCode:state.code,startedAt:state.startedAt||'',completedAt:state.completionAt||''
+  };
+  Object.entries(payload).forEach(([k,v])=>{const i=document.createElement('input');i.name=k;i.value=String(v);form.appendChild(i)});
+  document.body.appendChild(form);form.submit();setTimeout(()=>form.remove(),1500);
 }
+
 async function load(){
- try{
-  manifest=await fetch('../daily_questions/manifest.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('manifest');return r.json()});
-  data=await fetch('../daily_questions/'+manifest.latest+'.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('daily');return r.json()});
-  $('#datePill').textContent=data.date;$('#title').textContent=data.title;
-  const plan=(manifest.plan||[]).find(x=>x.day===data.day);$('#theme').textContent=(plan?plan.theme:'오늘의 핵심')+' · '+data.questions.length+'문항 완주형';
-  $('#notice').textContent=(manifest.policy?.publicBasis||'')+' · '+(manifest.policy?.disclaimer||'')+' · '+(manifest.policy?.privacy||'');
-  loadState();render();
- }catch(e){$('#study').innerHTML='<div class="err">오늘의 문제를 불러오지 못했습니다. 잠시 후 다시 확인해 주세요.</div>'}
+  try{
+    manifest=await fetch('../daily_questions/manifest.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('manifest');return r.json()});
+    data=await fetch('../daily_questions/'+manifest.latest+'.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('daily');return r.json()});
+    $('#datePill').textContent=data.date;
+    $('#title').textContent=data.title;
+    const plan=(manifest.plan||[]).find(x=>x.day===data.day);
+    $('#theme').textContent=(plan?plan.theme:'오늘의 핵심')+' · '+data.questions.length+'문항 · 한 문제씩 완주';
+    $('#notice').textContent=(manifest.policy?.publicBasis||'')+' · '+(manifest.policy?.disclaimer||'')+' · '+(manifest.policy?.privacy||'');
+    renderCoverage();loadState();render();
+  }catch(e){
+    $('#study').innerHTML='<div class="err">오늘의 문제를 불러오지 못했습니다. 잠시 후 다시 확인해 주세요.</div>';
+  }
 }
 load();
 </script>
-</body></html>
+</body>
+</html>
