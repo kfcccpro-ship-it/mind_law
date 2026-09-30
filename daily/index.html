@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>간부직원 자격전형 · 오늘의 5문제</title>
+<style>
+:root{--bg:#f4f5f7;--card:#fff;--ink:#17181c;--muted:#6e737b;--line:#e4e7eb;--accent:#2f62f5;--ok:#0a8f5b;--bad:#c9344b}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+main{max-width:760px;margin:auto;padding:18px 16px 70px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.back{color:var(--muted);text-decoration:none;font-weight:700}.pill{font-size:12px;font-weight:800;background:#eaf0ff;color:var(--accent);padding:7px 10px;border-radius:999px}
+.hero{background:linear-gradient(135deg,#1f2937,#38465d);color:#fff;border-radius:22px;padding:22px;margin-bottom:16px}
+.hero h1{font-size:24px;margin:0 0 8px}.hero p{margin:0;opacity:.78;line-height:1.55}.progress{margin-top:14px;font-size:13px;font-weight:700}
+.q{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:19px;margin:12px 0;box-shadow:0 5px 18px rgba(20,25,35,.05)}
+.qnum{font-size:12px;color:var(--accent);font-weight:900}.q h2{font-size:18px;line-height:1.5;margin:8px 0 14px}
+.choice{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:14px;padding:13px 14px;margin:8px 0;font-size:15px;line-height:1.45;cursor:pointer}
+.choice.sel{border-color:var(--accent);background:#f1f5ff}.choice.correct{border-color:var(--ok);background:#eefaf5}.choice.wrong{border-color:var(--bad);background:#fff1f3}
+.reveal{margin-top:13px;border:0;border-radius:12px;padding:11px 14px;font-weight:800;background:#20242c;color:white;cursor:pointer}
+.explain{display:none;margin-top:14px;padding:14px;border-radius:14px;background:#f7f8fa;line-height:1.65;font-size:14px}.explain.show{display:block}
+.source{font-size:12px;color:var(--muted);margin-top:8px}.point{font-weight:800;margin-top:7px}
+.notice{font-size:12px;color:var(--muted);line-height:1.55;margin:18px 4px}.err{padding:22px;background:#fff;border-radius:18px;border:1px solid var(--line)}
+@media(max-width:540px){.hero h1{font-size:21px}.q h2{font-size:17px}.choice{font-size:14px}.top{align-items:flex-start}}
+</style>
+</head>
+<body><main>
+<div class="top"><a class="back" href="../">← 법령 학습</a><span class="pill" id="datePill">오늘의 문제</span></div>
+<section class="hero"><h1 id="title">오늘의 5문제</h1><p id="theme">현행 규정에 근거한 매일 학습 세트입니다.</p><div class="progress" id="progress"></div></section>
+<div id="app"><div class="err">문제를 불러오는 중입니다.</div></div>
+<p class="notice" id="notice"></p>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+async function load(){
+ try{
+  const m=await fetch('../daily_questions/manifest.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('manifest');return r.json()});
+  const latest=m.latest;
+  const d=await fetch('../daily_questions/'+latest+'.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('daily');return r.json()});
+  $('#datePill').textContent=d.date;
+  $('#title').textContent=d.title;
+  const plan=(m.plan||[]).find(x=>x.day===d.day);
+  $('#theme').textContent=plan?plan.theme:'오늘의 핵심 문제';
+  $('#progress').textContent='30일 중 DAY '+d.day+' · '+d.questions.length+'문제';
+  $('#notice').textContent=(m.policy?.publicBasis||'')+' · '+(m.policy?.disclaimer||'');
+  $('#app').innerHTML='';
+  d.questions.forEach((q,idx)=>renderQ(q,idx));
+ }catch(e){
+  $('#app').innerHTML='<div class="err">오늘의 문제를 불러오지 못했습니다. 잠시 후 다시 확인해 주세요.</div>';
+ }
+}
+function renderQ(q,idx){
+ const sec=document.createElement('section');sec.className='q';
+ sec.innerHTML='<div class="qnum">Q'+(idx+1)+'</div><h2></h2><div class="choices"></div><button class="reveal">정답·해설 보기</button><div class="explain"><div class="answer"></div><div class="text"></div><div class="point"></div><div class="source"></div></div>';
+ sec.querySelector('h2').textContent=q.question;
+ const wrap=sec.querySelector('.choices');
+ q.choices.forEach((c,i)=>{
+   const b=document.createElement('button');b.className='choice';b.textContent=(i+1)+'. '+c;
+   b.onclick=()=>{wrap.querySelectorAll('.choice').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');};
+   wrap.appendChild(b);
+ });
+ sec.querySelector('.reveal').onclick=()=>{
+   const ex=sec.querySelector('.explain');ex.classList.add('show');
+   const bs=[...wrap.querySelectorAll('.choice')];
+   bs.forEach((b,i)=>{b.classList.remove('correct','wrong');if(i+1===q.answer)b.classList.add('correct');else if(b.classList.contains('sel'))b.classList.add('wrong')});
+   ex.querySelector('.answer').innerHTML='<strong>정답 '+q.answer+'번</strong>';
+   ex.querySelector('.text').textContent=q.explanation;
+   ex.querySelector('.point').textContent='암기 포인트 · '+q.point;
+   ex.querySelector('.source').textContent='근거 · '+q.source;
+ };
+ $('#app').appendChild(sec);
+}
+load();
+</script>
+</body></html>
