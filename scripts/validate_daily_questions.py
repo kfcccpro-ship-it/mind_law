@@ -68,6 +68,10 @@ for path in sorted(DATA.glob("20??-??-??.json")):
             fail(f"{q['id']}: remediation.detail required")
         if not str(r.get("rule","")).strip():
             fail(f"{q['id']}: remediation.rule required")
+        if not str(r.get("why","")).strip():
+            fail(f"{q['id']}: remediation.why required")
+        if not str(r.get("contrast","")).strip():
+            fail(f"{q['id']}: remediation.contrast required")
 
         recall = r.get("recall", {})
         if not str(recall.get("prompt","")).strip():
