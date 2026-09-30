@@ -32,3 +32,17 @@
 6. `main` 루트의 `index.html`이 갱신되면 GitHub Pages가 배포한다.
 
 > 비공식 학습자료입니다. 실무 적용 전 국가법령정보센터의 현행 법령과 해당 금고 정관·내부규정을 확인하세요.
+
+## DAILY 문제 운영
+
+- 수험생용: `/daily/`
+- 관리자용: `/admin/`
+- 데이터: `daily_questions/YYYY-MM-DD.json`
+- 기본 문항수: 20문항
+- 날짜별 문항수 확장: `daily_questions/manifest.json`의 해당 날짜 plan 항목에 `questionCount`를 지정
+- 최대 문항수: 현재 60문항
+- 최초 오답 문항: 상세해설 → ANKI 직접회상 → 유사문제 정답까지 통과해야 완료
+- 완료화면: 당일 전체 문항을 마쳐야 생성
+- 중앙 완료자/미완료자 집계: `backend/apps-script/`의 Google Apps Script 백엔드를 배포해 연결
+
+문항수를 20→30→40 등으로 늘릴 때 DAILY UI와 검증기 수정은 필요하지 않습니다. 기존 공개문항은 보존하고 추가 문항만 뒤에 붙이는 방식으로 운영합니다.
