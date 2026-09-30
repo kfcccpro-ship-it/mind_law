@@ -44,7 +44,7 @@ for path in sorted(DATA.glob("20??-??-??.json")):
         fail(f"{path.name}: exactly {expected} questions required")
 
     for q in qs:
-        required = ["id","question","choices","answer","explanation","source","point","remediation"]
+        required = ["id","question","choices","answer","explanation","source","sourceExcerpt","point","remediation"]
         missing = [k for k in required if k not in q]
         if missing:
             fail(f"{path.name}: {q.get('id','?')} missing {missing}")
@@ -66,6 +66,8 @@ for path in sorted(DATA.glob("20??-??-??.json")):
         r = q["remediation"]
         if not isinstance(r, dict) or not str(r.get("detail","")).strip():
             fail(f"{q['id']}: remediation.detail required")
+        if not str(r.get("rule","")).strip():
+            fail(f"{q['id']}: remediation.rule required")
 
         recall = r.get("recall", {})
         if not str(recall.get("prompt","")).strip():
