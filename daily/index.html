@@ -32,7 +32,7 @@ main{max-width:760px;margin:auto;padding:16px 14px 70px}.top{display:flex;justif
 </head>
 <body><main>
 <div class="top"><a class="back" href="../">← 법령 학습</a><span class="pill" id="datePill">오늘의 문제</span></div>
-<section class="hero"><h1 id="title">오늘의 20문제</h1><p id="theme">하루 20문항을 끝까지 마쳐야 완료됩니다.</p><div class="meter"><i id="bar"></i></div><div class="progress" id="progress"></div></section>
+<section class="hero"><h1 id="title">오늘의 문제</h1><p id="theme">당일 전체 문항을 끝까지 마쳐야 완료됩니다.</p><div class="meter"><i id="bar"></i></div><div class="progress" id="progress"></div></section>
 <div id="study"><div class="err">문제를 불러오는 중입니다.</div></div>
 <section id="finish" class="finish">
  <div class="namebox"><label for="nickname">카카오방에서 사용하는 이름/닉네임</label><input id="nickname" maxlength="30" placeholder="예: 홍길동"><button class="btn primary" id="applyName">완료 인증 화면 만들기</button></div>
@@ -41,18 +41,19 @@ main{max-width:760px;margin:auto;padding:16px 14px 70px}.top{display:flex;justif
   <div class="big" id="certTitle">DAY 완료</div>
   <div class="row"><span>학습자</span><span class="val" id="certName"></span></div>
   <div class="row"><span>학습일</span><span class="val" id="certDate"></span></div>
-  <div class="row"><span>기본문제</span><span class="val">20 / 20 완료</span></div>
+  <div class="row"><span>기본문제</span><span class="val" id="certBase"></span></div>
   <div class="row"><span>최초 정답</span><span class="val" id="certScore"></span></div>
   <div class="row"><span>오답 복습</span><span class="val" id="certRem"></span></div>
   <div class="row"><span>복습 상태</span><span class="val">오답 해설·ANKI·유사문제 전부 통과</span></div>
   <div class="row"><span>완료 시각</span><span class="val" id="certTime"></span></div>
   <div class="row"><span>인증 코드</span><span class="val" id="certCode"></span></div>
-  <small>이 화면은 오늘의 20문항과 필요한 오답 복습을 모두 마친 뒤에만 표시됩니다. 카카오 채팅방 제출용으로 이 화면 전체를 캡처하세요.</small>
+  <small>이 화면은 오늘의 전체 문항과 필요한 오답 복습을 모두 마친 뒤에만 표시됩니다. 카카오 채팅방 제출용으로 이 화면 전체를 캡처하세요.</small>
  </div>
  <button class="btn primary screenbtn hidden" id="printBtn">인증 화면만 인쇄·PDF 보기</button>
 </section>
 <p class="notice" id="notice"></p>
 </main>
+<iframe name="submitFrame" class="hidden" aria-hidden="true"></iframe>
 <script>
 const $=s=>document.querySelector(s);
 let manifest,data,state;
@@ -61,13 +62,23 @@ function key(){return 'mg-daily-v3-'+data.date}
 function save(){localStorage.setItem(key(),JSON.stringify(state))}
 function loadState(){
  const old=localStorage.getItem(key());
- state=old?JSON.parse(old):{index:0,items:{},firstCorrect:0,completed:false,completionAt:null,code:null,nickname:''};
+ state=old?JSON.parse(old):{index:0,items:{},firstCorrect:0,completed:false,completionAt:null,code:null,nickname:'',startedAt:new Date().toISOString()};
+ if(!state.startedAt) state.startedAt=new Date().toISOString();
  for(const q of data.questions) if(!state.items[q.id]) state.items[q.id]={attempted:false,firstCorrect:null,mastered:false,detailSeen:false,recall:false,similar:false};
+ const mastered=data.questions.filter(q=>state.items[q.id]&&state.items[q.id].mastered).length;
+ if(mastered<data.questions.length){
+   state.completed=false;
+   if(state.completionAt){state.completionAt=null;state.code=null}
+   const firstOpen=data.questions.findIndex(q=>!state.items[q.id].mastered);
+   if(firstOpen>=0) state.index=firstOpen;
+ }
+ save();
 }
 function updateProgress(){
- const mastered=Object.values(state.items).filter(x=>x.mastered).length;
- $('#bar').style.width=(mastered/20*100)+'%';
- $('#progress').textContent='DAY '+data.day+' / 30 · '+mastered+' / 20 완료';
+ const total=data.questions.length;
+ const mastered=data.questions.filter(q=>state.items[q.id]&&state.items[q.id].mastered).length;
+ $('#bar').style.width=(total?mastered/total*100:0)+'%';
+ $('#progress').textContent='DAY '+data.day+' / 30 · '+mastered+' / '+total+' 완료';
 }
 function choiceButtons(choices,onselect){
  const wrap=document.createElement('div');
@@ -77,10 +88,11 @@ function choiceButtons(choices,onselect){
 function render(){
  updateProgress();
  if(state.completed){showFinish();return}
- const idx=Math.min(state.index,19),q=data.questions[idx],s=state.items[q.id];
+ const total=data.questions.length;
+ const idx=Math.min(state.index,total-1),q=data.questions[idx],s=state.items[q.id];
  $('#study').innerHTML='';
  const card=document.createElement('section');card.className='card';
- card.innerHTML='<div class="qnum">Q'+(idx+1)+' / 20</div><h2></h2><div class="basechoices"></div><button class="btn primary submit">정답 제출</button><div class="feedback hidden"></div><div class="rem"><h3>오답 복습 1 · 조항을 다시 확인하세요</h3><div class="detail"></div><div class="point"></div><div class="source"></div><button class="btn primary seen">해설 확인 완료</button><div class="anki hidden"><label></label><input class="recallInput" autocomplete="off" placeholder="정답을 직접 입력"><button class="btn primary recallBtn">ANKI 회상 확인</button><div class="statusline recallStatus"></div></div><div class="mini hidden"><h4>오답 복습 3 · 유사문제</h4><div class="simq"></div><div class="simchoices"></div><button class="btn primary simSubmit">유사문제 제출</button><div class="statusline simStatus"></div></div></div><button class="btn next hidden">다음 문제</button>';
+ card.innerHTML='<div class="qnum">Q'+(idx+1)+' / '+total+'</div><h2></h2><div class="basechoices"></div><button class="btn primary submit">정답 제출</button><div class="feedback hidden"></div><div class="rem"><h3>오답 복습 1 · 조항을 다시 확인하세요</h3><div class="detail"></div><div class="point"></div><div class="source"></div><button class="btn primary seen">해설 확인 완료</button><div class="anki hidden"><label></label><input class="recallInput" autocomplete="off" placeholder="정답을 직접 입력"><button class="btn primary recallBtn">ANKI 회상 확인</button><div class="statusline recallStatus"></div></div><div class="mini hidden"><h4>오답 복습 3 · 유사문제</h4><div class="simq"></div><div class="simchoices"></div><button class="btn primary simSubmit">유사문제 제출</button><div class="statusline simStatus"></div></div></div><button class="btn next hidden">다음 문제</button>';
  card.querySelector('h2').textContent=q.question;
  let selected=null,selectedBtn=null,baseWrap=card.querySelector('.basechoices');
  const built=choiceButtons(q.choices,(n,b)=>{selected=n;selectedBtn=b});
@@ -143,7 +155,7 @@ function render(){
  }
  next.onclick=()=>{
    if(!s.mastered)return;
-   if(idx===19){
+   if(idx===total-1){
      state.completed=true;state.completionAt=state.completionAt||new Date().toISOString();
      state.code=state.code||makeCode();save();showFinish();
    }else{state.index=idx+1;save();render();window.scrollTo({top:0,behavior:'smooth'})}
@@ -161,22 +173,33 @@ function showFinish(){
  $('#applyName').onclick=()=>{
    const n=$('#nickname').value.trim();if(!n){alert('카카오방에서 사용하는 이름 또는 닉네임을 입력하세요.');return}
    state.nickname=n;state.code=state.code||makeCode();state.completionAt=state.completionAt||new Date().toISOString();save();
-   const wrong=20-state.firstCorrect;
+   const total=data.questions.length,wrong=total-state.firstCorrect;
    $('#certTitle').textContent='DAY '+String(data.day).padStart(2,'0')+' 완료';
-   $('#certName').textContent=n;$('#certDate').textContent=data.date;$('#certScore').textContent=state.firstCorrect+' / 20';$('#certRem').textContent=wrong+'문항 복습 완료';
+   $('#certName').textContent=n;$('#certDate').textContent=data.date;$('#certBase').textContent=total+' / '+total+' 완료';$('#certScore').textContent=state.firstCorrect+' / '+total;$('#certRem').textContent=wrong+'문항 복습 완료';
    $('#certTime').textContent=new Date(state.completionAt).toLocaleString('ko-KR');$('#certCode').textContent=state.code;
+   submitCompletion();
    $('#cert').classList.remove('hidden');$('#printBtn').classList.remove('hidden');window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
  };
  $('#printBtn').onclick=()=>window.print();
  if(state.nickname) $('#applyName').click();
  updateProgress();
 }
+function submitCompletion(){
+ if(!manifest.completion?.enabled||!manifest.completion?.apiUrl)return;
+ const total=data.questions.length;
+ const mastered=data.questions.filter(q=>state.items[q.id]&&state.items[q.id].mastered).length;
+ if(mastered!==total)return;
+ const form=document.createElement('form');form.method='POST';form.action=manifest.completion.apiUrl;form.target='submitFrame';form.className='hidden';
+ const payload={action:'complete',nickname:state.nickname,date:data.date,day:data.day,total,mastered,firstCorrect:state.firstCorrect,remediationCount:total-state.firstCorrect,completionCode:state.code,startedAt:state.startedAt||'',completedAt:state.completionAt||''};
+ Object.entries(payload).forEach(([k,v])=>{const i=document.createElement('input');i.name=k;i.value=String(v);form.appendChild(i)});
+ document.body.appendChild(form);form.submit();setTimeout(()=>form.remove(),1500);
+}
 async function load(){
  try{
   manifest=await fetch('../daily_questions/manifest.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('manifest');return r.json()});
   data=await fetch('../daily_questions/'+manifest.latest+'.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('daily');return r.json()});
   $('#datePill').textContent=data.date;$('#title').textContent=data.title;
-  const plan=(manifest.plan||[]).find(x=>x.day===data.day);$('#theme').textContent=(plan?plan.theme:'오늘의 핵심')+' · 20문항 완주형';
+  const plan=(manifest.plan||[]).find(x=>x.day===data.day);$('#theme').textContent=(plan?plan.theme:'오늘의 핵심')+' · '+data.questions.length+'문항 완주형';
   $('#notice').textContent=(manifest.policy?.publicBasis||'')+' · '+(manifest.policy?.disclaimer||'')+' · '+(manifest.policy?.privacy||'');
   loadState();render();
  }catch(e){$('#study').innerHTML='<div class="err">오늘의 문제를 불러오지 못했습니다. 잠시 후 다시 확인해 주세요.</div>'}
