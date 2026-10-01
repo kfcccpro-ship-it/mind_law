@@ -104,7 +104,7 @@ for path in sorted(DATA.glob("20??-??-??.json")):
                 fail(f"{path.name}: more than 3 consecutive questions from same subject+unit: {key}")
 
     for q in qs:
-        required = ["id","question","choices","answer","explanation","source","sourceExcerpt","point","remediation"]
+        required = ["id","question","choices","answer","explanation","source","sourceVersion","sourceExcerpt","point","remediation"]
         missing = [k for k in required if k not in q]
         if missing:
             fail(f"{path.name}: {q.get('id','?')} missing {missing}")
