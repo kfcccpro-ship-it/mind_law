@@ -21,6 +21,28 @@ max_count = int(manifest.get("maxQuestionsPerDay", 60))
 if default_count < 1 or max_count < default_count:
     fail("invalid default/max question counts")
 
+
+TRACK_SUBJECTS = {
+    "법·감독·정관·선거": {
+        "새마을금고법", "새마을금고법 시행령", "새마을금고법 시행규칙",
+        "감독기준", "감독기준 시행세칙", "정관", "선거"
+    },
+    "여신": {"여신"},
+    "수신·출자": {"수신", "출자"},
+    "AML·세무·공제": {"자금세탁방지", "AML", "세무", "공제"},
+    "새마을금고론": {"새마을금고론"},
+    "인사·복무·직제·내부통제": {
+        "인사", "복무", "직제", "내부통제", "개인정보보호",
+        "사업계획·예산", "보수", "퇴직급여", "감사"
+    },
+}
+
+def track_for_subject(subject):
+    for track, subjects in TRACK_SUBJECTS.items():
+        if subject in subjects:
+            return track
+    return None
+
 plan_by_date = {x["date"]: x for x in manifest.get("plan", [])}
 latest = manifest.get("latest")
 try:
@@ -42,6 +64,44 @@ for path in sorted(DATA.glob("20??-??-??.json")):
     qs = obj.get("questions")
     if not isinstance(qs, list) or len(qs) != expected:
         fail(f"{path.name}: exactly {expected} questions required")
+
+    # Mixed DAILY must expose all declared learning tracks with real question counts.
+    if plan.get("mode") == "mixed_daily":
+        declared = obj.get("trackCounts")
+        if not isinstance(declared, dict):
+            fail(f"{path.name}: trackCounts required for mixed_daily")
+        if sum(int(v) for v in declared.values()) != expected:
+            fail(f"{path.name}: trackCounts sum must equal {expected}")
+
+        actual = {k: 0 for k in TRACK_SUBJECTS}
+        for q in qs:
+            subject = str(q.get("scope", {}).get("subject", "")).strip()
+            track = track_for_subject(subject)
+            if not track:
+                fail(f"{path.name}: unmapped mixed_daily subject: {subject!r}")
+            actual[track] += 1
+
+        if set(declared) != set(actual):
+            fail(f"{path.name}: trackCounts keys must match canonical six tracks")
+        for track, count in actual.items():
+            if int(declared.get(track, -1)) != count:
+                fail(f"{path.name}: trackCounts mismatch for {track}: declared={declared.get(track)}, actual={count}")
+            if count < 1:
+                fail(f"{path.name}: mixed_daily track has zero questions: {track}")
+
+        # Avoid long runs from the same subject+unit.
+        run_key = None
+        run_len = 0
+        for q in qs:
+            scope = q.get("scope", {})
+            key = (scope.get("subject"), scope.get("unit"))
+            if key == run_key:
+                run_len += 1
+            else:
+                run_key = key
+                run_len = 1
+            if run_len > 3:
+                fail(f"{path.name}: more than 3 consecutive questions from same subject+unit: {key}")
 
     for q in qs:
         required = ["id","question","choices","answer","explanation","source","sourceExcerpt","point","remediation"]
