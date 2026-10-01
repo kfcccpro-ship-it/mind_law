@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, pathlib, sys, datetime
+import json, pathlib, sys, datetime, math, re
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 DATA = ROOT / "daily_questions"
@@ -51,6 +51,22 @@ except Exception:
     fail("latest must be YYYY-MM-DD")
 
 seen_ids = set()
+seen_question_texts = {}
+seen_similar_texts = {}
+
+def normalize_text(value):
+    return re.sub(r"[^0-9A-Za-z가-힣]+", "", str(value)).lower()
+
+def check_answer_distribution(path_name, answers, label):
+    counts = [answers.count(i) for i in (1,2,3,4)]
+    total = len(answers)
+    expected = total / 4
+    tolerance = max(2, math.ceil(total * 0.15))
+    if min(counts) == 0:
+        fail(f"{path_name}: {label} answer position missing; counts={counts}")
+    if max(abs(c - expected) for c in counts) > tolerance:
+        fail(f"{path_name}: {label} answer positions too skewed; counts={counts}")
+
 for path in sorted(DATA.glob("20??-??-??.json")):
     obj = json.loads(path.read_text(encoding="utf-8"))
     if obj.get("date") != path.stem:
@@ -103,6 +119,9 @@ for path in sorted(DATA.glob("20??-??-??.json")):
             if run_len > 3:
                 fail(f"{path.name}: more than 3 consecutive questions from same subject+unit: {key}")
 
+    check_answer_distribution(path.name, [q.get("answer") for q in qs], "base")
+    check_answer_distribution(path.name, [q.get("remediation", {}).get("similar", {}).get("answer") for q in qs], "similar")
+
     for q in qs:
         required = ["id","question","choices","answer","explanation","source","sourceVersion","sourceExcerpt","point","remediation"]
         missing = [k for k in required if k not in q]
@@ -111,6 +130,11 @@ for path in sorted(DATA.glob("20??-??-??.json")):
         if q["id"] in seen_ids:
             fail(f"duplicate id: {q['id']}")
         seen_ids.add(q["id"])
+
+        nq = normalize_text(q["question"])
+        if nq in seen_question_texts:
+            fail(f"duplicate question text: {q['id']} == {seen_question_texts[nq]}")
+        seen_question_texts[nq] = q["id"]
         if len(q["choices"]) != 4:
             fail(f"{q['id']}: exactly 4 choices required")
         if q["answer"] not in (1,2,3,4):
@@ -148,5 +172,10 @@ for path in sorted(DATA.glob("20??-??-??.json")):
             fail(f"{q['id']}: remediation.similar.answer must be 1..4")
         if not str(similar.get("explanation","")).strip():
             fail(f"{q['id']}: remediation.similar.explanation required")
+
+        ns = normalize_text(similar.get("question",""))
+        if ns in seen_similar_texts:
+            fail(f"duplicate similar question text: {q['id']} == {seen_similar_texts[ns]}")
+        seen_similar_texts[ns] = q["id"]
 
 print(f"[OK] {len(seen_ids)} daily questions validated; default={default_count}, max={max_count}")
