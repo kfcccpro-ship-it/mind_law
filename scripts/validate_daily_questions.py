@@ -50,6 +50,14 @@ try:
 except Exception:
     fail("latest must be YYYY-MM-DD")
 
+daily_paths = sorted(DATA.glob("20??-??-??.json"))
+latest_path = DATA / f"{latest}.json"
+if not latest_path.exists():
+    fail(f"latest DAILY file missing: {latest}.json")
+future_files = [p.name for p in daily_paths if p.stem > latest]
+if future_files:
+    fail(f"future DAILY files must not be pre-published beyond manifest.latest: {future_files}")
+
 seen_ids = set()
 seen_question_texts = {}
 seen_similar_texts = {}
@@ -67,7 +75,7 @@ def check_answer_distribution(path_name, answers, label):
     if max(abs(c - expected) for c in counts) > tolerance:
         fail(f"{path_name}: {label} answer positions too skewed; counts={counts}")
 
-for path in sorted(DATA.glob("20??-??-??.json")):
+for path in daily_paths:
     obj = json.loads(path.read_text(encoding="utf-8"))
     if obj.get("date") != path.stem:
         fail(f"{path.name}: date mismatch")
