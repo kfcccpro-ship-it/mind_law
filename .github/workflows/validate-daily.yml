@@ -5,6 +5,8 @@ on:
     paths:
       - 'daily_questions/**'
       - 'scripts/validate_daily_questions.py'
+      - 'scripts/audit_daily_coverage.py'
+      - 'scripts/audit_daily_coverage.py'
       - '.github/workflows/validate-daily.yml'
   pull_request:
     paths:
@@ -24,3 +26,4 @@ jobs:
         with:
           python-version: '3.12'
       - run: python3 scripts/validate_daily_questions.py
+      - run: python3 scripts/audit_daily_coverage.py
