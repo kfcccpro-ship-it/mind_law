@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>간부직원 자격전형 · DAILY</title>
+<title>간부직원 자격전형 · DAY 학습</title>
 <style>
 :root{--bg:#f3f5f7;--card:#fff;--ink:#17191d;--muted:#6b717a;--line:#e2e6ea;--accent:#2f62f5;--ok:#087f53;--bad:#c5334d;--warn:#9a6500;--violet:#7856d8}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
@@ -12,7 +12,7 @@ main{max-width:780px;margin:auto;padding:16px 14px 74px}.top{display:flex;justif
 .hero{background:linear-gradient(135deg,#1f2633,#3f4b61);color:#fff;border-radius:22px;padding:22px;margin-bottom:14px}
 .hero h1{font-size:24px;margin:0 0 7px}.hero p{margin:0;opacity:.84;line-height:1.58}.meter{height:8px;background:rgba(255,255,255,.18);border-radius:20px;overflow:hidden;margin-top:15px}.meter>i{display:block;height:100%;width:0;background:#fff;transition:width .25s}.progress{margin-top:8px;font-size:13px;font-weight:800}
 .honesty{margin-top:13px;padding:11px 12px;border-radius:13px;background:rgba(255,255,255,.1);font-size:12.5px;line-height:1.55}
-.coverage{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin:0 0 14px}.coverage b{font-size:13px}.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.chip{font-size:11.5px;font-weight:800;color:#334155;background:#f0f3f7;border:1px solid #e1e6ec;padding:7px 9px;border-radius:999px}
+.daynav{display:flex;gap:7px;overflow-x:auto;padding:2px 1px 10px;margin:0 0 4px}.daypick{flex:none;border:1px solid var(--line);background:#fff;color:#374151;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:900;cursor:pointer}.daypick.active{background:#20242c;color:#fff;border-color:#20242c}.launchbox{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;line-height:1.7}.launchbox h2{margin:0 0 8px;font-size:20px}.coverage{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin:0 0 14px}.coverage b{font-size:13px}.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.chip{font-size:11.5px;font-weight:800;color:#334155;background:#f0f3f7;border:1px solid #e1e6ec;padding:7px 9px;border-radius:999px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:19px;box-shadow:0 5px 18px rgba(20,25,35,.05)}
 .scope{font-size:12px;font-weight:800;color:var(--accent);line-height:1.55;margin-bottom:6px}.qnum{font-size:12px;color:var(--muted);font-weight:900}.card h2{font-size:19px;line-height:1.5;margin:8px 0 16px}
 .choice{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:14px;padding:13px 14px;margin:8px 0;font-size:15px;line-height:1.45;cursor:pointer}.choice.sel{border-color:var(--accent);background:#f1f5ff}.choice.correct{border-color:var(--ok);background:#eefaf5}.choice.wrong{border-color:var(--bad);background:#fff1f3}.choice:disabled{cursor:default}
@@ -26,17 +26,18 @@ input[type=text]{width:100%;border:1px solid var(--line);border-radius:13px;padd
 </style>
 </head>
 <body><main>
-<div class="top"><a class="back" href="../">← 법령 학습</a><span class="pill" id="datePill">오늘의 문제</span></div>
+<div class="top"><a class="back" href="../">← 법령 학습</a><span class="pill" id="datePill">DAY 학습</span></div>
 
 <section class="hero">
-  <h1 id="title">오늘의 문제</h1>
+  <h1 id="title">DAY 학습</h1>
   <p id="theme">한 문제씩 확인하며 끝까지 학습합니다.</p>
   <div class="meter"><i id="bar"></i></div>
   <div class="progress" id="progress"></div>
   <div class="honesty">모르면 찍지 않아도 됩니다. <b>‘모르겠음’</b>을 누르면 오답으로 처리하고 바로 학습으로 넘어갑니다. 인증은 점수가 아니라 <b>끝까지 학습했는지</b>를 확인합니다.</div>
 </section>
 
-<section class="coverage"><b>오늘의 학습 범위</b><div class="chips" id="trackCountChips"></div><div class="chips" id="coverageChips" style="margin-top:8px"></div><p id="coveragePlan" class="small" style="margin:10px 0 0"></p></section>
+<nav class="daynav hidden" id="dayNav" aria-label="공개 DAY 선택"></nav>
+<section class="coverage"><b>선택한 DAY 학습 범위</b><div class="chips" id="trackCountChips"></div><div class="chips" id="coverageChips" style="margin-top:8px"></div><p id="coveragePlan" class="small" style="margin:10px 0 0"></p></section>
 
 <div id="study"><div class="err">문제를 불러오는 중입니다.</div></div>
 
@@ -47,10 +48,10 @@ input[type=text]{width:100%;border:1px solid var(--line);border-radius:13px;padd
    <button class="btn primary" id="applyName">완료 인증 화면 만들기</button>
  </div>
  <div id="cert" class="cert hidden">
-  <div>간부직원 자격전형 · DAILY 인증</div>
+  <div>간부직원 자격전형 · DAY 학습 인증</div>
   <div class="big" id="certTitle">DAY 완료</div>
   <div class="row"><span>학습자</span><span class="val" id="certName"></span></div>
-  <div class="row"><span>학습일</span><span class="val" id="certDate"></span></div>
+  <div class="row"><span>완료일</span><span class="val" id="certDate"></span></div>
   <div class="row"><span>기본문제</span><span class="val" id="certBase"></span></div>
   <div class="row"><span>첫 시도 정답</span><span class="val" id="certScore"></span></div>
   <div class="row"><span>모르겠음 선택</span><span class="val" id="certUnknown"></span></div>
@@ -59,7 +60,7 @@ input[type=text]{width:100%;border:1px solid var(--line);border-radius:13px;padd
   <div class="row"><span>최종 상태</span><span class="val">전체 범위 학습·오답교정·재시험 통과</span></div>
   <div class="row"><span>완료 시각</span><span class="val" id="certTime"></span></div>
   <div class="row"><span>인증 코드</span><span class="val" id="certCode"></span></div>
-  <small>첫 시도 정답수나 ‘모르겠음’ 횟수는 참여 판정 기준이 아닙니다. 오늘 배정된 모든 문항을 끝까지 학습하고, 최초 오답·모르겠음 문항을 최종 재시험에서 모두 맞힌 경우에만 이 화면이 표시됩니다.</small>
+  <small>첫 시도 정답수나 ‘모르겠음’ 횟수는 참여 판정 기준이 아닙니다. 선택한 DAY에 배정된 모든 문항을 끝까지 학습하고, 최초 오답·모르겠음 문항을 최종 재시험에서 모두 맞힌 경우에만 이 화면이 표시됩니다.</small>
  </div>
  <button class="btn primary screenbtn hidden" id="printBtn">인증 화면만 인쇄·PDF 보기</button>
 </section>
@@ -70,13 +71,13 @@ input[type=text]{width:100%;border:1px solid var(--line);border-radius:13px;padd
 
 <script>
 const $=s=>document.querySelector(s);
-let manifest,data,state;
+let manifest,data,state,currentRelease;
 
 const norm=s=>String(s??'').toLowerCase()
   .replace(/퍼센트/g,'')
   .replace(/[\s·,._%()%원]/g,'');
 
-function storageKey(){return 'mg-daily-v6-'+data.date}
+function storageKey(){return 'mg-day-v7-'+String(data.day).padStart(2,'0')}
 function save(){localStorage.setItem(storageKey(),JSON.stringify(state))}
 function defaultItem(){return {
   attempted:false,firstCorrect:null,dontKnow:false,mastered:false,
@@ -144,7 +145,7 @@ function updateProgress(){
     $('#progress').textContent='최종 오답 재시험 · '+n+' / '+wrong.length+' 정답';
   }else{
     $('#bar').style.width='100%';
-    $('#progress').textContent='오늘 학습 완료';
+    $('#progress').textContent='DAY 학습 완료';
   }
 }
 
@@ -442,7 +443,7 @@ function renderFinal(){
     c.innerHTML='<div class="scope"></div><div class="qnum"></div><h2>최종 재시험 정답.</h2><div class="feedback good">처음에는 틀렸거나 모르겠던 문항을 다시 맞혔습니다.</div>';
     c.querySelector('.scope').textContent=scopeText(q);
     c.querySelector('.qnum').textContent='최종 오답 재시험 '+(fi+1)+' / '+wrong.length;
-    const next=button(fi===wrong.length-1?'오늘 학습 완료 확인':'다음 오답 재시험');
+    const next=button(fi===wrong.length-1?'DAY 학습 완료 확인':'다음 오답 재시험');
     next.onclick=()=>{
       const n=wrong.findIndex(x=>!item(x).finalPassed);
       if(n<0)return completeDay();
@@ -483,9 +484,10 @@ function completeDay(){
 }
 
 function makeCode(){
-  const seed=data.date+'|'+Date.now()+'|'+Math.random();
+  const tag='D'+String(data.day).padStart(2,'0');
+  const seed=tag+'|'+Date.now()+'|'+Math.random();
   let h=2166136261;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=Math.imul(h,16777619)}
-  return data.date.replaceAll('-','').slice(4)+'-'+(h>>>0).toString(36).toUpperCase().padStart(6,'0').slice(0,6);
+  return tag+'-'+(h>>>0).toString(36).toUpperCase().padStart(6,'0').slice(0,6);
 }
 
 function showFinish(){
@@ -499,7 +501,7 @@ function showFinish(){
     const total=data.questions.length,wrong=wrongQuestions();
     $('#certTitle').textContent='DAY '+String(data.day).padStart(2,'0')+' 완료';
     $('#certName').textContent=n;
-    $('#certDate').textContent=data.date;
+    $('#certDate').textContent=new Date(state.completionAt).toLocaleDateString('ko-KR');
     $('#certBase').textContent=total+' / '+total+' 완료';
     $('#certScore').textContent=state.firstCorrect+' / '+total;
     $('#certUnknown').textContent=state.dontKnowCount+'문항';
@@ -526,7 +528,7 @@ function submitCompletion(){
   const form=document.createElement('form');
   form.method='POST';form.action=manifest.completion.apiUrl;form.target='submitFrame';form.className='hidden';
   const payload={
-    action:'complete',nickname:state.nickname,date:data.date,day:data.day,total,mastered,
+    action:'complete',nickname:state.nickname,releaseDate:(data.releaseDate||currentRelease?.releasedAt||''),day:data.day,total,mastered,
     firstCorrect:state.firstCorrect,dontKnowCount:state.dontKnowCount,
     remediationCount:wrong.length,finalRetestCount:wrong.length,finalRetestPassed:finalPassed,
     completionCode:state.code,startedAt:state.startedAt||'',completedAt:state.completionAt||''
@@ -535,19 +537,76 @@ function submitCompletion(){
   document.body.appendChild(form);form.submit();setTimeout(()=>form.remove(),1500);
 }
 
+function publishedEntries(){
+  return (manifest.publishedDays||[]).map(x=>{
+    if(typeof x==='number')return {day:x,file:'day-'+String(x).padStart(2,'0')+'.json'};
+    return x;
+  }).filter(x=>Number.isInteger(Number(x.day))&&x.file)
+    .sort((a,b)=>Number(a.day)-Number(b.day));
+}
+
+function renderDayNav(entries,selected){
+  const nav=$('#dayNav');
+  nav.innerHTML='';
+  if(!entries.length){nav.classList.add('hidden');return}
+  nav.classList.remove('hidden');
+  entries.forEach(e=>{
+    const b=document.createElement('button');
+    b.className='daypick'+(Number(e.day)===Number(selected)?' active':'');
+    b.textContent='DAY '+String(e.day).padStart(2,'0');
+    b.onclick=()=>selectDay(Number(e.day),true);
+    nav.appendChild(b);
+  });
+}
+
+function showLaunchGate(){
+  const launch=manifest.launchDate||'2026-10-10';
+  $('#datePill').textContent='10/10 시작';
+  $('#title').textContent='DAY 01 · 10월 10일 공개 예정';
+  $('#theme').textContent='DAY 번호는 날짜와 1:1로 묶지 않습니다. 검수 완료된 학습세트를 운영자가 선택해 공개합니다.';
+  $('#progress').textContent='현재 공개된 DAY 없음';
+  $('#bar').style.width='0%';
+  $('#dayNav').classList.add('hidden');
+  $('.coverage').classList.add('hidden');
+  $('#finish').classList.remove('show');
+  $('#study').innerHTML='<section class="launchbox"><h2>10월 10일부터 DAY 01을 시작합니다.</h2><div>하루에 반드시 1개씩 공개하는 방식으로 고정하지 않습니다. 같은 날 여러 DAY를 열 수도 있고, 필요하면 공개 간격을 둘 수도 있습니다.</div></section>';
+  $('#notice').textContent=(manifest.policy?.publicBasis||'')+' · '+(manifest.policy?.disclaimer||'');
+}
+
+async function selectDay(day,pushUrl=false){
+  const entries=publishedEntries();
+  const rel=entries.find(x=>Number(x.day)===Number(day));
+  if(!rel)return;
+  currentRelease=rel;
+  data=await fetch('../daily_questions/'+rel.file,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('day file');return r.json()});
+  if(Number(data.day)!==Number(rel.day))throw Error('day mismatch');
+  if(pushUrl){
+    const u=new URL(location.href);u.searchParams.set('day',String(rel.day));history.replaceState(null,'',u);
+  }
+  $('#finish').classList.remove('show');
+  $('#cert').classList.add('hidden');
+  $('#printBtn').classList.add('hidden');
+  $('.coverage').classList.remove('hidden');
+  $('#datePill').textContent='DAY '+String(data.day).padStart(2,'0');
+  $('#title').textContent=data.title||('DAY '+String(data.day).padStart(2,'0'));
+  const plan=(manifest.plan||[]).find(x=>Number(x.day)===Number(data.day));
+  $('#theme').textContent=(plan?plan.theme:'핵심 학습세트')+' · '+data.questions.length+'문항 · 한 문제씩 완주';
+  $('#coveragePlan').textContent=data.deliveryNote||'법·감독·정관·선거, 여신, 수신·출자, AML·세무·공제, 새마을금고론, 내부규정을 순환합니다.';
+  $('#notice').textContent=(manifest.policy?.publicBasis||'')+' · '+(manifest.policy?.disclaimer||'')+' · '+(manifest.policy?.privacy||'');
+  renderDayNav(entries,data.day);renderCoverage();loadState();render();
+}
+
 async function load(){
   try{
     manifest=await fetch('../daily_questions/manifest.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('manifest');return r.json()});
-    data=await fetch('../daily_questions/'+manifest.latest+'.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('daily');return r.json()});
-    $('#datePill').textContent=data.date;
-    $('#title').textContent=data.title;
-    const plan=(manifest.plan||[]).find(x=>x.day===data.day);
-    $('#theme').textContent=(plan?plan.theme:'오늘의 핵심')+' · '+data.questions.length+'문항 · 한 문제씩 완주';
-    $('#coveragePlan').textContent=data.deliveryNote||'본 DAILY는 여신만 반복하는 구조가 아니라 법·감독·정관·선거, 여신, 수신·출자, AML·세무·공제, 새마을금고론, 내부규정을 매일 순환합니다.';
-    $('#notice').textContent=(manifest.policy?.publicBasis||'')+' · '+(manifest.policy?.disclaimer||'')+' · '+(manifest.policy?.privacy||'');
-    renderCoverage();loadState();render();
+    const entries=publishedEntries();
+    if(!entries.length){showLaunchGate();return}
+    const requested=Number(new URLSearchParams(location.search).get('day'));
+    const fallback=manifest.activeDay||entries[entries.length-1].day;
+    const chosen=entries.some(x=>Number(x.day)===requested)?requested:fallback;
+    await selectDay(chosen,false);
   }catch(e){
-    $('#study').innerHTML='<div class="err">오늘의 문제를 불러오지 못했습니다. 잠시 후 다시 확인해 주세요.</div>';
+    $('#study').innerHTML='<div class="err">DAY 학습세트를 불러오지 못했습니다. 잠시 후 다시 확인해 주세요.</div>';
   }
 }
 load();
