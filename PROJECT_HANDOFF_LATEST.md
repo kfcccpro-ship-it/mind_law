@@ -1,9 +1,17 @@
 # PROJECT_HANDOFF_LATEST
 
 > Project: [new]간부자격 / 새마을금고 간부직원 자격전형 DAILY 학습시스템  
-> Last synchronized: 2026-10-01 10:05 KST  
+> Last synchronized: 2026-10-06 KST  
 > Repository: `kfcccpro-ship-it/mind_law`  
 > Branch / source of truth: `main`
+
+## CRITICAL · 저장소 식별 잠금
+
+- **현재 [new]간부자격의 단일 진실 소스는 `kfcccpro-ship-it/mind_law`의 `main`이다.**
+- 학생용 메인: `https://kfcccpro-ship-it.github.io/mind_law/`
+- 학생용 DAILY: `https://kfcccpro-ship-it.github.io/mind_law/daily/`
+- `korealaw/mg-law-webapp` 및 `PRIVATE_APPS_SCRIPT_v8.4_NEW_BACKEND`는 과거 생성형 AI 연구 설문 연계 웹앱 계열이며 **현재 간부자격 DAILY 작업에 사용하지 않는다.**
+- 새 채팅에서 "다음 작업 진행" 요청이 오면 먼저 이 저장소와 `daily_questions/manifest.json`을 확인한다.
 
 ## 0. 새 채팅 진입 규칙
 
@@ -184,11 +192,14 @@ GitHub는 학생이 볼 수 있다고 가정한다.
 ## 7. 현재 GitHub 상태
 
 현재 `manifest.latest`:
-- **2026-10-01 / DAY 02**
+- **2026-10-04 / DAY 05**
 
 공개 DAY:
-- `daily_questions/2026-09-30.json` — DAY 01, 여신 집중, 현재 version 7
-- `daily_questions/2026-10-01.json` — DAY 02, 전범위 혼합, 현재 version 4
+- `daily_questions/2026-09-30.json` — DAY 01
+- `daily_questions/2026-10-01.json` — DAY 02
+- `daily_questions/2026-10-02.json` — DAY 03
+- `daily_questions/2026-10-03.json` — DAY 04
+- `daily_questions/2026-10-04.json` — DAY 05, 전범위 혼합, version 2
 
 DAY 01 및 DAY 02:
 - 기본문제 정답위치: ①②③④ 각각 5개
@@ -336,3 +347,14 @@ Google Apps Script / 중앙 완료기록 연동은 **추후 진행**하기로 �
 **다음 작업 진행**
 
 그러면 이 파일과 `main`의 현재 상태를 확인한 뒤 위 11번부터 이어간다.
+
+
+## 14. 2026-10-06 복구 상태
+
+- 저장소 혼동 원인 확인: 과거 설문연계 앱 `korealaw/mg-law-webapp`을 현재 프로젝트로 잘못 잡았던 문제였음.
+- 현재 기준 저장소를 `kfcccpro-ship-it/mind_law`로 재고정.
+- DAY 05(2026-10-04) 전수 재점검 후 2개 표현 교정:
+  - D05-Q02: 공동·연계 합산 20%를 단순 "관리기준"이 아니라 **20% 초과 시 공동대출 취급 제한**으로 명확화.
+  - D05-Q20: 유동성비율을 임의의 70% 수치로 치환하지 않고 **감독기준 별표4상 5등급**이라는 원문 기준으로 교정.
+- `daily_questions/manifest.json` latest를 2026-10-04로 정상화.
+- 다음 우선순위: 누락된 DAY 06(2026-10-05, 수신·예금거래 기본) 및 DAY 07(2026-10-06, 수신·예적금·이율·만기) 복구·검증·공개.
